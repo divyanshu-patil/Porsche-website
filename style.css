@@ -334,6 +334,106 @@ nav .hamburger:hover{
 }
 
 
+/* page 4.........................................*/
+
+
+.page-4 {
+   position: relative;
+   backdrop-filter: blur(5px);
+   background-image: linear-gradient(-235deg,rgba(255, 255, 255, 0),rgba(0, 0, 0, 0.281));
+   /* background-image: radial-gradient(rgba(255, 255, 255, 0) 10%,rgba(0, 0, 0, 0.281)); */
+   background-size: 20px 20px;
+}
+
+.slider-wrapper {
+    width: 90%;
+    position: absolute;
+    top: 27%;
+    left: 5%;
+}
+
+.page-4 .holder {
+    width: 100%;
+    height: 70%;
+    display: grid;
+    align-items: center;
+    grid-template-columns: repeat(5, auto); 
+    grid-gap: 20px;
+    padding: 10px;
+    overflow-x: auto;
+    scrollbar-color: #888 #f1f1f1; 
+    scrollbar-width: thin;
+    border: none; 
+}
+
+.card-container {
+    position: relative;
+}
+
+.slider-wrapper .cards {
+    position: relative;
+    transition: all 0.5s ease-in-out;
+    border-radius: 35px;
+
+    
+}
+
+.slider-wrapper .cards:hover{
+    transform: translateY(-30px);
+    transition: all 0.2s ease-in-out;
+}
+
+.page-4 .holder:hover > :not(:hover){
+    filter: blur(5px);
+    opacity: 0.5;
+    transform: translateY(5px);
+}
+
+
+.hover-after {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.car-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    z-index: -1;
+    border-radius: 35px;
+}
+
+.cover-logo-text {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    bottom: 2vh;
+    left: 1vw;
+    gap: 12px;
+    pointer-events: none;
+}
+
+.cards-logo {
+    height: 35px;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cover-logo-text .car-name {
+    font-family: var(--base-font);
+    color:  #CB9D58;
+    font-weight: 900;
+    font-size: 2rem;
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+
+.hover-after:hover {
+    background-image: linear-gradient(transparent, #000000);
+}
 
 
 /* .page 5............................................... */
