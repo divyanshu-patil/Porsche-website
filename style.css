@@ -51,6 +51,10 @@ html,body{
 }
 
 /* global structure ............................... */
+canvas{
+    display: none;
+}
+
 .pages{
     height: 100vh;
     width: 100vw;
@@ -102,7 +106,7 @@ nav{
     justify-content: space-between;
     /* background-color: red; */
    
-    padding: 30px 80px;
+    padding: 15px 80px;
     height: auto;
     width: 100%;
     
@@ -111,6 +115,11 @@ nav{
     top: 0;
     left: 0;
     z-index: 99;
+
+    backdrop-filter: blur(5px);
+    background-image: linear-gradient(-235deg,rgba(255, 255, 255, 0),rgba(0, 0, 0, 0.281));
+    /* background-image: radial-gradient(rgba(255, 255, 255, 0) 10%,rgba(0, 0, 0, 0.281)); */
+    background-size: 20px 20px;
 }
 nav .logo{
     /* width: 85px; */
@@ -323,3 +332,107 @@ nav .hamburger:hover{
 .page-3  .end{
     margin-left: auto;
 }
+
+
+
+
+/* .page 5............................................... */
+
+.page-5{
+    color: var(--lightColor);
+    
+    background-image: url('assets/tmp/footer.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.page-5 h3 {
+    font-size: 3vw;
+   position: absolute;
+   font-family: var(--base-font); 
+   top: 10%;
+   left: 5%;
+   
+   padding: 5px 10px;
+
+}
+@media only screen and (min-width: 960px){
+    .page-5 h3{
+
+        font-size: 25px;
+    }
+}
+.footer-part{
+    width: 100%;
+    max-height: max-content;
+    display: grid;
+    grid-template-columns: 1fr 0.7fr 1fr 1fr;
+    /* grid-template-rows: repeat(2,1fr); */
+    
+    position: absolute;
+    bottom: 0%;
+
+    /* margin-bottom: 10px; */
+    padding: 7% 10%;
+    color:var(--gray-color);
+
+    font-size: 1rem;
+
+    background-image: linear-gradient(rgba(0, 0, 0, 0),var(--gradient-color-bottom));
+
+}
+.footer-part ul {
+    list-style-type: none;
+}
+.footer-part ul li{
+    display: flex;
+    align-items: center;
+    gap:10px;
+}
+.footer-part .logo{
+    width: 17px;
+    height: auto;
+    aspect-ratio: 1;
+}
+.footer-part h4{
+    margin-bottom: 10px;
+    font-size: 1em;
+}
+.footer-part .row2{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.footer-part p{
+    font-size: 0.9em;
+}
+@media only screen and (max-width: 900px){
+.footer-part{
+    grid-template-columns: 1fr 1fr;
+    gap:  20px 0px;
+    bottom: 0%;
+    
+    
+}
+}
+@media only screen and (min-width:1200px){
+    .footer-part{
+        padding:50px 5%;
+        bottom: 0px;
+    }
+
+}
+
+@media only screen and (max-width:350px) {
+        .footer-part h4 {
+
+            font-size: 0.8em;
+        }
+
+        .footer-part p {
+
+            font-size: 0.5em;
+        }
+
+    }
