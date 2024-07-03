@@ -12,6 +12,11 @@
     font-family: Oleto;
     src: url('./assets/fonts/Oleto\ DEMO.ttf');
 }
+@font-face {
+    font-family: OpenSans;
+    src: url('./assets/fonts/open-sans-italic/OpenSans-Regular.ttf');
+}
+
 
 /* basic structure............................... */
 *{
@@ -36,6 +41,9 @@
     /* fonts.......... */
     --logo-font : porsche;
     --italic-font: OpenSansItalic;
+    --inter: inter;
+    --hollow-font:Oleto;
+    --base-font: OpenSans;
 
 }
 html,body{
@@ -53,6 +61,38 @@ html,body{
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.gradient-text{
+    background-image: linear-gradient(var(--gradient-color-top),var(--gradient-color-bottom));
+    background-clip: text;
+    color: transparent;
+
+    /* for safari */
+    background: -webkit-linear-gradient(var(--gradient-color-top),var(--gradient-color-bottom));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.gradient-text-70p{
+    background-image: linear-gradient(var(--gradient-color-top) 70%,var(--gradient-color-bottom));
+    background-clip: text;
+    color: transparent;
+
+    /* for safari */
+    background: -webkit-linear-gradient(var(--gradient-color-top) 70%,var(--gradient-color-bottom));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-reverse{
+    background-image: linear-gradient(var(--gradient-color-bottom),var(--gradient-color-top));
+    background-clip: text;
+    color: transparent;
+
+    /* for safari */
+    background: -webkit-linear-gradient(var(--gradient-color-bottom),var(--gradient-color-top));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 /* header section.................................... */
@@ -181,7 +221,6 @@ nav .hamburger:hover{
 
 .page-2{
     position: relative;
-    background-color: red;
 }
 
 
@@ -192,7 +231,7 @@ nav .hamburger:hover{
 }
 
 .page-2 .trans-text .text11{
-    font-family: Oleto;
+    font-family: var(--hollow-font);
     writing-mode: vertical-rl;
     text-orientation: mixed;
     font-size: 9.3rem;
@@ -203,7 +242,7 @@ nav .hamburger:hover{
 }
 
 .page2-discription-part{
-    font-family: inter;
+    font-family: var(--base-font);
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -216,12 +255,12 @@ nav .hamburger:hover{
 }
 
 .page2-discription-part .headline{
-    font-family: OpenSansItalic;
+    font-family: var(--base-font);
     font-weight: 700;
     font-size: 1.2rem;
 }
 .page2-discription-part .discrip{
-    font-family:OpenSansItalic;
+    font-family:var(--italic-font);
     font-weight: 400;
     color: var( --gray-color);
 }
@@ -240,17 +279,47 @@ nav .hamburger:hover{
     top: 20%;
     left: 10%;
 }
-.page-3 h3{
+.page-3  h3{
     font-size: 7vw;
     font-family: var(--logo-font);
     font-weight: 100;
     margin-bottom: 10px;
 }
 @media only screen and (min-width: 960px){
-    .page-3 h3{
+    .page-3 .top-left h3{
         font-size: 60px;
     }
 }
-.page-3 p{
+.page-3 .top-left p{
     max-width: 30%;
+    font-family: var(--base-font);
+    font-size: 1.2rem;
+    color: var(--gray-color);
+}
+.page-3 .bottom-right{
+    position: absolute;
+    bottom: 15%;
+    right: 10%;
+    width: 25vw;
+    max-width: 300px;
+
+}
+.page-3 .bottom-right .wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+    
+}
+.page-3 .bottom-right h3{
+    font-size: 5vw;
+    
+}
+@media only screen and (min-width: 960px){
+    .page-3 .bottom-right h3{
+        font-size: 60px;
+    }
+}
+.page-3  .end{
+    margin-left: auto;
 }
