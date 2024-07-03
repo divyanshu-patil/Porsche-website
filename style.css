@@ -47,6 +47,7 @@ html,body{
     height: 100vh;
     width: 100vw;
     background-color: var(--darkColor);
+    position: relative;
 }
 .logo img{
     width: 100%;
@@ -180,6 +181,7 @@ nav .hamburger:hover{
 
 .page-2{
     position: relative;
+    background-color: red;
 }
 
 
@@ -222,4 +224,33 @@ nav .hamburger:hover{
     font-family:OpenSansItalic;
     font-weight: 400;
     color: var( --gray-color);
+}
+
+
+/* page 3.................................... */
+
+.page-3{
+    background-image: url('assets/tmp/upper car.png');
+    background-size: cover;
+    background-position: center;
+    color: var(--lightColor);
+}
+.page-3 .top-left{
+    position: absolute;
+    top: 20%;
+    left: 10%;
+}
+.page-3 h3{
+    font-size: 7vw;
+    font-family: var(--logo-font);
+    font-weight: 100;
+    margin-bottom: 10px;
+}
+@media only screen and (min-width: 960px){
+    .page-3 h3{
+        font-size: 60px;
+    }
+}
+.page-3 p{
+    max-width: 30%;
 }
