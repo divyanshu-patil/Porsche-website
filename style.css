@@ -8,7 +8,10 @@
     font-family: OpenSansItalic;
     src: url('./assets/fonts/open-sans-italic/OpenSans-Italic.ttf');
 }
-
+@font-face {
+    font-family: Oleto;
+    src: url('./assets/fonts/Oleto\ DEMO.ttf');
+}
 
 /* basic structure............................... */
 *{
@@ -174,3 +177,49 @@ nav .hamburger:hover{
 }
 
 /* page 2.........................................*/
+
+.page-2{
+    position: relative;
+}
+
+
+.trans-text{
+    position: absolute;
+    bottom: 10vh;
+    left: 2.6vw;
+}
+
+.page-2 .trans-text .text11{
+    font-family: Oleto;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-size: 9.3rem;
+    color: var(--lightColor);
+    transform: rotate(180deg);
+    letter-spacing: 17px;
+   
+}
+
+.page2-discription-part{
+    font-family: inter;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: absolute;
+    right: 34px;
+    bottom: 96px;
+    color: var(--lightColor);
+    
+    max-width: 27vw;
+}
+
+.page2-discription-part .headline{
+    font-family: OpenSansItalic;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+.page2-discription-part .discrip{
+    font-family:OpenSansItalic;
+    font-weight: 400;
+    color: var( --gray-color);
+}
