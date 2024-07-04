@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import * as GUI from 'lil-gui';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js'; // for compressed version
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -16,10 +17,40 @@ let debugObject = {};
 // creating debug UI
 const gui = new GUI.GUI();
 
+// creating folders in GUI
+const Lightsfolder = gui.addFolder('Lights')
+Lightsfolder.open()
+// lights folder
+const directionLightfolder = Lightsfolder.addFolder('directionLight')
+const directionLightfolder2 = Lightsfolder.addFolder('spotLight')
+const ambientLightFolder = Lightsfolder.addFolder('ambientLight')
+
+// model
+const ModelFolder = gui.addFolder('Model')
+ModelFolder.open()
+
+const envimapfolder = ModelFolder.addFolder('Envi')
+const modelpositionfolder = ModelFolder.addFolder('Model Position')
+const modelRotaionfolder = ModelFolder.addFolder('Model Rotation')
+
+
+// camera
+const CameraFolder = gui.addFolder('Camera')
+CameraFolder.open()
+const CameraRotationFolder = CameraFolder.addFolder('Camera Rotation')
+const CameraPositionFolder = CameraFolder.addFolder('Camera Position')
+
+
+
+
+
+
 // creating lights
 const ambientLight = new THREE.AmbientLight(0xffffff, 0);
 const directionalLight = new THREE.DirectionalLight(0xffffff, 0.32);
-directionalLight.position.set(-0.04, 5, 5);
+directionalLight.position.set(-1.39, 5, -2.01);
+// adding intensity              B
+directionalLight.intensity = 0.82;
 directionalLight.castShadow = true;
 // removing shadow acne
 directionalLight.shadow.normalBias = 0.05;
@@ -30,35 +61,37 @@ directionalLight.shadow.mapSize.height = 1024;
 
 const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
 
-const spotlight = new THREE.SpotLight(0xffffff, 100, 9, 0.7);
-spotlight.position.set(0.08, 5, 0.08);
-spotlight.castShadow = true;
-spotlight.shadow.normalBias = 0.05;
+const directionalLight2 = new THREE.DirectionalLight(0xffffff);
+directionalLight2.position.set(-3.76, 4.65, -1.38);
+// adding intensity              B
+directionalLight2.intensity = 3
+directionalLight2.castShadow = true;
+directionalLight2.shadow.normalBias = 0.05;
 
 // adjusting shadow map size
-spotlight.shadow.mapSize.width = 1024;
-spotlight.shadow.mapSize.height = 1024;
+directionalLight2.shadow.mapSize.width = 1024;
+directionalLight2.shadow.mapSize.height = 1024;
 
-const spotlightHelper = new THREE.SpotLightHelper(spotlight);
+const directionalLightHelper2 = new THREE.DirectionalLightHelper(directionalLight2);
 
 // all helpers are updated in animate loop functions
-scene.add(ambientLight, directionalLight, directionalLightHelper, spotlight, spotlightHelper);
+scene.add(ambientLight, directionalLight, directionalLightHelper, directionalLight2, directionalLightHelper2);
 
 // adding light controls to the debug UI
-// 1. directional light
-gui.add(directionalLight.position, 'x', -5, 5, 0.01).name('directional light x');
-gui.add(directionalLight.position, 'y', -5, 5, 0.01).name('directional light y');
-gui.add(directionalLight.position, 'z', -5, 5, 0.01).name('directional light z');
-gui.add(directionalLight, 'intensity', 0, 10, 0.01).name('directional intensity');
+// 1. directional light to directionLightfolder
+directionLightfolder.add(directionalLight.position, 'x', -5, 5, 0.01).name('directional light x');
+directionLightfolder.add(directionalLight.position, 'y', -5, 5, 0.01).name('directional light y');
+directionLightfolder.add(directionalLight.position, 'z', -5, 5, 0.01).name('directional light z');
+directionLightfolder.add(directionalLight, 'intensity', 0, 10, 0.01).name('directional intensity');
 
-// 2. spotlight
-gui.add(spotlight.position, 'x', -5, 5, 0.01).name('spotlight x');
-gui.add(spotlight.position, 'y', -5, 5, 0.01).name('spotlight y');
-gui.add(spotlight.position, 'z', -5, 5, 0.01).name('spotlight z');
-gui.add(spotlight, 'intensity', 0, 500, 0.01).name('spotlight intensity');
+// 2. spotlight to spotLightFolder
+directionLightfolder2.add(directionalLight2.position, 'x', -5, 5, 0.01).name('spotlight x');
+directionLightfolder2.add(directionalLight2.position, 'y', -5, 5, 0.01).name('spotlight y');
+directionLightfolder2.add(directionalLight2.position, 'z', -5, 5, 0.01).name('spotlight z');
+directionLightfolder2.add(directionalLight2, 'intensity', 0, 500, 0.01).name('spotlight intensity');
 
 // ambient light
-gui.add(ambientLight, 'intensity', 0, 10, 0.01).name('ambient intensity');
+ambientLightFolder.add(ambientLight, 'intensity', 0, 10, 0.01).name('ambient intensity');
 
 // adding visible/invisible button for all helpers
 let parameter = {
@@ -70,7 +103,7 @@ let parameter = {
     }
 };
 
-gui.add(parameter, 'visible').name('visible helpers');
+Lightsfolder.add(parameter, 'visible').name('visible helpers');
 
 // updating all material for envMap
 
@@ -101,10 +134,10 @@ rgbeLoader.load(
         debugObject.metalness = 0;
         debugObject.roughness = 0;
         debugObject.reflectivity = 0;
-        gui.add(debugObject, 'envMapIntensity', 0, 10, 0.01).onChange(updateAllMaterials);
-        gui.add(debugObject, 'metalness', 0, 1, 0.01).onChange(updateAllMaterials);
-        gui.add(debugObject, 'roughness', 0, 1, 0.01).onChange(updateAllMaterials);
-        gui.add(debugObject, 'reflectivity', 0, 1, 0.01).onChange(updateAllMaterials);
+        envimapfolder.add(debugObject, 'envMapIntensity', 0, 10, 0.01).onChange(updateAllMaterials);
+        envimapfolder.add(debugObject, 'metalness', 0, 1, 0.01).onChange(updateAllMaterials);
+        envimapfolder.add(debugObject, 'roughness', 0, 1, 0.01).onChange(updateAllMaterials);
+        envimapfolder.add(debugObject, 'reflectivity', 0, 1, 0.01).onChange(updateAllMaterials);
         environmentMap.encoding = THREE.sRGBEncoding;
 
         // adding mesh
@@ -114,19 +147,20 @@ rgbeLoader.load(
         const gltfLoader = new GLTFLoader();
         gltfLoader.setDRACOLoader(dracoLoader)
         gltfLoader.load(
-            './assets/models/draco/718 cayman gt4/718 cayman gt4.gltf',
+            './assets/models/draco/gt3r 2/gt3r.gltf',
             (gltf) => {
-                gltf.scene.position.set(1.8, -0.585, 3.177)
-                gltf.scene.rotation.set(6.2831, 3.119, 6.283 )
-                camera.position.set(-1.419, 0.451, 5.722);
                 scene.add(gltf.scene);
-                gui.add(gltf.scene.rotation, 'x', Math.PI / 2, Math.PI * 3, 0.001).name('ObjRotateX');
-                gui.add(gltf.scene.rotation, 'y', Math.PI / 2, Math.PI * 2, 0.001).name('ObjRotateY');
-                gui.add(gltf.scene.rotation, 'z', Math.PI / 2, Math.PI * 3, 0.001).name('ObjRotateZ');
-                gui.add(gltf.scene.position, 'x', -20, 10, 0.001).name('obj pos x')
-                gui.add(gltf.scene.position, 'y', -5, 10, 0.001).name('obj pos y')
-                gui.add(gltf.scene.position, 'z', -20, 20, 0.001).name('obj pos z')
-                camera.lookAt(gltf.scene.position)
+                gltf.scene.position.set(0, -1.237, -3.035)
+                gltf.scene.rotation.y = 3.138 
+                
+                modelRotaionfolder.add(gltf.scene.rotation, 'x', Math.PI / 2, Math.PI * 3, 0.001).name('ObjRotateX');
+                modelRotaionfolder.add(gltf.scene.rotation, 'y', Math.PI / 2, Math.PI * 2, 0.001).name('ObjRotateY');
+                modelRotaionfolder.add(gltf.scene.rotation, 'z', Math.PI / 2, Math.PI * 3, 0.001).name('ObjRotateZ');
+                modelpositionfolder.add(gltf.scene.position, 'x', -20, 10, 0.001).name('obj pos x')
+                modelpositionfolder.add(gltf.scene.position, 'y', -5, 10, 0.001).name('obj pos y')
+                modelpositionfolder.add(gltf.scene.position, 'z', -20, 20, 0.001).name('obj pos z')
+                
+                
                 // playing animation - if any
                 if (gltf.animations.length) {
                     mixer = new THREE.AnimationMixer(gltf.scene);
@@ -134,26 +168,6 @@ rgbeLoader.load(
                     action.play();
                 }
                 updateAllMaterials();
-            
-                const t1 = gsap.timeline(
-                   { scrollTrigger:{
-    
-                        trigger: "page-2",
-                        markers: true,
-                        start: "top",
-                        end: "bottom bottom",
-                        scrub: 2
-                   }
-                      }
-                );
-                t1.to( gltf.scene.rotation,{
-                    
-                      x:6.541,
-                      y:5.677,
-                    //   z:6.2831,
-                    duration:1
-                  })
-          
               
           
             }
@@ -172,6 +186,7 @@ rgbeLoader.load(
 
         // setting ground properties
         ground.material.side = THREE.DoubleSide;
+        // adding position              B
         ground.position.set(0, -0.6, 0);
         ground.rotation.set(Math.PI / 2, 0, 0);
         ground.receiveShadow = true;
@@ -182,24 +197,36 @@ rgbeLoader.load(
             height: window.innerHeight
         };
 
+
         // adding camera
         const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height);
-        camera.position.set(-1.419, 0.451, 5.722);
+        // adding position              B
+        camera.position.set(0.00802670873489235, 0.2695931369391041,3.525174558405584);
+        camera.zoom = 2
         scene.add(camera);
 
         // adding camera controls to the debug UI
-        gui.add(camera.position, 'x', -5, 10, 0.001).name('camera x');
-        gui.add(camera.position, 'y', -5, 10, 0.001).name('camera y');
-        gui.add(camera.position, 'z', -5, 10, 0.001).name('camera z');
-        gui.add(camera.rotation, 'x', -5, 10, 0.001).name('camera x');
-        gui.add(camera.rotation, 'y', -5, 10, 0.001).name('camera y');
-        gui.add(camera.rotation, 'z', -5, 10, 0.001).name('camera z');
-        gui.add(camera, 'zoom', -0.5, 5, 0.0001).name('zoom');
+        CameraPositionFolder.add(camera.position, 'x', -5, 10, 0.001).name('camera pos x');
+        CameraPositionFolder.add(camera.position, 'y', -5, 10, 0.001).name('camera pos y');
+        CameraPositionFolder.add(camera.position, 'z', -5, 10, 0.001).name('camera pos z');
+        CameraRotationFolder.add(camera.rotation, 'x', -5, 10, 0.001).name('camera Rotate x');
+        CameraRotationFolder.add(camera.rotation, 'y', -5, 10, 0.001).name('camera Rotate y');
+        CameraRotationFolder.add(camera.rotation, 'z', -5, 10, 0.001).name('camera Rotate z');
+        CameraFolder.add(camera, 'zoom', -0.5, 5, 0.0001).name('zoom');
 
         // defining canvas
         let canvas = document.querySelector('.webgl');
 
+     // adding orbit controls
+     const controls = new OrbitControls(camera, canvas);
+     controls.enableDamping = true;
 
+    //  controls.target.y = scene.position.y + 0.5
+
+     controls.addEventListener('change', () => {
+        console.log(`Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`);
+        console.log(`controls target: ${controls.target.x}, ${controls.target.y},${controls.target.z}`);
+      });
 
         // adding renderer
         const renderer = new THREE.WebGLRenderer({
@@ -254,12 +281,14 @@ rgbeLoader.load(
         let animate = () => {
             // update the helpers if their position changed
             directionalLightHelper.update();
-            spotlightHelper.update();
+            directionalLightHelper2.update();
 
             // update animation
             if (mixer != null) {
                 mixer.update();
             }
+
+            controls.update();
 
             // update camera
             camera.updateProjectionMatrix();
