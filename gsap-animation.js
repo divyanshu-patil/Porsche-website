@@ -2,6 +2,9 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/src/all';
 
+gsap.registerPlugin(ScrollTrigger);
+
+
 document.querySelectorAll('.cards').forEach(card => {
     let card_logo = card.querySelector('.cards-logo');
     let car_name = card.querySelector('.car-name');
@@ -73,4 +76,30 @@ ScrollTrigger.create({
   end: "max",
   snap: 1 / (panels.length - 1)
 })
+
+
+
+// scroll based animation
+
+ const t1 = gsap.timeline({
+  scrollTrigger:{
+    trigger: ".page-1",
+    markers: true,
+    start: "top center",
+    end: "bottom bottom",
+    scrub: true
+  }
+})
+
+
+function Model_animation() {
+  t1.to(gltf.scene.position,{
+    x:-500,
+    y:-200,
+  })
+  
+}
+
+
+
 
