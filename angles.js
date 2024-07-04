@@ -110,7 +110,7 @@ rgbeLoader.load(
         // adding mesh
         let mixer = null;
         const dracoLoader = new DRACOLoader()
-        // loader.setDecoderPath( '' );
+        dracoLoader.setDecoderPath( './assets/libraries/draco/' );
         const gltfLoader = new GLTFLoader();
         gltfLoader.setDRACOLoader(dracoLoader)
         gltfLoader.load(
