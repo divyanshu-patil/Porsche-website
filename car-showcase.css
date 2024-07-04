@@ -96,4 +96,64 @@ canvas{
     -webkit-text-fill-color: transparent;
 
 }
+
+/* points........................ */
+
+.point{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 99;
+    overflow: visible;
+    width: auto;
+
+}
+.cross{
+    position: absolute;
+    top:25px;
+    right:25px;
+    fill:white;
+    height: 35px;
+    width: auto;
+    padding: 5px;
+    aspect-ratio: 1;
+    transform: translate(-50%,-50%);
+    z-index: 99;
+    overflow: visible;
+    background-color: rgba(153, 153, 153, 0.247);
+    border: 1px solid rgba(165, 165, 165, 0.822);
+
+    border-radius: 50%;
+    transition: all 0.3s;
+
+}
+.cross:hover{
+    background-color: rgba(153, 153, 153, 0.617);
+    transition: all 0.3s;
+
+}
+.point .label{
+    background-color: rgba(153, 153, 153, 0.247);
+    width: 40px;
+    height: auto;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1px solid rgba(165, 165, 165, 0.822);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transform: scale(0,0) translate(-50%,-50%);
+    transition: all 0.3s;
+}
+.point.visible .label{
+    transform: scale(1,1);
+    transition: all 0.3s;
+}
+
+
 /* test */
