@@ -373,9 +373,7 @@ nav .hamburger:hover{
 .slider-wrapper .cards {
     position: relative;
     transition: all 0.5s ease-in-out;
-    border-radius: 35px;
-
-    
+    border-radius: 35px;  
 }
 
 .slider-wrapper .cards:hover{
