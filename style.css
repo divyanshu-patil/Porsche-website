@@ -63,8 +63,11 @@ body::-webkit-scrollbar{
     display: none;
 }
 /* global structure ............................... */
-canvas{
-    display: none;
+.webgl{
+  position: fixed;
+  top: 0;
+  z-index: 5;
+  
 }
 
 .pages{
@@ -202,6 +205,7 @@ nav .hamburger:hover{
 .page-1 .main-heading{
     position: absolute;
     top: 15%;
+    z-index: 6;
     
     
 }
@@ -236,6 +240,7 @@ nav .hamburger:hover{
     background: -webkit-linear-gradient(var(--gradient-color-top),var(--gradient-color-bottom));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    z-index: 6;
 }
 
 /* page 2.........................................*/
@@ -249,6 +254,7 @@ nav .hamburger:hover{
     position: absolute;
     bottom: 10vh;
     left: 2.6vw;
+    z-index: 6;
 }
 
 .page-2 .trans-text .text11{
@@ -271,7 +277,7 @@ nav .hamburger:hover{
     right: 34px;
     bottom: 96px;
     color: var(--lightColor);
-    
+    z-index: 6;
     max-width: 27vw;
 }
 
