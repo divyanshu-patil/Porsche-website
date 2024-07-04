@@ -10,6 +10,9 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/src/all';
 
+
+
+
 // creating scene
 const scene = new THREE.Scene();
 let debugObject = {};
@@ -149,6 +152,7 @@ rgbeLoader.load(
         gltfLoader.load(
             './assets/models/draco/gt3r 2/gt3r.gltf',
             (gltf) => {
+             
                 gltf.scene.renderOrder = 2;
                 scene.add(gltf.scene);           
                 
@@ -159,7 +163,7 @@ rgbeLoader.load(
                 modelpositionfolder.add(gltf.scene.position, 'y', -5, 10, 0.001).name('obj pos y')
                 modelpositionfolder.add(gltf.scene.position, 'z', -20, 20, 0.001).name('obj pos z')
                 
-                
+          
                 
                 // playing animation - if any
                 if (gltf.animations.length) {
@@ -168,8 +172,7 @@ rgbeLoader.load(
                     action.play();
                 }
                 updateAllMaterials();
-              
-          
+                
             }
         );
 
@@ -198,6 +201,8 @@ rgbeLoader.load(
         };
 
 
+        
+      
         // adding camera
         const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height);
         // adding position              B
@@ -206,6 +211,48 @@ rgbeLoader.load(
         scene.add(camera);
 
 
+        
+gsap.registerPlugin(ScrollTrigger);
+
+// Define camera positions
+const cameraPositions = [
+    // giving positions of camera as object
+    { x: -0.014, y: 1.32, z: -6.00 },
+    { x: 2.7023127197580825, y:1.7049162056063678, z: 5.02001983140576 },
+    { x: 0.00042699999302532474, y:12.327319, z:0.000797999986965361 },
+];
+
+
+// Function to update the camera position
+const updateCamera = (index) => {
+    const position = cameraPositions[index];
+    if (position) {
+            gsap.to(camera.position, {
+                x: position.x,
+                y: position.y,
+                z: position.z,
+                duration: 1,
+                onUpdate: () => {
+                    camera.updateProjectionMatrix();
+                    controls.update(15);   
+                 }
+             });
+        }
+    
+};
+
+// Initialize ScrollTrigger
+cameraPositions.forEach((obj, index) => {
+    ScrollTrigger.create({
+        trigger: `.page-${index + 1}`,
+        start: 'top center',
+        markers: true ,
+        onEnter: () => updateCamera(index),
+        onEnterBack: () => updateCamera(index),
+    });
+});
+
+ 
         // adding camera controls to the debug UI
         CameraPositionFolder.add(camera.position, 'x', -5, 10, 0.001).name('camera pos x');
         CameraPositionFolder.add(camera.position, 'y', -5, 10, 0.001).name('camera pos y');

@@ -308,8 +308,9 @@ nav .hamburger:hover{
 }
 .page-3 .top-left{
     position: absolute;
-    top: 20%;
-    left: 10%;
+    top: 19%;
+    left: 12%;
+    z-index: 3;
 }
 .page-3  h3{
     font-size: 7vw;
@@ -331,9 +332,9 @@ nav .hamburger:hover{
 .page-3 .bottom-right{
     position: absolute;
     bottom: 15%;
-    right: 10%;
+    right: 16%;
     width: 25vw;
-    max-width: 300px;
+    max-width: 440px;
 
 }
 .page-3 .bottom-right .wrapper{
@@ -341,15 +342,22 @@ nav .hamburger:hover{
     flex-direction: column;
     width: 100%;
     
+   
+    
     
 }
+
+.third-sidetext{
+    z-index: 3;
+}
+
 .page-3 .bottom-right h3{
     font-size: 5vw;
     
 }
 @media only screen and (min-width: 960px){
     .page-3 .bottom-right h3{
-        font-size: 60px;
+        font-size: 6rem;
     }
 }
 .page-3  .end{
