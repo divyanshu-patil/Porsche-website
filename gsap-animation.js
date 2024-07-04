@@ -2,33 +2,82 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/src/all';
 
-document.querySelectorAll('.cards').forEach(card => {
-    let card_logo = card.querySelector('.cards-logo');
-    let car_name = card.querySelector('.car-name');
-    let container = card.querySelector('.hover-after');
-  
 
-    container.addEventListener('mouseenter', (events) => {
- 
-        gsap.to([card_logo, car_name], {
-            x: 30,
-            opacity: 1,
-            duration: 0.5
-        });
-    });
+// cards animation
 
-    container.addEventListener('mouseleave', () => {
-        gsap.to([card_logo, car_name], {
-            x: -20,
-            opacity: 0,
-            duration: 0.5
-        });
-    });
-});
+{
 
+let duration = 0.3
+let cards=document.querySelectorAll(".page-4 .cards ");
+cards.forEach((card)=>{
+  card.addEventListener('mouseenter',()=>{
+  //   cards.forEach(c => {
+  //     if (c !== card) {
+  //         c.classList.add('blurred');
+  //         // body.classList.add('blurred');
+  //     }
+  // });
+
+
+
+    let txt = card.querySelector('.page-4 .cards .txt')
+    gsap.to(card,{
+      scale:1.075,
+      duration:duration,
+      ease:"power2.inOut"
+    })
+    gsap.to(txt,{
+      bottom:"10%",
+      left:"10%",
+      duration:duration,
+      ease:"power2.inOut"
+
+    })
+    let gradient = card.querySelector('.page-4 .cards .gradient')
+    gsap.to(gradient,{
+      top:"0%",
+      delay:0.02,
+      duration:duration,
+      ease:"power2.inOut"
+
+    })
+  })
+
+  card.addEventListener('mouseleave',()=>{
+  //   cards.forEach(c => {
+  //     if (c !== card) {
+  //         c.classList.remove('blurred');
+  //         // body.classList.add('blurred');
+          
+  //     }
+  // });
+
+  gsap.to(card,{
+    scale:1,
+    duration:duration,
+    ease:"power2.inOut"
+  })
+
+    let txt = card.querySelector('.page-4 .cards .txt')
+    gsap.to(txt,{
+      bottom:"-20%",
+      left:"30%",
+      duration:duration,
+      ease:"power2.inOut"
+
+    })
+    let gradient = card.querySelector('.page-4 .cards .gradient')
+    gsap.to(gradient,{
+      top:"100%",
+      duration:duration,
+      ease:"power2.inOut"
+
+    })
+  })
+})
+}
 
 // scroll snapping 
-
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -58,7 +107,7 @@ function goToSection(i) {
 }
 
 panels.forEach((panel, i) => {
-    console.log(panel);
+  
   ScrollTrigger.create({
     trigger: panel,
     start: "top bottom",
