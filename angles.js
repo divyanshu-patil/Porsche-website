@@ -110,10 +110,7 @@ rgbeLoader.load(
         // adding mesh
         let mixer = null;
         const dracoLoader = new DRACOLoader()
-<<<<<<< HEAD
         // loader.setDecoderPath( '' );
-=======
->>>>>>> angles
         const gltfLoader = new GLTFLoader();
         gltfLoader.setDRACOLoader(dracoLoader)
         gltfLoader.load(
