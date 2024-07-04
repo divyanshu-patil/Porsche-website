@@ -1,11 +1,98 @@
+@font-face {
+    font-family: porsche;
+    src: url('./assets/fonts/Porsche-font.ttf');
+}
+@font-face {
+    font-family: OpenSansItalic;
+    src: url('./assets/fonts/open-sans-italic/OpenSans-Italic.ttf');
+}
+@font-face {
+    font-family: Oleto;
+    src: url('./assets/fonts/Oleto\ DEMO.ttf');
+}
+@font-face {
+    font-family: OpenSans;
+    src: url('./assets/fonts/open-sans-italic/OpenSans-Regular.ttf');
+}
+@font-face {
+    font-family: OpenSansBold;
+    src: url('assets/fonts/open-sans-italic/OpenSans-Bold.ttf');
+}
+@font-face {
+    font-family: OpenSansExtraBold;
+    src: url('assets/fonts/open-sans-italic/OpenSans-ExtraBold.ttf');
+}
+@font-face {
+    font-family: OpenSansExtraBoldItalic;
+    src: url('assets/fonts/open-sans-italic/OpenSans-ExtraBoldItalic.ttf');
+}
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: OpenSans,Arial, Helvetica, sans-serif;
 }
 
 html, body{
     height: 100%;
     width: 100%;
+    background-color: var(--darkColor);
 }
 
+:root{
+     /* color......... */
+     --lightColor: rgb(218, 218, 218);
+     --lightColorHover:rgb(153, 153, 153);
+     --darkColor:rgb(15, 15, 15);
+     --hoverColor:rgb(48, 48, 48);
+     --gray-color:#a3a3a3;
+     --yellow-color:#CB9D58;
+     --yellow-Dark-color:#c57906;
+
+     
+    /* fonts.......... */
+    --logo-font : porsche;
+    --italic-font: OpenSansItalic;
+    --inter: inter;
+    --hollow-font:Oleto;
+    --base-font: OpenSans;
+    --bold-italic-font:OpenSansExtraBoldItalic;
+
+}
+canvas{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    background-color: transparent;
+    z-index: 2;
+}
+
+.name{
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+}
+.name h1{
+    /* color: var(--yellow-color); */
+    font-family: var(--logo-font);
+    font-size: 10vw;
+    font-weight: 100;
+    letter-spacing: 5px;
+    font-style: italic ;
+
+    background-image: linear-gradient(white ,var(--yellow-Dark-color) 60%);
+    background-clip: text;
+    color: transparent;
+
+    /* for safari */
+    background: -webkit-linear-gradient(white ,var(--yellow-Dark-color) 60%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+}
