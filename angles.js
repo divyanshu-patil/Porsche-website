@@ -48,7 +48,7 @@ const CameraPositionFolder = CameraFolder.addFolder('Camera Position')
 // creating lights
 const ambientLight = new THREE.AmbientLight(0xffffff, 0);
 const directionalLight = new THREE.DirectionalLight(0xffffff, 0.32);
-directionalLight.position.set(-1.39, 5, -2.01);
+directionalLight.position.set(0,2.64,0);
 // adding intensity              B
 directionalLight.intensity = 0.82;
 directionalLight.castShadow = true;
@@ -62,7 +62,7 @@ directionalLight.shadow.mapSize.height = 1024;
 const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
 
 const directionalLight2 = new THREE.DirectionalLight(0xffffff);
-directionalLight2.position.set(-3.76, 4.65, -1.38);
+directionalLight2.position.set(5,5,1.38);
 // adding intensity              B
 directionalLight2.intensity = 3
 directionalLight2.castShadow = true;
@@ -149,9 +149,8 @@ rgbeLoader.load(
         gltfLoader.load(
             './assets/models/draco/gt3r 2/gt3r.gltf',
             (gltf) => {
-                scene.add(gltf.scene);
-                gltf.scene.position.set(0, -1.237, -3.035)
-                gltf.scene.rotation.y = 3.138 
+                gltf.scene.renderOrder = 2;
+                scene.add(gltf.scene);           
                 
                 modelRotaionfolder.add(gltf.scene.rotation, 'x', Math.PI / 2, Math.PI * 3, 0.001).name('ObjRotateX');
                 modelRotaionfolder.add(gltf.scene.rotation, 'y', Math.PI / 2, Math.PI * 2, 0.001).name('ObjRotateY');
@@ -159,6 +158,7 @@ rgbeLoader.load(
                 modelpositionfolder.add(gltf.scene.position, 'x', -20, 10, 0.001).name('obj pos x')
                 modelpositionfolder.add(gltf.scene.position, 'y', -5, 10, 0.001).name('obj pos y')
                 modelpositionfolder.add(gltf.scene.position, 'z', -20, 20, 0.001).name('obj pos z')
+                
                 
                 
                 // playing animation - if any
@@ -201,9 +201,10 @@ rgbeLoader.load(
         // adding camera
         const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height);
         // adding position              B
-        camera.position.set(0.00802670873489235, 0.2695931369391041,3.525174558405584);
+        camera.position.set(-0.014562269457166203, 1.3209874023720694,-6.004923732399126);
         camera.zoom = 2
         scene.add(camera);
+
 
         // adding camera controls to the debug UI
         CameraPositionFolder.add(camera.position, 'x', -5, 10, 0.001).name('camera pos x');
@@ -221,7 +222,7 @@ rgbeLoader.load(
      const controls = new OrbitControls(camera, canvas);
      controls.enableDamping = true;
 
-    //  controls.target.y = scene.position.y + 0.5
+     controls.target.y = scene.position.y + 1
 
      controls.addEventListener('change', () => {
         console.log(`Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`);
@@ -233,7 +234,8 @@ rgbeLoader.load(
             canvas: canvas,
             // multi sampling for avoiding stair-like effect when zoom
             // you can do antialias only here no other option
-            antialias: true
+            antialias: true,
+            alpha:true
         });
 
         // setting renderer size
