@@ -338,57 +338,53 @@ nav .hamburger:hover{
 
 
 .page-4 {
-   position: relative;
-   backdrop-filter: blur(5px);
-   background-image: linear-gradient(-235deg,rgba(255, 255, 255, 0),rgba(0, 0, 0, 0.281));
-   /* background-image: radial-gradient(rgba(255, 255, 255, 0) 10%,rgba(0, 0, 0, 0.281)); */
-   background-size: 20px 20px;
+    position: relative;
+    backdrop-filter: blur(5px);
+    background-image: linear-gradient(-235deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.281));
+    background-size: 20px;
 }
 
 .slider-wrapper {
-    width: 90%;
+    width: 100%;
+    height: 60%;
     position: absolute;
     top: 27%;
-    left: 5%;
 }
 
 .page-4 .holder {
     width: 100%;
-    height: 70%;
+    height: 100%;
     display: grid;
     align-items: center;
-    grid-template-columns: repeat(5, auto); 
+    grid-template-columns: repeat(5, 330px);
     grid-gap: 20px;
-    padding: 10px;
     overflow-x: auto;
-    scrollbar-color: #888 #f1f1f1; 
-    scrollbar-width: thin;
-    border: none; 
+    overflow-y: hidden; /* Ensure no vertical overflow */
+    scrollbar-width: none;
+    padding: 4vw;
 }
 
-.card-container {
-    position: relative;
+.page-4 .holder::-webkit-scrollbar {
+    display: none;
 }
 
 .slider-wrapper .cards {
     position: relative;
-    transition: all 0.5s ease-in-out;
-    border-radius: 35px;
-
     
+    width: 320px;
+    border-radius: 20px;
+    overflow: hidden;
 }
 
-.slider-wrapper .cards:hover{
-    transform: translateY(-30px);
-    transition: all 0.2s ease-in-out;
+.slider-wrapper .cards:hover {
+    transform: scale(1.190);
+    transition: all 0.3s;
 }
 
-.page-4 .holder:hover > :not(:hover){
-    filter: blur(5px);
+.blurred {
+    filter: blur(3px);
     opacity: 0.5;
-    transform: translateY(5px);
-}
-
+  }
 
 .hover-after {
     position: absolute;
@@ -400,8 +396,7 @@ nav .hamburger:hover{
     height: 100%;
     width: 100%;
     object-fit: cover;
-    z-index: -1;
-    border-radius: 35px;
+    z-index: 5;
 }
 
 .cover-logo-text {
@@ -422,14 +417,12 @@ nav .hamburger:hover{
 
 .cover-logo-text .car-name {
     font-family: var(--base-font);
-    color:  #CB9D58;
+    color: #CB9D58;
     font-weight: 900;
     font-size: 2rem;
     opacity: 0;
     pointer-events: none;
 }
-
-
 
 .hover-after:hover {
     background-image: linear-gradient(transparent, #000000);
