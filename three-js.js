@@ -19,6 +19,9 @@
 // smooth and flatter surfaces may have shadow acne for removing that tweak the light shadow's bias and normalBias to fix it
 // bias helps flat surfaces
 // normal bias helps rounded surfaces
+
+
+import { addGUI } from './carShowcasegui';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import * as GUI from 'lil-gui';
