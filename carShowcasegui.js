@@ -1,5 +1,5 @@
 import GUI from 'lil-gui'
-let addGUI = (THREE,camera,scene,lights)=>{
+let addGUI = (THREE,camera,scene,lights,points)=>{
     const gui = new GUI();
     
     const cameraFolder= gui.addFolder('camera controls')
@@ -42,6 +42,43 @@ lights.forEach(light => {
     sceneFolder.add(scene.rotation,'y',-Math.PI,Math.PI,0.01)
     sceneFolder.add(scene.rotation,'z',-Math.PI,Math.PI,0.01)
 
+    const point0Folder = gui.addFolder("point0");
+    const point1Folder = gui.addFolder("point1");
+    const point2Folder = gui.addFolder("point2");
+    const point3Folder = gui.addFolder("point3");
+    const point4Folder = gui.addFolder("point4");
+    point0Folder.add(points[0].position, "x", -5, 5, 0.00001);
+    point0Folder.add(points[0].position, "y", -5, 5, 0.00001);
+    point0Folder.add(points[0].position, "z", -5, 5, 0.00001);
+  
+    point1Folder.add(points[1].position, "x", -5, 5, 0.00001);
+    point1Folder.add(points[1].position, "y", -5, 5, 0.00001);
+    point1Folder.add(points[1].position, "z", -5, 5, 0.00001);
+  
+    point2Folder.add(points[2].position, "x", -5, 5, 0.00001);
+    point2Folder.add(points[2].position, "y", -5, 5, 0.00001);
+    point2Folder.add(points[2].position, "z", -5, 5, 0.00001);
+  
+    
+  
+    
+    // show/hide lil.gui on keypress h
+    gui.domElement.style.display = 'none';
+    // Function to hide or show the GUI
+    function toggleGUI() {
+        if (gui.domElement.style.display === 'none') {
+            gui.domElement.style.display = 'block';
+        } else {
+            gui.domElement.style.display = 'none';
+        }
+    }
+
+    // Event listener for keypress
+    document.addEventListener('keypress', function(event) {
+        if (event.key === 'h' || event.key === 'H') {
+            toggleGUI();
+        }
+    });
 
     
 

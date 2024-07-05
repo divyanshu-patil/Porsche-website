@@ -1,0 +1,215 @@
+import gsap from 'gsap';
+import CustomEase from 'gsap/CustomEase';
+
+
+gsap.registerPlugin(CustomEase) 
+let addGsapAnimation =(camera,controls,THREE,points,info,name)=>{
+  
+  setTimeout(()=>{
+    controls.addEventListener('change',()=>{
+      gsap.to(name,{
+        fontSize:"3vw",
+        top:"5%",
+        duration:duration,
+        ease:ease
+      })
+    },1000)
+  })
+
+let duration =3;
+let ease =CustomEase.create("custom", "M0,0 C0.083,0.294 0.234,1.162 0.563,1.163 0.816,1.163 0.819,1 1,1 ");
+let rapidease =CustomEase.create("custom", "M0,0 C0.083,0.294 0.206,1.102 0.536,1.103 0.769,1.103 0.556,0.923 1,1 ");
+let defaultPosition =  new THREE.Vector3(camera.position.x,camera.position.y,camera.position.z)
+let defaultTarget = new THREE.Vector3(controls.target.x,controls.target.y,controls.target.x)
+let isAnimating = false;
+let title = info.querySelector('.title');
+let description = info.querySelector('.description');
+
+document.body.classList.add('disabled-pointer-events');
+
+
+gsap.from(name,{
+  y:100,
+  opacity:0,
+  duration:1,
+  ease:"back.out",  
+})
+
+
+
+
+points.forEach(point => {
+  point.element.addEventListener("click", () => {
+    
+    if (isAnimating) return;
+    isAnimating = true;
+    document.body.classList.add('disabled-pointer-events');
+    // re-enable pointer events
+    gsap.to(camera.position, {
+      x:  point.cameraPosition.x,
+      y:  point.cameraPosition.y,
+      z:  point.cameraPosition.z,
+      ease: ease,
+      duration: duration,
+      onComplete:()=>{
+        title.innerText=point.title;
+        description.innerText=point.description;
+        isAnimating = false;
+        document.body.classList.remove('disabled-pointer-events'); 
+        document.addEventListener('click',()=>{
+          gsap.to(info,{
+            opacity:0,
+            duration:0.1,
+            ease:ease,
+          })
+        })
+        info.style.left=point.infoPosition.left;
+        info.style.top=point.infoPosition.top;
+        console.log(info)
+        gsap.to(info,{
+          opacity:1,
+          duration:0.5,
+          ease:ease,
+          onComplete:()=>{
+           
+            document.addEventListener('click',()=>{
+              gsap.to(info,{
+                opacity:0,
+                duration:1,
+                ease:ease,
+              })
+            })
+           
+          }
+        })
+      }
+    });
+
+    gsap.to(camera,{
+      zoom:point.cameraZoom,
+      ease: ease,
+      duration: duration,
+    });
+
+    gsap.to(controls.target,{
+      x:  point.controlsTarget.x,
+      y:  point.controlsTarget.y,
+      z:  point.controlsTarget.z,
+      ease: rapidease,
+      duration: duration,
+    })
+  });
+
+  
+});
+  // document.querySelector(".point1").addEventListener("click", () => {
+  //   gsap.to(camera.position, {
+  //     x: -2.7867899148204773,
+  //     y:  1.3251701539405176,
+  //     z: -4.380688373887278,
+  //     ease: ease,
+  //     duration: duration,
+  //   });
+  //   gsap.to(camera,{
+  //     zoom:2,
+  //     ease: ease,
+  //     duration: duration,
+  //   })
+  // });
+  
+  // document.querySelector(".point2").addEventListener("click", () => {
+  //   gsap.to(camera.position, {
+  //     x:   -0.11221879758882979,
+  //     y:1.4713641265658624,
+  //     z: -2.6958706807433135,
+  //     ease: rapidease,
+  //     duration: duration,
+  //     // onComplete:()=>{
+  //     //   setTimeout(() => {
+  //     //     controls.addEventListener('change',()=>{
+            
+  //     //       gsap.to(camera.position,{
+  //     //         x:defaultPosition.x,
+  //     //         y:defaultPosition.y,
+  //     //         z:defaultPosition.z,
+  //     //         duration:duration,
+  //     //         ease:ease,
+  //     //         onComplete:()=>{
+  //     //           controls.removeEventListener('change')
+  //     //         }
+  //     //       })
+  //     //       gsap.to(camera,{
+  //     //         zoom:2,
+  //     //         ease:ease,
+  //     //         duration:duration,
+  //     //       })
+  //     //     })
+  //     //   }, 100);
+  //     // }
+  //   });
+  //   gsap.to(controls.target,{
+  //     x: -0.015634134907712538,
+  //     y:0.2902402707101544,
+  //     z:-0.07058572870483645,
+  //     ease: rapidease,
+  //     duration: duration,
+  //   })
+  //   gsap.to(camera,{
+  //     zoom:0.566,
+  //     ease: rapidease,
+  //     duration: duration,
+      
+  //   })
+
+    
+    
+  //   })
+
+   document.querySelector(".cross").addEventListener('click',()=>{
+    
+    gsap.to(camera.position,{
+      x:defaultPosition.x,
+      y:defaultPosition.y,
+      z:defaultPosition.z,
+      duration:duration,
+      ease:ease,
+      onComplete:()=>{
+        gsap.to(name,{
+          fontSize:"10vw",
+          top:"10%",
+          duration:duration,
+          // delay:-1,
+          ease:ease
+        })
+      }
+    })
+    gsap.to(camera,{
+      zoom:2,
+      ease:ease,
+      duration:duration,
+    })
+    gsap.to(controls.target,{
+      x:defaultTarget.x,
+      y:defaultTarget.y,
+      z:defaultTarget.z,
+      duration:duration,
+      ease:ease,
+    })
+    
+  }); 
+  
+  
+}
+
+let pointsVisibleAnimation=(points)=>{
+    setTimeout(()=>{
+      document.body.classList.remove('disabled-pointer-events');
+      points.forEach((point)=>{
+        point.element.classList.add('visible')
+      })
+     
+    },1000)
+}
+
+
+export {addGsapAnimation,pointsVisibleAnimation}
