@@ -39,7 +39,6 @@ cards.forEach((card)=>{
       delay:0.02,
       duration:duration,
       ease:"power2.inOut"
-
     })
   })
 
@@ -71,7 +70,6 @@ cards.forEach((card)=>{
       top:"100%",
       duration:duration,
       ease:"power2.inOut"
-
     })
   })
 })
@@ -127,16 +125,16 @@ ScrollTrigger.create({
 
 // scroll based animation
 
- const t1 = gsap.timeline({
-  scrollTrigger:{
-    trigger: ".page-1",
-    markers: true,
-    start: "top center",
-    end: "bottom bottom",
-    scrub: true
-  }
-})
-
+//  const t1 = gsap.timeline({
+//   scrollTrigger:{
+//     trigger: ".page-1",
+//     markers: true,
+//     start: "top center",
+//     end: "bottom bottom",
+//     scrub: 2
+//   }
+// })
+// tl.set(document.body, {overflow: "hidden"})
 
 function Model_animation() {
   t1.to(gltf.scene.position,{
@@ -153,75 +151,109 @@ function Model_animation() {
 // animation on all the pages...
 
 let tl = gsap.timeline()
-
+let duration=1;
+let ease='power2.out';
 function page1animation() {
   
+// document.body.classList.add('disabled-pointer-events');
 
 
-tl.from("nav .logo , nav .hamburger",{
-  y: 30,
+tl.from("nav",{
+  top:"-100%",
   opacity: 0,
-  duration:1.2,
-  delay:0.4,
-  stagger:0.2
-})
+  duration:duration,
+  ease:ease
+},'fixed')
 
 tl.from(".page-1 .main-heading h1",{
   y: 40,
   opacity:0,
-  duration:1,
-  
- 
+  duration:duration,
+  ease:ease,
 },"-=0.8")
 
-tl.from(".watermark .wrapper",{
-  x:30,
+tl.from(".page-1 .sub-heading ",{
+  y: 40,
   opacity:0,
-  duration:1,
- 
-})
+  scale:0.5,
+  duration:duration,
+  ease:ease,
+
+},"-=0.8")
+
+tl.from(".watermark ",{
+  right:'-90%',
+  opacity:0,
+  duration:duration,
+  ease:ease,
+},'fixed')
 
 }
 
 page1animation();
+function page2animation(){
+  let delay=0.5
+  gsap.from('.page-2 .trans-text ',{
+    left:'-100%',
+    duration:duration,
+    ease:'power2.out',
+    delay:delay,
+    scrollTrigger:{
+      trigger:".page-2 ",
+      scroller:"body",
+      start:'top 10px',
+      // end:'top 20%',
 
+      // markers:true,
+      // scrub:true
+    }
+  })
+  gsap.from('.page2-discription-part',{
+    right:'-100%',
+    opacity:0,
+    duration:duration,
+    ease:'power2.out',
+    delay:delay,
+    scrollTrigger:{
+      trigger:".page-2 ",
+      scroller:"body",
+      start:'top 10px',
+      // end:'top 20%',
+
+      // markers:true,
+      // scrub:true
+    }
+  })
+}
+page2animation()
 
 function page3animation() {
-  
-
-gsap.from(".top-left .gradient-text-70p,.top-left p",{
-  
-  x:-30,
+  let delay=0.5
+gsap.from('.page-3 .top-left',{
+  left:'-100%',
   opacity:0,
-  delay:0.3,
-  duration:1,
+  duration:duration,
+  delay:delay,
   scrollTrigger:{
-    trigger:".top-left",
-    scroller:"body",
-    start:"top 30%",
-    end:"top 20%",
-    scrub:3
+    trigger:'.page-3',
+    scroller:'body',
+    start:'top 10px',
+    // markers:true
   }
-  
 })
-
-gsap.from(".bottom-right .third-sidetext",{
-  y:-40,
+gsap.from('.page-3 .bottom-right ',{
+  right:'-100%',
   opacity:0,
-  duration:1,
-  delay:0.8,
-  stagger:0.5,
+  duration:duration,
+  delay:delay,
+  // stagger:0.5,
   scrollTrigger:{
-    trigger:".bottom-right",
-    scroller:"body",
-    start:"top 80%%",
-    end:"top 70%",
-    scrub:3
+    trigger:'.page-3',
+    scroller:'body',
+    start:'top 10px',
+    // markers:true
   }
-  
 })
 
 }
-
-
 page3animation();

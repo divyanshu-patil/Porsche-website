@@ -48,6 +48,7 @@ html, body{
 
 .disabled-pointer-events {
     pointer-events: none;
+    overflow: hidden;
   }
 
 canvas{
@@ -122,6 +123,7 @@ canvas{
     overflow: visible;
     background-color: rgba(153, 153, 153, 0.247);
     border: 1px solid rgba(165, 165, 165, 0.822);
+    cursor: pointer;
 
     border-radius: 50%;
     transition: all 0.3s;
@@ -130,8 +132,8 @@ canvas{
 .cross:hover{
     background-color: rgba(153, 153, 153, 0.617);
     transition: all 0.3s;
-
 }
+
 .point .label{
     background-color: rgba(153, 153, 153, 0.247);
     width: 40px;
