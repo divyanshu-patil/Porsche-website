@@ -1,4 +1,5 @@
-import * as THREE from 'three'
+import * as THREE from 'three';
+
 let GT3rs={
     url:'./assets/models/draco/gt3rs/gt3rs.gltf',
     name:'GT3rs',
@@ -73,7 +74,7 @@ let Spyder918={
   ]
 }
 
-let GT3r2={
+let GT3r={
     url:'./assets/models/draco/gt3r 2/gt3r.gltf',
     name:'GT3r',
     points : [
@@ -185,37 +186,67 @@ const Cayman718={
   ]
 }
 
-
-let car = "none"
-  let cards = document.querySelectorAll('.cards')
+let car ;
+let cards = document.querySelectorAll('.cards')
+  console.log(cards)
   cards.forEach((card)=>{
     card.addEventListener('click',()=>{
       console.log(card.id);
       switch(card.id){
         case 'gt3rs':
-          car = GT3rs
+          car = encodeURIComponent('GT3rs')
           break;
         case '718-cayman':
-          car = Cayman718
+          car = encodeURIComponent('Cayman718')
           break;
         case '918-spyder':
-          car = Spyder918;
+          car = encodeURIComponent('Spyder918');
           break;
         case 'gtr2':
-          car = GT3r2
+          car = encodeURIComponent('GT3r2')
           break;
         case 'turbo-s':
-          car = TurboS
+          car = encodeURIComponent('TurboS')
           break;
       }
-      window.location.href = 'carshowcase.html';
+
+        window.location.href = `carshowcase.html?car=${car}`
     })
   })
 
 
-let cardData=()=>{
-  
 
+
+  const cars=[
+    {
+      name:'GT3rs',
+      obj:GT3rs
+    },
+    {
+      name:'Spyder918',
+      obj:Spyder918
+    },
+    {
+      name:'GT3r',
+      obj:GT3r
+    },
+    {
+      name:'TurboS',
+      obj:TurboS
+    },
+    {
+      name:'Cayman718',
+      obj:Cayman718
+    },
+  ]
+
+let cardData=(carname)=>{
+  let car;
+  for (const c of cars) {
+    if(c.name===carname){
+      car=c.obj
+    }
+  }
    let Data={
     url: car.url,
     name: car.name,

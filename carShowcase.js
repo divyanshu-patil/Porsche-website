@@ -9,12 +9,15 @@ import { cardData } from "./interactions.js";
 
 console.log("three-js", THREE);
 
-const Data = cardData();
+var urlParams = new URLSearchParams(window.location.search);
+var encodedCar = urlParams.get('car');
+console.log(encodedCar)
+const Data = cardData(encodedCar);
 
 const url =Data.url;
 const name = Data.name
 const points=Data.points
-
+console.log(Data)
 let carName = document.querySelector(".name h1");
 document.title = name
 carName.innerHTML = name;
