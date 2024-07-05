@@ -102,68 +102,8 @@ points.forEach(point => {
 
   
 });
-  // document.querySelector(".point1").addEventListener("click", () => {
-  //   gsap.to(camera.position, {
-  //     x: -2.7867899148204773,
-  //     y:  1.3251701539405176,
-  //     z: -4.380688373887278,
-  //     ease: ease,
-  //     duration: duration,
-  //   });
-  //   gsap.to(camera,{
-  //     zoom:2,
-  //     ease: ease,
-  //     duration: duration,
-  //   })
-  // });
-  
-  // document.querySelector(".point2").addEventListener("click", () => {
-  //   gsap.to(camera.position, {
-  //     x:   -0.11221879758882979,
-  //     y:1.4713641265658624,
-  //     z: -2.6958706807433135,
-  //     ease: rapidease,
-  //     duration: duration,
-  //     // onComplete:()=>{
-  //     //   setTimeout(() => {
-  //     //     controls.addEventListener('change',()=>{
-            
-  //     //       gsap.to(camera.position,{
-  //     //         x:defaultPosition.x,
-  //     //         y:defaultPosition.y,
-  //     //         z:defaultPosition.z,
-  //     //         duration:duration,
-  //     //         ease:ease,
-  //     //         onComplete:()=>{
-  //     //           controls.removeEventListener('change')
-  //     //         }
-  //     //       })
-  //     //       gsap.to(camera,{
-  //     //         zoom:2,
-  //     //         ease:ease,
-  //     //         duration:duration,
-  //     //       })
-  //     //     })
-  //     //   }, 100);
-  //     // }
-  //   });
-  //   gsap.to(controls.target,{
-  //     x: -0.015634134907712538,
-  //     y:0.2902402707101544,
-  //     z:-0.07058572870483645,
-  //     ease: rapidease,
-  //     duration: duration,
-  //   })
-  //   gsap.to(camera,{
-  //     zoom:0.566,
-  //     ease: rapidease,
-  //     duration: duration,
-      
-  //   })
 
-    
-    
-  //   })
+
 
    document.querySelector(".cross").addEventListener('click',()=>{
     

@@ -225,6 +225,24 @@
 
     
     <!-- <script type="module" src="three-js.js"></script> -->
+
+    <script id="vertexshader" type="vertex">
+        varying vec2 vUv;
+        void main(){
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+    </script>
+
+    <script id="fragmentshader" type="fragment">
+        uniform sampler2D baseTexture;
+        uniform sampler2D bloomTexture;
+        varying vec2 vUv;
+        void main(){
+            gl_FragColor = (texture2D(baseTexture, vUv) + vec4(1.0) *  texture2D(bloomTexture, vUv)); 
+        }
+    </script>
+
      <script type ="module" src="interactions.js"></script>
      <script src="angles.js" type="module"></script>
     <script type ="module" src="gsap-animation.js"></script>

@@ -6,9 +6,16 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js'; // for compressed version
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js'
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js'
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
+import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/src/all';
+
+
 
 // making variable to store model
 let Model;
@@ -79,7 +86,7 @@ directionalLight2.shadow.mapSize.height = 1024;
 const directionalLightHelper2 = new THREE.DirectionalLightHelper(directionalLight2);
 
 // all helpers are updated in animate loop functions
-scene.add(ambientLight, directionalLight, directionalLightHelper, directionalLight2, directionalLightHelper2);
+scene.add(ambientLight, directionalLight, directionalLight2);
 
 // adding light controls to the debug UI
 // 1. directional light to directionLightfolder
@@ -131,6 +138,15 @@ rgbeLoader.load(
             });
         };
 
+        const params = {
+            Tail_light: false,
+            ring: false,
+            Object_34 : false,
+            Object_42 : false,
+            bloom_1 : false,
+            bloom_3: false
+        }
+
         environmentMap.mapping = THREE.EquirectangularReflectionMapping;
         scene.environment = environmentMap;
         // scene.background = environmentMap;
@@ -152,7 +168,7 @@ rgbeLoader.load(
         const gltfLoader = new GLTFLoader();
         gltfLoader.setDRACOLoader(dracoLoader)
         gltfLoader.load(
-            './assets/models/draco/gt3r 2/gt3r.gltf',
+            './assets/models/New Folder(4)/gt3r.gltf',
             (gltf) => {
                 Model = gltf.scene
                 scene.add(Model);           
@@ -174,6 +190,34 @@ rgbeLoader.load(
                 }
                 updateAllMaterials();
                 
+                // adding models to gui
+                const partsfolder = gui.addFolder('Parts');
+                partsfolder.add(params, 'Tail_light').onChange(function () {
+                    
+                    Model.getObjectByName('Tail_light').layers.toggle(BLOOM_SCENE);
+                    console.log(bloomLayer);
+                })
+                partsfolder.add(params, 'ring').onChange(function () {
+                    
+                    Model.getObjectByName('ring').layers.toggle(BLOOM_SCENE);
+                })
+                partsfolder.add(params, 'Object_34').onChange(function () {
+                    
+                    Model.getObjectByName('Object_34').layers.toggle(BLOOM_SCENE);
+                })
+                partsfolder.add(params, 'Object_42').onChange(function () {
+                    
+                    Model.getObjectByName('Object_42').layers.toggle(BLOOM_SCENE);
+                })
+                partsfolder.add(params, 'bloom_1').onChange(function () {
+                    
+                    Model.getObjectByName('bloom_1').layers.toggle(BLOOM_SCENE);
+                })
+                partsfolder.add(params, 'bloom_3').onChange(function () {
+                    
+                    Model.getObjectByName('bloom_3').layers.toggle(BLOOM_SCENE);
+                })
+
             }
         );
 
@@ -241,28 +285,32 @@ const updateCamera = (index) => {
     const rotation = modelRotations[index];
 
     if (position && rotation) {
-        gsap.timeline()
-            .to(camera.position, {
-                x: position.x,
-                y: position.y,
-                z: position.z,
-                duration: 2,
-                onUpdate: () => {
-                    camera.updateProjectionMatrix();
-                    controls.update();
-                }
-            }, 0)
-            .to(Model.rotation, {
+        const timeline = gsap.timeline({
+            onUpdate: () => {
+                camera.updateProjectionMatrix();
+                controls.update();
+            }
+        });
+
+        timeline.to(camera.position, {
+            x: position.x,
+            y: position.y,
+            z: position.z,
+            duration: 2,
+            ease: 'power2.inOut',
+        }, 0);
+
+        if (Model) {
+            timeline.to(Model.rotation, {
                 x: rotation.x,
                 y: rotation.y,
                 z: rotation.z,
                 duration: 2,
                 ease: 'power2.inOut',
-                
-            }, 0); 
+            }, 0);
+        }
     }
 };
-
 // Initialize ScrollTrigger
 cameraPositions.forEach((obj, index) => {
     ScrollTrigger.create({
@@ -291,6 +339,8 @@ cameraPositions.forEach((obj, index) => {
      // adding orbit controls
      const controls = new OrbitControls(camera, canvas);
      controls.enableDamping = true;
+
+     controls.enabled = false;
 
      controls.target.y = scene.position.y + 1
 
@@ -331,6 +381,8 @@ cameraPositions.forEach((obj, index) => {
         // changing renderer tone mapping
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
 
+     
+
         // adding renderer tone mapping controls to the debug UI
         gui.add(renderer, 'toneMapping', {
             No: THREE.NoToneMapping,
@@ -341,9 +393,122 @@ cameraPositions.forEach((obj, index) => {
         });
         gui.add(renderer, 'toneMappingExposure', 0, 3, 0.0001);
 
-        // render
-        renderer.render(scene, camera);
 
+
+        // creating bloom
+
+
+        const renderScene = new RenderPass(scene, camera);
+        const composer = new EffectComposer(renderer)
+
+        // adding renderpass to composer
+        composer.addPass(renderScene)
+
+
+        // adding Bloom to composer
+
+        const bloomPass = new UnrealBloomPass(
+            new THREE.Vector2(sizes.width, sizes.height),
+            1.3,
+            0.1,
+            0.4
+        );
+
+        composer.addPass(bloomPass)
+        // CameraRotationFolder.add(bloomPass.intensity, 'z', -5, 10, 0.001).name('camera Rotate z');
+        gui.add(bloomPass, 'strength', 0, 500, 0.01).name('bloom i');
+        gui.add(bloomPass, 'radius', 0, 500, 0.01).name('bloom r');
+        gui.add(bloomPass, 'threshold', 0, 500, 0.01).name('bloom t');
+        composer.renderToScreen = false
+
+        // adding shader pass
+ 
+        const mixPass = new ShaderPass(
+            new THREE.ShaderMaterial(
+                {
+                    uniforms:{
+                        baseTexture:{value:null},
+                        bloomTexture:{value:composer.renderTarget2.texture}
+                    },
+                    vertexShader:document.getElementById('vertexshader').textContent,
+                    fragmentShader:document.getElementById('fragmentshader').textContent
+
+                }
+            ),'baseTexture'
+        )
+
+
+        // final composer
+
+        const finalComposer = new EffectComposer(renderer);
+        finalComposer.addPass(renderScene) 
+        finalComposer.addPass(mixPass)
+
+
+        // adding outputpass
+
+        const outputPass = new OutputPass()
+        finalComposer.addPass(outputPass)
+
+        //  adding bloom to selected part
+
+        const BLOOM_SCENE = 1;
+        const bloomLayer = new THREE.Layers();
+        bloomLayer.set(BLOOM_SCENE);
+
+        const darkMaterial = new THREE.MeshBasicMaterial({color:0x000000})
+        const materials = {} 
+
+
+        function nonBloomed(obj) {
+            if (obj.isMesh) {
+                if (obj.layers === undefined) {
+                    console.warn('Object without layers:', obj);
+                    obj.layers = new THREE.Layers();
+                }
+        
+                if (bloomLayer.test(obj.layers) === false) {
+                    materials[obj.uuid] = obj.material;
+                    obj.material = darkMaterial;
+                
+                }
+            }
+        }
+        
+        function restoreMaterial(obj) {
+            if (materials[obj.uuid]) {
+                obj.material = materials[obj.uuid];
+                delete materials[obj.uuid];
+            }
+        }
+        
+        // Traverse scene and assign default layers
+        scene.traverse((obj) => {
+            if (obj.layers === undefined) {
+                obj.layers = new THREE.Layers();
+            }
+        });
+        
+// creating raycaster
+        // const rayCaster = new THREE.Raycaster()
+        // const mouse = new THREE.Vector2();
+
+        // function onPointerDown(event) {
+        //     mouse.x = (event.clientX / sizes.width) * 2 - 1;
+        //     mouse.y = -(event.clientY / sizes.height) * 2 + 1;
+
+        //     rayCaster.setFromCamera(mouse, camera)
+        //     const intersects = rayCaster.intersectObjects(scene.children);
+        //     if (intersects.length > 0) {
+        //         const object = intersects[0].object;
+        //         object.layers.toggle(BLOOM_SCENE);
+                
+        //     }
+        // }
+
+        // window.addEventListener('pointerdown', onPointerDown)
+
+       
         window.addEventListener('resize', () => {
             sizes.width = window.innerWidth;
             sizes.height = window.innerHeight;
@@ -352,29 +517,41 @@ cameraPositions.forEach((obj, index) => {
             camera.updateProjectionMatrix();
             renderer.render(scene, camera);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            composer.setSize(sizes.width, sizes.height);
+            finalComposer.setSize(sizes.width, sizes.height);
         });
 
         let animate = () => {
             // update the helpers if their position changed
             directionalLightHelper.update();
             directionalLightHelper2.update();
-
+        
             // update animation
             if (mixer != null) {
                 mixer.update();
             }
-
+        
             controls.update();
-
+        
             // update camera
             camera.updateProjectionMatrix();
-    
-            // render scene
-            renderer.render(scene, camera);
+        
+            // traversing through scene
+            scene.traverse(nonBloomed);
+        
+            // calling effect composer to render the effect
+            composer.render();
+        
+            scene.traverse(restoreMaterial);
+        
+            finalComposer.render();
+        
             // play animation on next frame
             window.requestAnimationFrame(animate);
         };
+        
         animate();
+
 
         // show/hide lil.gui on keypress h
         gui.domElement.style.display = 'none';
