@@ -87,6 +87,7 @@ directionLightfolder.add(directionalLight.position, 'x', -5, 5, 0.01).name('dire
 directionLightfolder.add(directionalLight.position, 'y', -5, 5, 0.01).name('directional light y');
 directionLightfolder.add(directionalLight.position, 'z', -5, 5, 0.01).name('directional light z');
 directionLightfolder.add(directionalLight, 'intensity', 0, 10, 0.01).name('directional intensity');
+directionLightfolder.add(directionalLight, 'intensity', 0, 10, 0.01).name('directional intensity');
 
 // 2. spotlight to spotLightFolder
 directionLightfolder2.add(directionalLight2.position, 'x', -5, 5, 0.01).name('spotlight x');
