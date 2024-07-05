@@ -189,10 +189,27 @@ const Cayman718={
 let car = "none"
   let cards = document.querySelectorAll('.cards')
   cards.forEach((card)=>{
-    card.addEventListener('click',(e)=>{
-      console.log(e);
-    }
-    )
+    card.addEventListener('click',()=>{
+      console.log(card.id);
+      switch(card.id){
+        case 'gt3rs':
+          car = GT3rs
+          break;
+        case '718-cayman':
+          car = Cayman718
+          break;
+        case '918-spyder':
+          car = Spyder918;
+          break;
+        case 'gtr2':
+          car = GT3r2
+          break;
+        case 'turbo-s':
+          car = TurboS
+          break;
+      }
+      window.location.href = 'carshowcase.html';
+    })
   })
 
 
@@ -200,9 +217,9 @@ let cardData=()=>{
   
 
    let Data={
-    url: Spyder918.url,
-    name: Spyder918.name,
-    points: Spyder918.points
+    url: car.url,
+    name: car.name,
+    points: car.points
    }
 
    return Data;
