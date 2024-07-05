@@ -184,3 +184,44 @@ tl.from(".watermark .wrapper",{
 }
 
 page1animation();
+
+
+function page3animation() {
+  
+
+gsap.from(".top-left .gradient-text-70p,.top-left p",{
+  
+  x:-30,
+  opacity:0,
+  delay:0.3,
+  duration:1,
+  scrollTrigger:{
+    trigger:".top-left",
+    scroller:"body",
+    start:"top 30%",
+    end:"top 20%",
+    scrub:3
+  }
+  
+})
+
+gsap.from(".bottom-right .third-sidetext",{
+  y:-40,
+  opacity:0,
+  duration:1,
+  delay:0.8,
+  stagger:0.5,
+  scrollTrigger:{
+    trigger:".bottom-right",
+    scroller:"body",
+    start:"top 80%%",
+    end:"top 70%",
+    scrub:3
+  }
+  
+})
+
+}
+
+
+page3animation();
