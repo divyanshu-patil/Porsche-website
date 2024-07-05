@@ -57,6 +57,7 @@
 html,body{
     overflow-x: hidden;
     overflow-y: auto;
+    background-color: var(--darkColor);
 }
 
 body::-webkit-scrollbar{
@@ -71,14 +72,13 @@ canvas{
     left: 0;
     display: block;
     background-color: transparent;
-    z-index: 1;
+    z-index: 2;
  
 }
 
 .pages{
     height: 100vh;
     width: 100vw;
-    background-color: var(--darkColor);
     position: relative;
 }
 .logo img{
@@ -126,7 +126,7 @@ nav{
     justify-content: space-between;
     /* background-color: red; */
    
-    padding: 15px 80px;
+    padding: 18px 80px;
     height: auto;
     width: 100%;
     
@@ -136,14 +136,21 @@ nav{
     left: 0;
     z-index: 99;
 
+
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 19px 8px 45px 20px rgba(0, 0, 0, 0.2);
+    /* border-right: 1px solid rgba(255, 255, 255, 0.2); */
+    /* border-bottom: 1px solid rgba(255, 255, 255, 0.2); */
     backdrop-filter: blur(5px);
-    background-image: linear-gradient(-235deg,rgba(255, 255, 255, 0),rgba(0, 0, 0, 0.281));
+    background-image: linear-gradient(-235deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.63));
     /* background-image: radial-gradient(rgba(255, 255, 255, 0) 10%,rgba(0, 0, 0, 0.281)); */
-    background-size: 20px 20px;
+    /* background-size: 20px 20px; */ 
 }
+
+
 nav .logo{
     /* width: 85px; */
-    height: 25px;
+    height: 30px;
     
 }
 
@@ -206,12 +213,12 @@ nav .hamburger:hover{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    z-index: 1;
 }
 .page-1 .main-heading{
     position: absolute;
     top: 15%;
-    z-index: 2;
-    
+    z-index: 1;
     
 }
 .page-1 .main-heading h1{
@@ -245,13 +252,14 @@ nav .hamburger:hover{
     background: -webkit-linear-gradient(var(--gradient-color-top),var(--gradient-color-bottom));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    z-index: 3;
+    
 }
 
 /* page 2.........................................*/
 
 .page-2{
     position: relative;
+    z-index: 3;
 }
 
 
@@ -259,7 +267,7 @@ nav .hamburger:hover{
     position: absolute;
     bottom: 10vh;
     left: 2.6vw;
-    z-index: 1;
+   
 }
 
 .page-2 .trans-text .text11{
@@ -282,7 +290,7 @@ nav .hamburger:hover{
     right: 34px;
     bottom: 96px;
     color: var(--lightColor);
-    z-index: 1;
+ 
     max-width: 27vw;
 }
 
@@ -301,16 +309,16 @@ nav .hamburger:hover{
 /* page 3.................................... */
 
 .page-3{
-    background-image: url('assets/tmp/upper car.png');
     background-size: cover;
     background-position: center;
     color: var(--lightColor);
+    z-index: 3;
 }
 .page-3 .top-left{
     position: absolute;
     top: 19%;
     left: 12%;
-    z-index: 3;
+
 }
 .page-3  h3{
     font-size: 7vw;
@@ -347,9 +355,6 @@ nav .hamburger:hover{
     
 }
 
-.third-sidetext{
-    z-index: 3;
-}
 
 .page-3 .bottom-right h3{
     font-size: 5vw;
@@ -373,15 +378,17 @@ nav .hamburger:hover{
 } */
 .page-4 {
    position: relative;
+
    backdrop-filter: blur(5px);
-   background-image: linear-gradient(-235deg,rgba(255, 255, 255, 0),rgba(0, 0, 0, 0.281));
-   /* background-image: radial-gradient(rgba(255, 255, 255, 0) 10%,rgba(0, 0, 0, 0.281)); */
-   background-size: 20px 20px;
+
+ 
+   z-index: 3;
 }
 
 
 .cards-wrapper{
     overflow-x: auto;
+    z-index: 3;
 }
 .slidecontainer,.slidecontent{
     height: 100%;
@@ -443,6 +450,7 @@ nav .hamburger:hover{
     position: relative;
     border-radius: 30px;
     margin-right: 30px;
+   
 }
 @media only screen and (max-width: 900px){
     .page-4 .cards-wrapper .cards{
@@ -492,10 +500,12 @@ object-fit: cover;
 .page-5{
     color: var(--lightColor);
     
-    background-image: url('assets/tmp/footer.png');
+   
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    z-index: 3;
+    
 }
 .page-5 h3 {
     font-size: 3vw;
@@ -531,6 +541,13 @@ object-fit: cover;
 
     background-image: linear-gradient(rgba(0, 0, 0, 0),var(--gradient-color-bottom));
 
+    
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 19px 8px 45px 20px rgba(0, 0, 0, 0.2);
+    /* border-right: 1px solid rgba(255, 255, 255, 0.2); */
+    /* border-bottom: 1px solid rgba(255, 255, 255, 0.2); */
+    backdrop-filter: blur(5px);
+    background-image: linear-gradient(-235deg, rgb(0 0 0 / 0.5), rgba(0, 0, 0, 0.73));
 }
 .footer-part ul {
     list-style-type: none;

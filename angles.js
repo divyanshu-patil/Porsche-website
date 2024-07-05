@@ -10,7 +10,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/src/all';
 
-
+// making variable to store model
+let Model;
 
 
 // creating scene
@@ -131,7 +132,7 @@ rgbeLoader.load(
 
         environmentMap.mapping = THREE.EquirectangularReflectionMapping;
         scene.environment = environmentMap;
-        scene.background = environmentMap;
+        // scene.background = environmentMap;
 
         debugObject.envMapIntensity = 1;
         debugObject.metalness = 0;
@@ -152,9 +153,8 @@ rgbeLoader.load(
         gltfLoader.load(
             './assets/models/draco/gt3r 2/gt3r.gltf',
             (gltf) => {
-             
-                gltf.scene.renderOrder = 2;
-                scene.add(gltf.scene);           
+                Model = gltf.scene
+                scene.add(Model);           
                 
                 modelRotaionfolder.add(gltf.scene.rotation, 'x', Math.PI / 2, Math.PI * 3, 0.001).name('ObjRotateX');
                 modelRotaionfolder.add(gltf.scene.rotation, 'y', Math.PI / 2, Math.PI * 2, 0.001).name('ObjRotateY');
@@ -210,7 +210,6 @@ rgbeLoader.load(
         camera.zoom = 2
         scene.add(camera);
 
-
         
 gsap.registerPlugin(ScrollTrigger);
 
@@ -219,26 +218,48 @@ const cameraPositions = [
     // giving positions of camera as object
     { x: -0.014, y: 1.32, z: -6.00 },
     { x: 2.7023127197580825, y:1.7049162056063678, z: 5.02001983140576 },
-    { x: 0.00042699999302532474, y:12.327319, z:0.000797999986965361 },
+    { x: 0.0001710000006823394, y:12.326639, z:0.0003240000012928536 },
+    { x: 2.1209853924759434, y:0.9604913289220418, z:4.310617568395401 },
+    { x: -5.5502484499949, y:1.4859644411285007, z:-2.740258632785624 },
 ];
 
+// for model rotation
+
+const modelRotations = [
+    { x: 0, y: 0, z: 0 },
+    { x: 0, y: 0, z: 0 },
+    { x: 0, y: Math.PI+0.47, z: 0 },
+    { x: 0, y: (Math.PI *2)+0.46 , z: 0 },
+    { x: 0, y:(Math.PI *2)+0.46, z: 0 },
+
+];
 
 // Function to update the camera position
 const updateCamera = (index) => {
     const position = cameraPositions[index];
-    if (position) {
-            gsap.to(camera.position, {
+    const rotation = modelRotations[index];
+
+    if (position && rotation) {
+        gsap.timeline()
+            .to(camera.position, {
                 x: position.x,
                 y: position.y,
                 z: position.z,
-                duration: 1,
+                duration: 2,
                 onUpdate: () => {
                     camera.updateProjectionMatrix();
-                    controls.update(15);   
-                 }
-             });
-        }
-    
+                    controls.update();
+                }
+            }, 0)
+            .to(Model.rotation, {
+                x: rotation.x,
+                y: rotation.y,
+                z: rotation.z,
+                duration: 2,
+                ease: 'power2.inOut',
+                
+            }, 0); 
+    }
 };
 
 // Initialize ScrollTrigger
@@ -247,10 +268,12 @@ cameraPositions.forEach((obj, index) => {
         trigger: `.page-${index + 1}`,
         start: 'top center',
         markers: true ,
+        scrub:3,
         onEnter: () => updateCamera(index),
         onEnterBack: () => updateCamera(index),
     });
 });
+
 
  
         // adding camera controls to the debug UI
@@ -275,6 +298,10 @@ cameraPositions.forEach((obj, index) => {
         console.log(`Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`);
         console.log(`controls target: ${controls.target.x}, ${controls.target.y},${controls.target.z}`);
       });
+
+   
+        
+    
 
         // adding renderer
         const renderer = new THREE.WebGLRenderer({
@@ -341,7 +368,7 @@ cameraPositions.forEach((obj, index) => {
 
             // update camera
             camera.updateProjectionMatrix();
-     
+    
             // render scene
             renderer.render(scene, camera);
             // play animation on next frame
