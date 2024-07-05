@@ -10,6 +10,10 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/src/all';
 
+// making variable to store model
+let Model;
+
+
 // creating scene
 const scene = new THREE.Scene();
 let debugObject = {};
@@ -48,7 +52,7 @@ const CameraPositionFolder = CameraFolder.addFolder('Camera Position')
 // creating lights
 const ambientLight = new THREE.AmbientLight(0xffffff, 0);
 const directionalLight = new THREE.DirectionalLight(0xffffff, 0.32);
-directionalLight.position.set(-1.39, 5, -2.01);
+directionalLight.position.set(0,2.64,0);
 // adding intensity              B
 directionalLight.intensity = 0.82;
 directionalLight.castShadow = true;
@@ -62,7 +66,7 @@ directionalLight.shadow.mapSize.height = 1024;
 const directionalLightHelper = new THREE.DirectionalLightHelper(directionalLight);
 
 const directionalLight2 = new THREE.DirectionalLight(0xffffff);
-directionalLight2.position.set(-3.76, 4.65, -1.38);
+directionalLight2.position.set(5,5,1.38);
 // adding intensity              B
 directionalLight2.intensity = 3
 directionalLight2.castShadow = true;
@@ -128,7 +132,7 @@ rgbeLoader.load(
 
         environmentMap.mapping = THREE.EquirectangularReflectionMapping;
         scene.environment = environmentMap;
-        scene.background = environmentMap;
+        // scene.background = environmentMap;
 
         debugObject.envMapIntensity = 1;
         debugObject.metalness = 0;
@@ -149,9 +153,8 @@ rgbeLoader.load(
         gltfLoader.load(
             './assets/models/draco/gt3r 2/gt3r.gltf',
             (gltf) => {
-                scene.add(gltf.scene);
-                gltf.scene.position.set(0, -1.237, -3.035)
-                gltf.scene.rotation.y = 3.138 
+                Model = gltf.scene
+                scene.add(Model);           
                 
                 modelRotaionfolder.add(gltf.scene.rotation, 'x', Math.PI / 2, Math.PI * 3, 0.001).name('ObjRotateX');
                 modelRotaionfolder.add(gltf.scene.rotation, 'y', Math.PI / 2, Math.PI * 2, 0.001).name('ObjRotateY');
@@ -160,6 +163,7 @@ rgbeLoader.load(
                 modelpositionfolder.add(gltf.scene.position, 'y', -5, 10, 0.001).name('obj pos y')
                 modelpositionfolder.add(gltf.scene.position, 'z', -20, 20, 0.001).name('obj pos z')
                 
+          
                 
                 // playing animation - if any
                 if (gltf.animations.length) {
@@ -168,8 +172,7 @@ rgbeLoader.load(
                     action.play();
                 }
                 updateAllMaterials();
-              
-          
+                
             }
         );
 
@@ -198,13 +201,80 @@ rgbeLoader.load(
         };
 
 
+        
+      
         // adding camera
         const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height);
         // adding position              B
-        camera.position.set(0.00802670873489235, 0.2695931369391041,3.525174558405584);
+        camera.position.set(-0.014562269457166203, 1.3209874023720694,-6.004923732399126);
         camera.zoom = 2
         scene.add(camera);
 
+        
+gsap.registerPlugin(ScrollTrigger);
+
+// Define camera positions
+const cameraPositions = [
+    // giving positions of camera as object
+    { x: -0.014, y: 1.32, z: -6.00 },
+    { x: 2.7023127197580825, y:1.7049162056063678, z: 5.02001983140576 },
+    { x: 0.0001710000006823394, y:12.326639, z:0.0003240000012928536 },
+    { x: 2.1209853924759434, y:0.9604913289220418, z:4.310617568395401 },
+    { x: -5.5502484499949, y:1.4859644411285007, z:-2.740258632785624 },
+];
+
+// for model rotation
+
+const modelRotations = [
+    { x: 0, y: 0, z: 0 },
+    { x: 0, y: 0, z: 0 },
+    { x: 0, y: Math.PI+0.47, z: 0 },
+    { x: 0, y: (Math.PI *2)+0.46 , z: 0 },
+    { x: 0, y:(Math.PI *2)+0.46, z: 0 },
+
+];
+
+// Function to update the camera position
+const updateCamera = (index) => {
+    const position = cameraPositions[index];
+    const rotation = modelRotations[index];
+
+    if (position && rotation) {
+        gsap.timeline()
+            .to(camera.position, {
+                x: position.x,
+                y: position.y,
+                z: position.z,
+                duration: 2,
+                onUpdate: () => {
+                    camera.updateProjectionMatrix();
+                    controls.update();
+                }
+            }, 0)
+            .to(Model.rotation, {
+                x: rotation.x,
+                y: rotation.y,
+                z: rotation.z,
+                duration: 2,
+                ease: 'power2.inOut',
+                
+            }, 0); 
+    }
+};
+
+// Initialize ScrollTrigger
+cameraPositions.forEach((obj, index) => {
+    ScrollTrigger.create({
+        trigger: `.page-${index + 1}`,
+        start: 'top center',
+        scrub:3,
+        onEnter: () => updateCamera(index),
+        onEnterBack: () => updateCamera(index),
+    });
+});
+
+
+ 
         // adding camera controls to the debug UI
         CameraPositionFolder.add(camera.position, 'x', -5, 10, 0.001).name('camera pos x');
         CameraPositionFolder.add(camera.position, 'y', -5, 10, 0.001).name('camera pos y');
@@ -221,19 +291,24 @@ rgbeLoader.load(
      const controls = new OrbitControls(camera, canvas);
      controls.enableDamping = true;
 
-    //  controls.target.y = scene.position.y + 0.5
+     controls.target.y = scene.position.y + 1
 
      controls.addEventListener('change', () => {
         console.log(`Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`);
         console.log(`controls target: ${controls.target.x}, ${controls.target.y},${controls.target.z}`);
       });
 
+   
+        
+    
+
         // adding renderer
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas,
             // multi sampling for avoiding stair-like effect when zoom
             // you can do antialias only here no other option
-            antialias: true
+            antialias: true,
+            alpha:true
         });
 
         // setting renderer size
@@ -292,7 +367,7 @@ rgbeLoader.load(
 
             // update camera
             camera.updateProjectionMatrix();
-     
+    
             // render scene
             renderer.render(scene, camera);
             // play animation on next frame
