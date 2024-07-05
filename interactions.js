@@ -203,7 +203,7 @@ let cards = document.querySelectorAll('.cards')
           car = encodeURIComponent('Spyder918');
           break;
         case 'gtr2':
-          car = encodeURIComponent('GT3r2')
+          car = encodeURIComponent('GT3r')
           break;
         case 'turbo-s':
           car = encodeURIComponent('TurboS')
