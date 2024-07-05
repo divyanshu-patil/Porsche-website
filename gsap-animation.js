@@ -149,3 +149,38 @@ function Model_animation() {
 
 
 
+
+// animation on all the pages...
+
+let tl = gsap.timeline()
+
+function page1animation() {
+  
+
+
+tl.from("nav .logo , nav .hamburger",{
+  y: 30,
+  opacity: 0,
+  duration:1.2,
+  delay:0.4,
+  stagger:0.2
+})
+
+tl.from(".page-1 .main-heading h1",{
+  y: 40,
+  opacity:0,
+  duration:1,
+  
+ 
+},"-=0.8")
+
+tl.from(".watermark .wrapper",{
+  x:30,
+  opacity:0,
+  duration:1,
+ 
+})
+
+}
+
+page1animation();

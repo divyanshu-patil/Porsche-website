@@ -175,8 +175,7 @@ nav .hamburger:hover{
 
 /* fixed watermark in lower right.................. */
 .watermark{
-    width: max-content;
-
+  
     position: fixed;
     bottom: 5%;
     right: 5%;
@@ -184,6 +183,7 @@ nav .hamburger:hover{
     
 }
 .watermark .wrapper{
+    overflow: hidden;
     width: auto;
     height: auto;
 
@@ -206,6 +206,12 @@ nav .hamburger:hover{
 
 /* page 1.........................................*/
 
+.hider{
+    overflow: hidden;
+    
+}
+
+
 .page-1{
     position: relative;
     color: var(--lightColor);
@@ -219,6 +225,7 @@ nav .hamburger:hover{
     position: absolute;
     top: 15%;
     z-index: 1;
+    overflow: hidden;
     
 }
 .page-1 .main-heading h1{
@@ -267,6 +274,7 @@ nav .hamburger:hover{
     position: absolute;
     bottom: 10vh;
     left: 2.6vw;
+    overflow: hidden;
    
 }
 
@@ -278,6 +286,8 @@ nav .hamburger:hover{
     color: var(--lightColor);
     transform: rotate(180deg);
     letter-spacing: 17px;
+    position: relative;
+   
    
 }
 

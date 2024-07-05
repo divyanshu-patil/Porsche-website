@@ -267,7 +267,6 @@ cameraPositions.forEach((obj, index) => {
     ScrollTrigger.create({
         trigger: `.page-${index + 1}`,
         start: 'top center',
-        markers: true ,
         scrub:3,
         onEnter: () => updateCamera(index),
         onEnterBack: () => updateCamera(index),
