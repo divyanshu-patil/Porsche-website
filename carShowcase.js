@@ -4,8 +4,21 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
 import { addGUI } from "./carShowcasegui";
-import { addGsapAnimation } from "./carshowcaseGsapAnimations";
+import { addGsapAnimation ,pointsVisibleAnimation} from "./carshowcaseGsapAnimations";
+import { cardData } from "./interactions.js";
+
 console.log("three-js", THREE);
+
+const Data = cardData();
+
+const url =Data.url;
+const name = Data.name
+const points=Data.points
+
+let carName = document.querySelector(".name h1");
+document.title = name
+carName.innerHTML = name;
+
 
 // creating scene
 const scene = new THREE.Scene();
@@ -85,7 +98,7 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
   dracoLoader.setDecoderPath("./assets/libraries/draco/");
   const gltfLoader = new GLTFLoader();
   gltfLoader.setDRACOLoader(dracoLoader);
-  gltfLoader.load("./assets/models/draco/gt3rs/gt3rs.gltf", (gltf) => {
+  gltfLoader.load(url, (gltf) => {
     gltf.scene.position.y = -0.5;
     scene.add(gltf.scene);
 
@@ -96,6 +109,8 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
       action.play();
     }
     updateAllMaterials();
+    pointsVisibleAnimation(points)
+    
   });
 
   // ground
@@ -169,14 +184,14 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
   // render
   renderer.render(scene, camera);
 
-//   controls.addEventListener("change", () => {
-//     console.log(
-//       `Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`
-//     );
-//     console.log(
-//       `controls target: ${controls.target.x}, ${controls.target.y},${controls.target.z}`
-//     );
-//   });
+  controls.addEventListener("change", () => {
+    console.log(
+      `Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`
+    );
+    console.log(
+      `controls target: ${controls.target.x}, ${controls.target.y},${controls.target.z}`
+    );
+  });
 
   window.addEventListener("resize", () => {
     sizes.width = window.innerWidth;
@@ -189,21 +204,7 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
   });
 
   // points of intrest
-  const points = [
-    {
-      position: new THREE.Vector3(0.67471,0.67471,1.62139),
-      element: document.querySelector(".point0"),
-    },
-    {
-      position: new THREE.Vector3(-0.74531,0.67471,0.02387),
-      element: document.querySelector(".point1"),
-    },
-    {
-      position: new THREE.Vector3(0.02387,1.14805,-1.75116),
-      element: document.querySelector(".point2"),
-    },
-    
-  ];
+  
   // console.log();
     // next in tick function
 
@@ -219,9 +220,11 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
   //         });
   //     });
   // });
-  
+  let info = document.querySelector(".info");
+  let name = document.querySelector(".name");
+  info.style.opacity=0;
+  addGsapAnimation(camera,controls,THREE,points,info,name)
   const raycaster = new THREE.Raycaster();
-addGsapAnimation(camera,controls,THREE)
   let animate = () => {
     // update the helpers if their position changed
     directionalLightHelper.update();
