@@ -261,13 +261,20 @@ gsap.registerPlugin(ScrollTrigger);
 // Define camera positions
 const cameraPositions = [
     // giving positions of camera as object
-    { x: -0.014, y: 1.32, z: -6.00 },
-    { x: 2.7023127197580825, y:1.7049162056063678, z: 5.02001983140576 },
-    { x: 0.0001710000006823394, y:12.326639, z:0.0003240000012928536 },
-    { x: 2.1209853924759434, y:0.9604913289220418, z:4.310617568395401 },
-    { x: -5.5502484499949, y:1.4859644411285007, z:-2.740258632785624 },
+    { x: -0.014, y: 1.32, z: -6.00, },
+    { x: 2.7023127197580825, y:1.7049162056063678, z: 5.02001983140576,},
+    { x: 0.0001710000006823394, y:12.326639, z:0.0003240000012928536 ,},
+    { x: 2.1209853924759434, y:0.9604913289220418, z:4.310617568395401,},
+    {x: -5.550212999743161, y: 1.4869090011130943,z:-2.740565000144729, },
 ];
 
+const controlsTarget=[
+     new THREE.Vector3(0,1,0),
+     new THREE.Vector3(0,1,0) ,
+     new THREE.Vector3(0,1,0),
+     new THREE.Vector3(0,1,0) ,
+     new THREE.Vector3(-0.4175308165148711, 0.957633291500015,0.7474954119541828)
+]
 // for model rotation
 
 const modelRotations = [
@@ -286,6 +293,7 @@ const modelRotations = [
 const updateCamera = (index) => {
     const position = cameraPositions[index];
     const rotation = modelRotations[index];
+    const controlTarget = controlsTarget[index]
 
     if (position && rotation) {
         const timeline = gsap.timeline({
@@ -314,6 +322,14 @@ const updateCamera = (index) => {
                 immediateRender: true, // Ensure immediate rendering
             }, 0);
         }
+        timeline.to(controls.target, {
+            x: controlTarget.x,
+            y: controlTarget.y,
+            z: controlTarget.z,
+            duration: 2,
+            ease: 'power2.inOut',
+            immediateRender: true, // Ensure immediate rendering
+        }, 0);
     }
 };
 
@@ -370,10 +386,10 @@ window.addEventListener('resize', () => {
 
      controls.target.y = scene.position.y + 1
 
-     controls.addEventListener('change', () => {
-        console.log(`Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`);
-        console.log(`controls target: ${controls.target.x}, ${controls.target.y},${controls.target.z}`);
-      });
+    //  controls.addEventListener('change', () => {
+    //     console.log(`Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`);
+    //     console.log(`controls target: ${controls.target.x}, ${controls.target.y},${controls.target.z}`);
+    //   });
 
    
         
