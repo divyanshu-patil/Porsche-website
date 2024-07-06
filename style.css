@@ -346,6 +346,27 @@ nav .hamburger:hover{
 
 /* page 3.................................... */
 
+.gradient-left{
+    position: absolute;
+    top:0;
+    
+
+    width: 100vw;
+    height: 100vh;
+
+    background-image: linear-gradient(to right,rgba(0, 0, 0, 0.642),transparent 50%);
+    
+}
+.gradient-right{
+    position: absolute;
+    top:0;
+  
+
+    width: 100vw;
+    height: 100vh;
+
+    background-image: linear-gradient(to left,rgba(0, 0, 0, 0.642),transparent 50%);
+}
 .page-3{
     background-size: cover;
     background-position: center;
@@ -357,12 +378,14 @@ nav .hamburger:hover{
     position: absolute;
     top: 19%;
     left: 12%;
+
 }
 .page-3  h3{
     font-size: 7vw;
     font-family: var(--logo-font);
     font-weight: 100;
     margin-bottom: 10px;
+    
 }
 @media only screen and (min-width: 960px){
     .page-3 .top-left h3{
@@ -380,7 +403,7 @@ nav .hamburger:hover{
     bottom: 15%;
     right: 16%;
     width: 25vw;
-    max-width: 440px;
+    max-width: 250px;
 
 }
 .page-3 .bottom-right .wrapper{
@@ -400,7 +423,7 @@ nav .hamburger:hover{
 }
 @media only screen and (min-width: 960px){
     .page-3 .bottom-right h3{
-        font-size: 6rem;
+        font-size: 3rem;
     }
 }
 .page-3  .end{
