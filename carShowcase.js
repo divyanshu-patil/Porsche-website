@@ -5,7 +5,8 @@ import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
 import { addGUI } from "./carShowcasegui";
 import { addGsapAnimation ,pointsVisibleAnimation} from "./carshowcaseGsapAnimations";
-import { cardData } from "./interactions.js";
+import { cardData} from "./interactions.js";
+import { load } from "./loading.js";
 
 console.log("three-js", THREE);
 
@@ -66,11 +67,14 @@ scene.add(
 );
 directionalLight2.target = scene;
 
-// updating all material for envMap
+
+// adding loading manager
+const loadingManager = new THREE.LoadingManager()
+// on progress function is before animate
 
 // adding environment map
 // using RGBELoader
-const rgbeLoader = new RGBELoader();
+const rgbeLoader = new RGBELoader(loadingManager);
 rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
   const updateAllMaterials = () => {
     scene.traverse((child) => {
@@ -97,9 +101,9 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
 
   // adding mesh
   let mixer = null;
-  const dracoLoader = new DRACOLoader();
+  const dracoLoader = new DRACOLoader(loadingManager);
   dracoLoader.setDecoderPath("./assets/libraries/draco/");
-  const gltfLoader = new GLTFLoader();
+  const gltfLoader = new GLTFLoader(loadingManager);
   gltfLoader.setDRACOLoader(dracoLoader);
   gltfLoader.load(url, (gltf) => {
     gltf.scene.position.y = -0.5;
@@ -230,6 +234,13 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
   let name = document.querySelector(".name");
   info.style.opacity=0;
   addGsapAnimation(camera,controls,THREE,points,info,name)
+
+  loadingManager.onProgress=(url,objectLoaded,totalObject)=>{
+    load(Math.floor((objectLoaded/totalObject)*100)/*,'carshowcase',[camera,controls,THREE,points,info,name],addGsapAnimation*/);
+  }
+  loadingManager.onLoad=()=>{
+    
+  }
   const raycaster = new THREE.Raycaster();
   let animate = () => {
     // update the helpers if their position changed

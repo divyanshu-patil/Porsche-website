@@ -58,6 +58,7 @@ html,body{
     overflow-x: hidden;
     overflow-y: auto;
     background-color: var(--darkColor);
+    pointer-events: all;
 }
 
 body::-webkit-scrollbar{
@@ -136,6 +137,9 @@ a:hover{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+
+
 
 /* header section.................................... */
 nav{

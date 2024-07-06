@@ -4,7 +4,9 @@ import CustomEase from 'gsap/CustomEase';
 
 gsap.registerPlugin(CustomEase) 
 let addGsapAnimation =(camera,controls,THREE,points,info,name)=>{
-  
+{
+  console.log('animation played');
+  name.style.opacity=1;
   document.querySelector(".cross").style.display='none';
   setTimeout(()=>{
     controls.addEventListener('change',()=>{
@@ -151,8 +153,9 @@ points.forEach(point => {
   
   
 }
+}
 
-let pointsVisibleAnimation=(points)=>{
+ let pointsVisibleAnimation=(points)=>{
     setTimeout(()=>{
       document.body.classList.remove('disabled-pointer-events');
       points.forEach((point)=>{
@@ -161,6 +164,5 @@ let pointsVisibleAnimation=(points)=>{
      
     },1000)
 }
-
 
 export {addGsapAnimation,pointsVisibleAnimation}

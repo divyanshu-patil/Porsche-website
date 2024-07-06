@@ -13,7 +13,7 @@ import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ScrollToPlugin } from 'gsap/src/all';
+import { load } from './loading';
 
 
 
@@ -117,11 +117,14 @@ let parameter = {
 
 Lightsfolder.add(parameter, 'visible').name('visible helpers');
 
-// updating all material for envMap
-
+// adding loading manager
+const loadingManager = new THREE.LoadingManager()
+loadingManager.onProgress=(url,objectLoaded,totalObject)=>{
+    load(Math.floor((objectLoaded/totalObject)*100));
+}
 // adding environment map
 // using RGBELoader
-const rgbeLoader = new RGBELoader();
+const rgbeLoader = new RGBELoader(loadingManager);
 rgbeLoader.load(
     './assets/enviroment/darkhdri.hdr',
     (environmentMap) => {
@@ -163,9 +166,9 @@ rgbeLoader.load(
 
         // adding mesh
         let mixer = null;
-        const dracoLoader = new DRACOLoader()
+        const dracoLoader = new DRACOLoader(loadingManager)
         dracoLoader.setDecoderPath( './assets/libraries/draco/' );
-        const gltfLoader = new GLTFLoader();
+        const gltfLoader = new GLTFLoader(loadingManager);
         gltfLoader.setDRACOLoader(dracoLoader)
         gltfLoader.load(
             './assets/models/papu/gt3r.gltf',
