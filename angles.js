@@ -140,11 +140,12 @@ rgbeLoader.load(
 
         const params = {
             Tail_light: false,
+            tail_glass_mirror: false,
+            tail_light_side_light: false,
             ring: false,
-            Object_34 : false,
-            Object_42 : false,
-            bloom_1 : false,
-            bloom_3: false
+            head_light: false,
+            Headlight_Mirror: false,
+           
         }
 
         environmentMap.mapping = THREE.EquirectangularReflectionMapping;
@@ -168,7 +169,7 @@ rgbeLoader.load(
         const gltfLoader = new GLTFLoader();
         gltfLoader.setDRACOLoader(dracoLoader)
         gltfLoader.load(
-            './assets/models/papu/gt3r.gltf',
+            './assets/models/final gt3r/gt3r.gltf',
             (gltf) => {
                 Model = gltf.scene
                 scene.add(Model);           
@@ -192,30 +193,29 @@ rgbeLoader.load(
                 
                 // adding models to gui
                 const partsfolder = gui.addFolder('Parts');
-                partsfolder.add(params, 'Tail_light').onChange(function () {
-                    
+                partsfolder.add(params, 'Tail_light').onChange(function () {  
                     Model.getObjectByName('Tail_light').layers.toggle(BLOOM_SCENE);
                     console.log(bloomLayer);
+                })
+                partsfolder.add(params, 'tail_glass_mirror').onChange(function () {
+                    
+                    Model.getObjectByName('tail_glass_mirror').layers.toggle(BLOOM_SCENE);
+                })
+                partsfolder.add(params, 'tail_light_side_light').onChange(function () {
+                    
+                    Model.getObjectByName('tail_light_side_light').layers.toggle(BLOOM_SCENE);
                 })
                 partsfolder.add(params, 'ring').onChange(function () {
                     
                     Model.getObjectByName('ring').layers.toggle(BLOOM_SCENE);
                 })
-                partsfolder.add(params, 'Object_34').onChange(function () {
+                partsfolder.add(params, 'head_light').onChange(function () {
                     
-                    Model.getObjectByName('Object_34').layers.toggle(BLOOM_SCENE);
+                    Model.getObjectByName('head_light').layers.toggle(BLOOM_SCENE);
                 })
-                partsfolder.add(params, 'Object_42').onChange(function () {
+                partsfolder.add(params, 'Headlight_Mirror').onChange(function () {
                     
-                    Model.getObjectByName('Object_42').layers.toggle(BLOOM_SCENE);
-                })
-                partsfolder.add(params, 'bloom_1').onChange(function () {
-                    
-                    Model.getObjectByName('bloom_1').layers.toggle(BLOOM_SCENE);
-                })
-                partsfolder.add(params, 'bloom_3').onChange(function () {
-                    
-                    Model.getObjectByName('bloom_3').layers.toggle(BLOOM_SCENE);
+                    Model.getObjectByName('Headlight_Mirror').layers.toggle(BLOOM_SCENE);
                 })
 
             }
