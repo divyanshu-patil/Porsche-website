@@ -169,7 +169,7 @@ rgbeLoader.load(
         const gltfLoader = new GLTFLoader();
         gltfLoader.setDRACOLoader(dracoLoader)
         gltfLoader.load(
-            './assets/models/final gt3r/gt3r.gltf',
+            './assets/models/1/gt3r.gltf',
             (gltf) => {
                 Model = gltf.scene
                 scene.add(Model);           
