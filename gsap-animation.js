@@ -76,9 +76,6 @@ cards.forEach((card)=>{
   })
 })
 }
-
-// scroll snapping 
-
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 let panels = gsap.utils.toArray(".pages"),
@@ -107,7 +104,6 @@ function goToSection(i) {
 }
 
 panels.forEach((panel, i) => {
-  
   ScrollTrigger.create({
     trigger: panel,
     start: "top bottom",
@@ -122,7 +118,6 @@ ScrollTrigger.create({
   end: "max",
   snap: 1 / (panels.length - 1)
 })
-
 
 
 // scroll based animation

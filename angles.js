@@ -168,7 +168,7 @@ rgbeLoader.load(
         const gltfLoader = new GLTFLoader();
         gltfLoader.setDRACOLoader(dracoLoader)
         gltfLoader.load(
-            './assets/models/New Folder(4)/gt3r.gltf',
+            './assets/models/papu/gt3r.gltf',
             (gltf) => {
                 Model = gltf.scene
                 scene.add(Model);           
@@ -279,6 +279,9 @@ const modelRotations = [
 
 ];
 
+
+
+
 // Function to update the camera position
 const updateCamera = (index) => {
     const position = cameraPositions[index];
@@ -298,6 +301,7 @@ const updateCamera = (index) => {
             z: position.z,
             duration: 2,
             ease: 'power2.inOut',
+            immediateRender: true, // Ensure immediate rendering
         }, 0);
 
         if (Model) {
@@ -307,20 +311,42 @@ const updateCamera = (index) => {
                 z: rotation.z,
                 duration: 2,
                 ease: 'power2.inOut',
+                immediateRender: true, // Ensure immediate rendering
             }, 0);
         }
     }
 };
+
 // Initialize ScrollTrigger
 cameraPositions.forEach((obj, index) => {
     ScrollTrigger.create({
         trigger: `.page-${index + 1}`,
         start: 'top center',
-        scrub:3,
+        end: 'bottom center',
+        scrub: true,
         onEnter: () => updateCamera(index),
         onEnterBack: () => updateCamera(index),
+        refreshPriority: index, // Ensure the correct order of ScrollTrigger instances
+        invalidateOnRefresh: true, // Recalculate positions when resizing
     });
 });
+
+// Event listener for resizing window
+window.addEventListener('resize', () => {
+    sizes.width = window.innerWidth;
+    sizes.height = window.innerHeight;
+    renderer.setSize(sizes.width, sizes.height);
+    camera.aspect = sizes.width / sizes.height;
+    camera.updateProjectionMatrix();
+    renderer.render(scene, camera);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    composer.setSize(sizes.width, sizes.height);
+    finalComposer.setSize(sizes.width, sizes.height);
+
+    // Refresh ScrollTrigger instances on resize
+    ScrollTrigger.refresh();
+});
+
 
 
  
