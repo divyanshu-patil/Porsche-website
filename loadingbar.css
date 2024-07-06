@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
 }
 
 /* loading bar....................................... */
@@ -15,7 +16,8 @@
     align-items: center;
     gap: 10px;
     transform-origin: center;
-    position: relative;
+    position: fixed;
+    /* display: none; */
     z-index: 105;
     pointer-events: all;
 }

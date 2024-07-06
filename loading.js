@@ -44,6 +44,9 @@ let load = (percentLoaded)=>{
                 backgroundColor:'#00000000',
                 duration:2.5,
                 delay:0.5,
+                onComplete:()=>{
+                    
+                }
             },'color')
             tl.to('.overlay',{
                 opacity:0,

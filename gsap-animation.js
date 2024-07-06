@@ -74,6 +74,8 @@ cards.forEach((card)=>{
   })
 })
 }
+
+
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 let panels = gsap.utils.toArray(".pages"),
