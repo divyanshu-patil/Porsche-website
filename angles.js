@@ -435,9 +435,9 @@ window.addEventListener('resize', () => {
 
         const bloomPass = new UnrealBloomPass(
             new THREE.Vector2(sizes.width, sizes.height),
-            1.3,
             0.1,
-            0.4
+            0.9,
+            0
         );
 
         composer.addPass(bloomPass)
