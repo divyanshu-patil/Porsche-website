@@ -144,7 +144,11 @@ rgbeLoader.load(
             tail_light_side_light: false,
             ring: false,
             head_light: false,
+            head_light_right: false,
+            head_light_left: false,
             Headlight_Mirror: false,
+            Headlight_Mirror_right: false,
+            Headlight_Mirror_left: false,
            
         }
 
@@ -169,7 +173,7 @@ rgbeLoader.load(
         const gltfLoader = new GLTFLoader();
         gltfLoader.setDRACOLoader(dracoLoader)
         gltfLoader.load(
-            './assets/models/1/gt3r.gltf',
+            './assets/models/draco/gt3r/gt3r.gltf',
             (gltf) => {
                 Model = gltf.scene
                 scene.add(Model);           
@@ -193,30 +197,64 @@ rgbeLoader.load(
                 
                 // adding models to gui
                 const partsfolder = gui.addFolder('Parts');
+               
                 partsfolder.add(params, 'Tail_light').onChange(function () {  
                     Model.getObjectByName('Tail_light').layers.toggle(BLOOM_SCENE);
                     console.log(bloomLayer);
                 })
-                partsfolder.add(params, 'tail_glass_mirror').onChange(function () {
+                if ("tail_glass_mirror") {
+                    partsfolder.add(params, 'tail_glass_mirror').onChange(function () {
+                        
+                        Model.getObjectByName('tail_glass_mirror').layers.toggle(BLOOM_SCENE);
+                    })
                     
-                    Model.getObjectByName('tail_glass_mirror').layers.toggle(BLOOM_SCENE);
-                })
-                partsfolder.add(params, 'tail_light_side_light').onChange(function () {
-                    
-                    Model.getObjectByName('tail_light_side_light').layers.toggle(BLOOM_SCENE);
-                })
+                }
+                if ("tail_light_side_light") {
+                    console.log("tail_light_side_light");
+                    partsfolder.add(params, 'tail_light_side_light').onChange(function () {
+                        
+                        Model.getObjectByName('tail_light_side_light').layers.toggle(BLOOM_SCENE);
+                    })
+                }
                 partsfolder.add(params, 'ring').onChange(function () {
                     
                     Model.getObjectByName('ring').layers.toggle(BLOOM_SCENE);
                 })
-                partsfolder.add(params, 'head_light').onChange(function () {
+                if ("head_light") {
+                    partsfolder.add(params, 'head_light').onChange(function () {
                     
-                    Model.getObjectByName('head_light').layers.toggle(BLOOM_SCENE);
+                        Model.getObjectByName('head_light').layers.toggle(BLOOM_SCENE);
+                    })
+                }
+                else{
+
+                
+                partsfolder.add(params, 'head_light_right').onChange(function () {
+                    
+                    Model.getObjectByName('head_light_right').layers.toggle(BLOOM_SCENE);
                 })
-                partsfolder.add(params, 'Headlight_Mirror').onChange(function () {
+         
+                partsfolder.add(params, 'head_light_left').onChange(function () {
                     
+                    Model.getObjectByName('head_light_left').layers.toggle(BLOOM_SCENE);
+                })
+            }
+            if ("Headlight_Mirror") {
+                partsfolder.add(params, 'Headlight_Mirror').onChange(function () {                 
                     Model.getObjectByName('Headlight_Mirror').layers.toggle(BLOOM_SCENE);
                 })
+            }
+           if ("Headlight_Mirror_right"){
+
+                partsfolder.add(params, 'Headlight_Mirror_right').onChange(function () {
+                    
+                    Model.getObjectByName('Headlight_Mirror_right').layers.toggle(BLOOM_SCENE);
+                })
+                partsfolder.add(params, 'Headlight_Mirror_left').onChange(function () {
+                    
+                    Model.getObjectByName('Headlight_Mirror_left').layers.toggle(BLOOM_SCENE);
+                })
+            }
 
             }
         );
@@ -366,14 +404,14 @@ window.addEventListener('resize', () => {
      const controls = new OrbitControls(camera, canvas);
      controls.enableDamping = true;
 
-     controls.enabled = false;
+    //  controls.enabled = false;
 
      controls.target.y = scene.position.y + 1
 
-     controls.addEventListener('change', () => {
-        console.log(`Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`);
-        console.log(`controls target: ${controls.target.x}, ${controls.target.y},${controls.target.z}`);
-      });
+    //  controls.addEventListener('change', () => {
+    //     console.log(`Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`);
+    //     console.log(`controls target: ${controls.target.x}, ${controls.target.y},${controls.target.z}`);
+    //   });
 
    
         
