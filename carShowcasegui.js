@@ -1,11 +1,19 @@
 import GUI from 'lil-gui'
-let addGUI = (THREE,camera,scene,lights,points)=>{
+let addGUI = (THREE,camera,scene,lights,points,controls)=>{
     const gui = new GUI();
     
     const cameraFolder= gui.addFolder('camera controls')
     const sceneFolder= gui.addFolder('scene controls')
     const lightsFolder= gui.addFolder('lights controls')
+    const controlsFolder= gui.addFolder('controls')
     
+    controlsFolder.add(controls,'minDistance',0,3,1)
+    controlsFolder.add(controls,'maxDistance',0,15,1)
+
+
+
+
+
     cameraFolder.add(camera.position,'x',-5,5,0.01).name('position x')
     cameraFolder.add(camera.position,'y',-5,5,0.01).name('position y')
     cameraFolder.add(camera.position,'z',-5,5,0.01).name('position z')

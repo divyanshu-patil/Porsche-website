@@ -23,6 +23,7 @@ html, body{
     height: 100%;
     width: 100%;
     background-color: var(--darkColor);
+    overflow: hidden;
 }
 
 :root{
@@ -67,6 +68,8 @@ canvas{
     top: 10%;
     left: 50%;
     transform: translateX(-50%);
+    
+
     z-index: 1;
     font-size: 10vw;
 }

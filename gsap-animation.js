@@ -308,7 +308,7 @@ function footerAnimation(){
             start:"top 50px",
             // end:'top 10px',
             // scrub:2,
-            markers:true
+            // markers:true
             },
           onComplete:infoAnimation()
         })
@@ -334,7 +334,7 @@ document.querySelector('.info').style.display='block'
       trigger:'.page-5',
       scroller:'body',
       start:'top 10px',
-      markers:true
+      // markers:true
       },
       onComplete:()=>{
         document.querySelector('.info .wrapper').style.opacity=1

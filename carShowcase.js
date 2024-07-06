@@ -152,8 +152,11 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
   // adding orbit controls
   const controls = new OrbitControls(camera, canvas);
   controls.enableDamping = true;
+  controls.dampingFactor = 0.04
   controls.target.y = scene.position.y + 0.5;
-
+  controls.maxPolarAngle = Math.PI / 2             // dont go below ground
+  controls.minDistance =0;
+  controls.maxDistance =15;
   // adding renderer
   const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
@@ -187,14 +190,14 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
   // render
   renderer.render(scene, camera);
 
-  controls.addEventListener("change", () => {
-    console.log(
-      `Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`
-    );
-    console.log(
-      `controls target: ${controls.target.x}, ${controls.target.y},${controls.target.z}`
-    );
-  });
+  // controls.addEventListener("change", () => {
+  //   console.log(
+  //     `Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`
+  //   );
+  //   console.log(
+  //     `controls target: ${controls.target.x}, ${controls.target.y},${controls.target.z}`
+  //   );
+  // });
 
   window.addEventListener("resize", () => {
     sizes.width = window.innerWidth;
@@ -280,5 +283,5 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
     ambientLight,
     directionalLight,
     directionalLight2,
-  ],points);
+  ],points,controls);
 });

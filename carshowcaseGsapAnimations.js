@@ -5,8 +5,12 @@ import CustomEase from 'gsap/CustomEase';
 gsap.registerPlugin(CustomEase) 
 let addGsapAnimation =(camera,controls,THREE,points,info,name)=>{
   
+  document.querySelector(".cross").style.display='none';
   setTimeout(()=>{
     controls.addEventListener('change',()=>{
+      name.style.zIndex=99;
+      document.querySelector(".cross").style.display='block';
+
       gsap.to(name,{
         fontSize:"3vw",
         top:"5%",
@@ -19,6 +23,7 @@ let addGsapAnimation =(camera,controls,THREE,points,info,name)=>{
 let duration =3;
 let ease =CustomEase.create("custom", "M0,0 C0.083,0.294 0.234,1.162 0.563,1.163 0.816,1.163 0.819,1 1,1 ");
 let rapidease =CustomEase.create("custom", "M0,0 C0.083,0.294 0.206,1.102 0.536,1.103 0.769,1.103 0.556,0.923 1,1 ");
+let curveEase = CustomEase.create("custom", "M0,0 C-0.294,0.338 -0.201,0.657 0,0.87 0.374,1.264 0.566,1 1,1 ");
 let defaultPosition =  new THREE.Vector3(camera.position.x,camera.position.y,camera.position.z)
 let defaultTarget = new THREE.Vector3(controls.target.x,controls.target.y,controls.target.x)
 let isAnimating = false;
@@ -105,7 +110,6 @@ points.forEach(point => {
 
 
    document.querySelector(".cross").addEventListener('click',()=>{
-    
     document.body.classList.add('disabled-pointer-events');
 
     gsap.to(camera.position,{
@@ -115,6 +119,7 @@ points.forEach(point => {
       duration:duration,
       ease:ease,
       onComplete:()=>{
+    name.style.zIndex =1
         gsap.to(name,{
           fontSize:"10vw",
           top:"10%",
@@ -123,6 +128,7 @@ points.forEach(point => {
           ease:ease,
           onComplete:()=>{
           document.body.classList.remove('disabled-pointer-events');
+          document.querySelector(".cross").style.display='none';
             
           }
         })
