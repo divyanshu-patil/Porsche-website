@@ -3,14 +3,6 @@
     src: url('./assets/fonts/Porsche-font.ttf');
 }
 @font-face {
-    font-family: OpenSansItalic;
-    src: url('./assets/fonts/open-sans-italic/OpenSans-Italic.ttf');
-}
-@font-face {
-    font-family: Oleto;
-    src: url('./assets/fonts/Oleto\ DEMO.ttf');
-}
-@font-face {
     font-family: OpenSans;
     src: url('./assets/fonts/open-sans-italic/OpenSans-Regular.ttf');
 }
@@ -18,14 +10,7 @@
     font-family: OpenSansBold;
     src: url('assets/fonts/open-sans-italic/OpenSans-Bold.ttf');
 }
-@font-face {
-    font-family: OpenSansExtraBold;
-    src: url('assets/fonts/open-sans-italic/OpenSans-ExtraBold.ttf');
-}
-@font-face {
-    font-family: OpenSansExtraBoldItalic;
-    src: url('assets/fonts/open-sans-italic/OpenSans-ExtraBoldItalic.ttf');
-}
+
 
 *{
     margin: 0;
@@ -57,12 +42,13 @@ html, body{
     --inter: inter;
     --hollow-font:Oleto;
     --base-font: OpenSans;
-    --bold-italic-font:OpenSansExtraBoldItalic;
+    --bold-font:OpenSansBold;
 
 }
 
 .disabled-pointer-events {
     pointer-events: none;
+    overflow: hidden;
   }
 
 canvas{
@@ -137,6 +123,7 @@ canvas{
     overflow: visible;
     background-color: rgba(153, 153, 153, 0.247);
     border: 1px solid rgba(165, 165, 165, 0.822);
+    cursor: pointer;
 
     border-radius: 50%;
     transition: all 0.3s;
@@ -145,8 +132,8 @@ canvas{
 .cross:hover{
     background-color: rgba(153, 153, 153, 0.617);
     transition: all 0.3s;
-
 }
+
 .point .label{
     background-color: rgba(153, 153, 153, 0.247);
     width: 40px;
@@ -194,6 +181,7 @@ canvas{
     text-transform: uppercase;
     letter-spacing: 5px;
     margin-bottom: 10px;
+    font-family: var(--bold-font);
 }
 .info .description{
     font-size: 1.2rem;

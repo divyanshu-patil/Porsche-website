@@ -76,6 +76,11 @@ canvas{
  
 }
 
+.disabled-pointer-events {
+    pointer-events: none;
+    overflow: hidden;
+  }
+
 .pages{
     height: 100vh;
     width: 100vw;
@@ -137,12 +142,12 @@ nav{
     z-index: 99;
 
 
-    background-color: rgba(255, 255, 255, 0.1);
+    /* background-color: rgba(255, 255, 255, 0.1); */
     box-shadow: 19px 8px 45px 20px rgba(0, 0, 0, 0.2);
     /* border-right: 1px solid rgba(255, 255, 255, 0.2); */
     /* border-bottom: 1px solid rgba(255, 255, 255, 0.2); */
     backdrop-filter: blur(5px);
-    background-image: linear-gradient(-235deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.63));
+    background-image: linear-gradient(rgba(0, 0, 0, 0.519) 50%,transparent)
     /* background-image: radial-gradient(rgba(255, 255, 255, 0) 10%,rgba(0, 0, 0, 0.281)); */
     /* background-size: 20px 20px; */ 
 }
@@ -219,7 +224,7 @@ nav .hamburger:hover{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 1;
+    /* z-index: 1; */
 }
 .page-1 .main-heading{
     position: absolute;
@@ -245,6 +250,7 @@ nav .hamburger:hover{
 .page-1 .sub-heading {
     position: absolute;
     bottom: 10%;
+    z-index: 9;
 
     font-size: 50px;
     
@@ -260,6 +266,7 @@ nav .hamburger:hover{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     
+    
 }
 
 /* page 2.........................................*/
@@ -267,6 +274,7 @@ nav .hamburger:hover{
 .page-2{
     position: relative;
     z-index: 3;
+    overflow-x: hidden;
 }
 
 
@@ -297,8 +305,8 @@ nav .hamburger:hover{
     flex-direction: column;
     gap: 8px;
     position: absolute;
-    right: 34px;
-    bottom: 96px;
+    right: 5%;
+    bottom: 10%;
     color: var(--lightColor);
  
     max-width: 27vw;
@@ -323,13 +331,12 @@ nav .hamburger:hover{
     background-position: center;
     color: var(--lightColor);
     z-index: 3;
+    overflow:hidden ;
 }
 .page-3 .top-left{
     position: absolute;
     top: 19%;
     left: 12%;
-    
-
 }
 .page-3  h3{
     font-size: 7vw;
@@ -516,7 +523,7 @@ object-fit: cover;
     background-size: cover;
     background-position: center;
     z-index: 3;
-    
+    background-image: linear-gradient(transparent 50%,var(--gradient-color-bottom));
 }
 .page-5 .hider{
     font-size: 3vw;
@@ -550,15 +557,15 @@ object-fit: cover;
 
     font-size: 1rem;
 
-    background-image: linear-gradient(rgba(0, 0, 0, 0),var(--gradient-color-bottom));
-
     
-    background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 19px 8px 45px 20px rgba(0, 0, 0, 0.2);
+    
+    /* background-image: linear-gradient(rgba(0, 0, 0, 0),var(--gradient-color-bottom)); */
+    /* background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 19px 8px 45px 20px rgba(0, 0, 0, 0.2); */
     /* border-right: 1px solid rgba(255, 255, 255, 0.2); */
     /* border-bottom: 1px solid rgba(255, 255, 255, 0.2); */
-    backdrop-filter: blur(5px);
-    background-image: linear-gradient(-235deg, rgb(0 0 0 / 0.5), rgba(0, 0, 0, 0.73));
+    /* backdrop-filter: blur(5px); */
+    /* background-image: linear-gradient(-235deg, rgb(0 0 0 / 0.5), rgba(0, 0, 0, 0.73)); */
 
 
     
@@ -570,6 +577,7 @@ object-fit: cover;
     display: flex;
     align-items: center;
     gap:10px;
+    margin-bottom: 10px;
 }
 .footer-part .logo{
     width: 17px;
@@ -577,8 +585,9 @@ object-fit: cover;
     aspect-ratio: 1;
 }
 .footer-part h4{
+    color: var(--lightColor);
     margin-bottom: 10px;
-    font-size: 1em;
+    font-size: 1.1em;
 }
 .footer-part .row2{
     display: flex;

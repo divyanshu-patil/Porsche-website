@@ -31,8 +31,8 @@ document.body.classList.add('disabled-pointer-events');
 gsap.from(name,{
   y:100,
   opacity:0,
-  duration:1,
-  ease:"back.out",  
+  duration:3,
+  ease:'power2.out',  
 })
 
 
@@ -68,10 +68,9 @@ points.forEach(point => {
         console.log(info)
         gsap.to(info,{
           opacity:1,
-          duration:0.5,
+          duration:1,
           ease:ease,
           onComplete:()=>{
-           
             document.addEventListener('click',()=>{
               gsap.to(info,{
                 opacity:0,
@@ -107,6 +106,8 @@ points.forEach(point => {
 
    document.querySelector(".cross").addEventListener('click',()=>{
     
+    document.body.classList.add('disabled-pointer-events');
+
     gsap.to(camera.position,{
       x:defaultPosition.x,
       y:defaultPosition.y,
@@ -119,7 +120,11 @@ points.forEach(point => {
           top:"10%",
           duration:duration,
           // delay:-1,
-          ease:ease
+          ease:ease,
+          onComplete:()=>{
+          document.body.classList.remove('disabled-pointer-events');
+            
+          }
         })
       }
     })
