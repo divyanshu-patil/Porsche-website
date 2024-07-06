@@ -42,13 +42,13 @@ let load = (percentLoaded)=>{
             },'color')
             tl.to('.box1, .box2 , .box3',{
                 backgroundColor:'#00000000',
-                duration:3,
+                duration:2.5,
                 delay:0.5,
             },'color')
             tl.to('.overlay',{
                 opacity:0,
-                duration:2,
-                delay:1.5,
+                duration:1,
+                delay:1,
                 onComplete:()=>{
                   document.querySelector(".overlay").style.display="none";
                 }

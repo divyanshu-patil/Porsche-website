@@ -70,7 +70,6 @@ directionalLight2.target = scene;
 
 // adding loading manager
 const loadingManager = new THREE.LoadingManager()
-// on progress function is before animate
 
 // adding environment map
 // using RGBELoader
@@ -233,14 +232,12 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
   let info = document.querySelector(".info");
   let name = document.querySelector(".name");
   info.style.opacity=0;
+  
   addGsapAnimation(camera,controls,THREE,points,info,name)
-
   loadingManager.onProgress=(url,objectLoaded,totalObject)=>{
-    load(Math.floor((objectLoaded/totalObject)*100)/*,'carshowcase',[camera,controls,THREE,points,info,name],addGsapAnimation*/);
-  }
-  loadingManager.onLoad=()=>{
-    
-  }
+    load(Math.floor((objectLoaded/totalObject)*100));
+}
+
   const raycaster = new THREE.Raycaster();
   let animate = () => {
     // update the helpers if their position changed
