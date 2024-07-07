@@ -143,19 +143,20 @@ rgbeLoader.load(
             });
         };
 
-        const params = {
-            Tail_light: false,
-            tail_glass_mirror: false,
-            tail_light_side_light: false,
-            ring: false,
-            head_light: false,
-            head_light_right: false,
-            head_light_left: false,
-            Headlight_Mirror: false,
-            Headlight_Mirror_right: false,
-            Headlight_Mirror_left: false,
-           
-        }
+        // const params = {
+        //     Tail_light: true,
+        //     tail_glass_mirror: true,
+        //     tail_light_side_light: true,
+        //     ring: true,
+        //     head_light: true,
+        //     head_light_right: true,
+        //     head_light_left: true,
+        //     Headlight_Mirror: false,
+        //     Headlight_Mirror_right: false,
+        //     Headlight_Mirror_left: false,
+        // };
+
+        
 
         environmentMap.mapping = THREE.EquirectangularReflectionMapping;
         scene.environment = environmentMap;
@@ -201,66 +202,23 @@ rgbeLoader.load(
                 updateAllMaterials();
                 
                 // adding models to gui
-                const partsfolder = gui.addFolder('Parts');
-               
-                partsfolder.add(params, 'Tail_light').onChange(function () {  
-                    Model.getObjectByName('Tail_light').layers.toggle(BLOOM_SCENE);
-                    console.log(bloomLayer);
-                })
-                if ("tail_glass_mirror") {
-                    partsfolder.add(params, 'tail_glass_mirror').onChange(function () {
-                        
-                        Model.getObjectByName('tail_glass_mirror').layers.toggle(BLOOM_SCENE);
-                    })
-                    
-                }
-                if ("tail_light_side_light") {
-                    console.log("tail_light_side_light");
-                    partsfolder.add(params, 'tail_light_side_light').onChange(function () {
-                        
-                        Model.getObjectByName('tail_light_side_light').layers.toggle(BLOOM_SCENE);
-                    })
-                }
-                partsfolder.add(params, 'ring').onChange(function () {
-                    
-                    Model.getObjectByName('ring').layers.toggle(BLOOM_SCENE);
-                })
-                if ("head_light") {
-                    partsfolder.add(params, 'head_light').onChange(function () {
-                    
-                        Model.getObjectByName('head_light').layers.toggle(BLOOM_SCENE);
-                    })
-                }
-                else{
-
-                
-                partsfolder.add(params, 'head_light_right').onChange(function () {
-                    
-                    Model.getObjectByName('head_light_right').layers.toggle(BLOOM_SCENE);
-                })
-         
-                partsfolder.add(params, 'head_light_left').onChange(function () {
-                    
-                    Model.getObjectByName('head_light_left').layers.toggle(BLOOM_SCENE);
-                })
-            }
-            if ("Headlight_Mirror") {
-                partsfolder.add(params, 'Headlight_Mirror').onChange(function () {                 
-                    Model.getObjectByName('Headlight_Mirror').layers.toggle(BLOOM_SCENE);
-                })
-            }
-           if ("Headlight_Mirror_right"){
-
-                partsfolder.add(params, 'Headlight_Mirror_right').onChange(function () {
-                    
-                    Model.getObjectByName('Headlight_Mirror_right').layers.toggle(BLOOM_SCENE);
-                })
-                partsfolder.add(params, 'Headlight_Mirror_left').onChange(function () {
-                    
-                    Model.getObjectByName('Headlight_Mirror_left').layers.toggle(BLOOM_SCENE);
-                })
-            }
-
+                const applyBloomToPart = (partName) => {
+                    const part = Model.getObjectByName(partName);
+                    if (part) {
+                        part.layers.enable(BLOOM_SCENE);
+                    }
+                };
+        
+                applyBloomToPart('Tail_light');
+                applyBloomToPart('tail_glass_mirror');
+                applyBloomToPart('tail_light_side_light');
+                applyBloomToPart('ring');
+                applyBloomToPart('head_light');
+                applyBloomToPart('head_light_right');
+                applyBloomToPart('head_light_left');
+                applyBloomToPart('Headlight_Mirror');
+                applyBloomToPart('Headlight_Mirror_right');
+                applyBloomToPart('Headlight_Mirror_left');
             }
         );
 
@@ -482,7 +440,6 @@ window.addEventListener('resize', () => {
 
         // creating bloom
 
-        
         const renderScene = new RenderPass(scene, camera);
         const composer = new EffectComposer(renderer)
 
@@ -494,16 +451,16 @@ window.addEventListener('resize', () => {
 
         const bloomPass = new UnrealBloomPass(
             new THREE.Vector2(sizes.width, sizes.height),
-            0.1,
+            0.21,
             0.9,
             0
         );
 
         composer.addPass(bloomPass)
         // CameraRotationFolder.add(bloomPass.intensity, 'z', -5, 10, 0.001).name('camera Rotate z');
-        gui.add(bloomPass, 'strength', 0, 500, 0.01).name('bloom i');
-        gui.add(bloomPass, 'radius', 0, 500, 0.01).name('bloom r');
-        gui.add(bloomPass, 'threshold', 0, 500, 0.01).name('bloom t');
+        gui.add(bloomPass, 'strength', 0, 500, 0.01).name('bloom strength');
+        gui.add(bloomPass, 'radius', 0, 500, 0.01).name('bloom radius');
+        gui.add(bloomPass, 'threshold', 0, 500, 0.01).name('bloom threshold');
         composer.renderToScreen = false
 
         // adding shader pass
@@ -669,3 +626,4 @@ window.addEventListener('resize', () => {
         });
     }
 );
+

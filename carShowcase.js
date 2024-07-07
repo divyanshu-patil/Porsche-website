@@ -5,9 +5,11 @@ import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
-import { GammaCorrectionShader, ShaderPass } from "three/examples/jsm/Addons.js";
+import { GammaCorrectionShader} from "three/examples/jsm/Addons.js";
 import { GlitchPass } from "three/examples/jsm/Addons.js";
-import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js"
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
+import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
 import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass.js";
 
 GlitchPass
@@ -18,6 +20,9 @@ import { load } from "./loading.js";
 import { shaderStages } from "three/examples/jsm/nodes/Nodes.js";
 
 console.log("three-js", THREE);
+
+let currentModle;
+
 
 var urlParams = new URLSearchParams(window.location.search);
 var encodedCar = urlParams.get('car');
@@ -120,8 +125,9 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
   const gltfLoader = new GLTFLoader(loadingManager);
   gltfLoader.setDRACOLoader(dracoLoader);
   gltfLoader.load(url, (gltf) => {
-    gltf.scene.position.y = -0.5;
-    scene.add(gltf.scene);
+    currentModle = gltf.scene
+    currentModle.position.y = -0.5;
+    scene.add(currentModle);
 
     // playing animation - if any
     if (gltf.animations.length) {
@@ -130,6 +136,27 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
       action.play();
     }
     updateAllMaterials();
+    
+
+  const applyBloomToPart = (partName) => {
+    const part = currentModle.getObjectByName(partName);
+    if (part) {
+        part.layers.enable(bloom_scene);
+    }
+};
+
+applyBloomToPart('Tail_light');
+applyBloomToPart('tail_glass_mirror');
+applyBloomToPart('tail_light_side_light');
+applyBloomToPart('ring');
+applyBloomToPart('head_light');
+applyBloomToPart('head_light_right');
+applyBloomToPart('head_light_left');
+applyBloomToPart('Headlight_Mirror');
+applyBloomToPart('Headlight_Mirror_right');
+applyBloomToPart('Headlight_Mirror_left');
+
+    
     pointsVisibleAnimation(points)
     
   });
@@ -203,42 +230,106 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
   // changing renderer tone mapping
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
 
- 
-
-  // render
-  renderer.render(scene, camera);
-
   // post processing
-  const renderTarget = new THREE.WebGLRenderTarget(sizes.width,sizes.height,
-    {
-      samples:2
-    }
-  )
 
-  const effectComposer = new EffectComposer(renderer,renderTarget)
+
+  const effectComposer = new EffectComposer(renderer)
   effectComposer.setSize(sizes.width,sizes.height)
   effectComposer.setPixelRatio(Math.min(window.devicePixelRatio,2))
 
   const renderPass = new RenderPass(scene,camera)
   effectComposer.addPass(renderPass)
 
- 
+//   const gammaCorrectionPas= new ShaderPass(GammaCorrectionShader)
+//   effectComposer.addPass(gammaCorrectionPas)
+
+// if(renderer.getPixelRatio()===1 && !renderer.capabilities.isWebGL2){
+
+//   const smaaPass = new SMAAPass()
+//   effectComposer.addPass(smaaPass);
+// }
 
 
-  const gammaCorrectionPas= new ShaderPass(GammaCorrectionShader)
-  effectComposer.addPass(gammaCorrectionPas)
+const bloomPass = new UnrealBloomPass(
+  new THREE.Vector2(sizes.width, sizes.height),
+  0.2,
+  0.9,
+  0
+);
 
-if(renderer.getPixelRatio()===1 && !renderer.capabilities.isWebGL2){
+effectComposer.addPass(bloomPass)
+// CameraRotationFolder.add(bloomPass.intensity, 'z', -5, 10, 0.001).name('camera Rotate z');
 
-  const smaaPass = new SMAAPass()
-  effectComposer.addPass(smaaPass);
-}
+effectComposer.renderToScreen = false
+
+
+   // adding shader pass
+
+   const mixPass = new ShaderPass(
+    new THREE.ShaderMaterial(
+        {
+            uniforms:{
+                baseTexture:{value:null},
+                bloomTexture:{value:effectComposer.renderTarget2.texture}
+            },
+            vertexShader:document.getElementById('vertexshader').textContent,
+            fragmentShader:document.getElementById('fragmentshader').textContent
+
+        }
+    ),'baseTexture'
+)
+
+  // final composer
+
+  const endComposer = new EffectComposer(renderer);
+  endComposer.addPass(renderPass) 
+  endComposer.addPass(mixPass)
 
   
+  // adding outputpass
+  
+  const outputPass = new OutputPass()
+  endComposer.addPass(outputPass)
+  
+   // adding antializing
+ const smaaPass = new SMAAPass()
+ // composer.addPass(smaaPass);
+ endComposer.addPass(smaaPass)
+  
+ const bloom_scene = 1;
+ const bloomLayer = new THREE.Layers();
+ bloomLayer.set(bloom_scene);
 
+ const darkMaterial = new THREE.MeshBasicMaterial({color:0x000000})
+ const materials = {} 
 
+ function nonBloomed(obj) {
+  if (obj.isMesh) {
+      if (obj.layers === undefined) {
+          console.warn('Object without layers:', obj);
+          obj.layers = new THREE.Layers();
+      }
 
+      if (bloomLayer.test(obj.layers) === false) {
+          materials[obj.uuid] = obj.material;
+          obj.material = darkMaterial;
+      
+      }
+  }
+}
 
+function restoreMaterial(obj) {
+  if (materials[obj.uuid]) {
+      obj.material = materials[obj.uuid];
+      delete materials[obj.uuid];
+  }
+}
+
+ scene.traverse((obj) => {
+  if (obj.layers === undefined) {
+      obj.layers = new THREE.Layers();
+  }
+});
 
   // controls.addEventListener("change", () => {
   //   console.log(
@@ -261,6 +352,8 @@ if(renderer.getPixelRatio()===1 && !renderer.capabilities.isWebGL2){
     // update effect composer
     effectComposer.render(scene, camera);
     effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    endComposer.setSize(sizes.width, sizes.height);
+    endComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   });
 
   // points of intrest
@@ -338,7 +431,15 @@ if(renderer.getPixelRatio()===1 && !renderer.capabilities.isWebGL2){
     controls.update();
     // render scene
     // renderer.render(scene, camera);
+    scene.traverse(nonBloomed);
+        
+    // calling effect composer to render the effect
     effectComposer.render();
+
+    scene.traverse(restoreMaterial);
+
+    endComposer.render();
+
     // play animation on next frame
     window.requestAnimationFrame(animate);
   };

@@ -194,8 +194,9 @@ nav .hamburger{
 
 .close{
     position: absolute;
+    height: 3.5vw;
     right: 2%;
-    top: 1%;
+    top: 4%;
     cursor: pointer;
 }
 

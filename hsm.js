@@ -16,7 +16,7 @@ hamberger.addEventListener('click',()=>{
      
        gsap.to(navigation,{   
          x:`-100%`,    
-        duration :2,
+        duration :1.5,
         onComplete:()=>{
             menu.style.display = 'none'
             close.style.display = 'block'
@@ -29,7 +29,7 @@ close.addEventListener('click',()=>{
    
     gsap.to(navigation,{   
         x:`100%`, 
-        duration :2,
+        duration :1.5,
         onComplete:()=>{
             
               navigation.style.display = 'none'
@@ -40,26 +40,24 @@ close.addEventListener('click',()=>{
 })
 
 
-
 // Add event listener to each anchor tag
 anchors.forEach(anchor => {
     anchor.addEventListener('mouseenter', (event) => {
         event.preventDefault(); 
         right_bottom.innerHTML = anchor.id
-        // Your animation code using gsap
-        gsap.to(anchor.previousElementSibling, { // Select the previous sibling which is the svg
+       
+        gsap.to(anchor.previousElementSibling, { 
             width: 250,
-            duration: 1,
+            duration: 0.5,
         });
 
         // If you want to log the clicked anchor tag or perform other actions
         console.log('Clicked:', anchor);
     });
     anchor.addEventListener('mouseleave', (event) => {
-        event.preventDefault(); // Prevent the default link behavior
+        event.preventDefault();
        
-        // Your animation code using gsap
-        gsap.to(anchor.previousElementSibling, { // Select the previous sibling which is the svg
+        gsap.to(anchor.previousElementSibling, { 
             width: 0,
             duration: 1,
             onComplete:()=>{
