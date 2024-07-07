@@ -249,6 +249,29 @@ gsap.from('.page-3 .bottom-right ',{
 }
 page3animation();
 
+function page4Animation(){
+  let delay = 0.4;
+  duration=1;
+  ease ='back(3).out'
+  gsap.from('.page-4 .cards',{
+    y:100,
+    opacity:0,
+    duration:duration,
+    delay:delay+0.5,
+    stagger:0.2,
+    ease:ease,
+    scrollTrigger:{
+      trigger:'.page-4',
+      scroller:'body',
+      start:'top 10px',
+      // markers:true
+      }
+  })
+
+}
+page4Animation()
+
+
 function footerAnimation(){
   document.querySelector('.info .wrapper').style.opacity=0
 
