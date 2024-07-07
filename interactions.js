@@ -2,6 +2,11 @@ import * as THREE from 'three';
 let GT3rs={
     url:'./assets/models/draco/gt3rs/gt3rs.gltf',
     name:'GT3rs',
+    bloom:{
+      i:0.075,
+      r:0.9,
+      t:0
+    },
     points : [
     {
       position: new THREE.Vector3(0.67471,0.67471,1.62139),
@@ -39,6 +44,11 @@ let GT3rs={
 let Spyder918={
     url:'./assets/models/draco/918/918.gltf',
     name:'Spyder',
+    bloom:{
+      i:0.075,
+      r:0.9,
+      t:0
+    },
     points : [
     {
       position: new THREE.Vector3(0.67471,0.67471,1.62139),
@@ -76,6 +86,11 @@ let Spyder918={
 let GT3r={
     url:'./assets/models/draco/gt3r/gt3r.gltf',
     name:'GT3r',
+    bloom:{
+      i:0.2,
+      r:0.9,
+      t:0
+    },
     points : [
     {
       position: new THREE.Vector3(0.67471,0.67471,1.62139),
@@ -113,6 +128,11 @@ let GT3r={
 let TurboS={
   url:'./assets/models/draco/turbo S/redcar.gltf',
   name:'TURBO S',
+  bloom:{
+    i:0.2,
+    r:0.9,
+    t:0
+  },
   points : [
   {
     position: new THREE.Vector3(0.67471,0.67471,1.62139),
@@ -150,6 +170,11 @@ let TurboS={
 const Cayman718={
     url:'./assets/models/draco/718 cayman gt4/718.gltf',
     name:'Cayman',
+    bloom:{
+      i:0.2,
+      r:0.9,
+      t:0
+    },
     points: [
     {
       position: new THREE.Vector3(0.67471,0.67471,1.62139),
@@ -249,7 +274,8 @@ let cardData=(carname)=>{
    let Data={
     url: car.url,
     name: car.name,
-    points: car.points
+    points: car.points,
+    bloom:car.bloom,
    }
 
    return Data;

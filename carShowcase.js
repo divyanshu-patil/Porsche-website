@@ -252,9 +252,9 @@ applyBloomToPart('Headlight_Mirror_left');
 
 const bloomPass = new UnrealBloomPass(
   new THREE.Vector2(sizes.width, sizes.height),
-  0.2,
-  0.9,
-  0
+  Data.bloom.i,
+  Data.bloom.r,
+  Data.bloom.t
 );
 
 effectComposer.addPass(bloomPass)
