@@ -249,4 +249,106 @@ gsap.from('.page-3 .bottom-right ',{
 }
 page3animation();
 
+function footerAnimation(){
+  document.querySelector('.info .wrapper').style.opacity=0
 
+  let delay = 0.5;
+  let duration=1;
+  let ease2 ='back(3).out'
+  let ease1= 'power2.out'
+  gsap.from('.page-5 .hider',{
+    left:'-100%',
+    opacity:0,
+    duration:duration,
+    delay:delay-0.2,
+    ease:ease1,
+    scrollTrigger:{
+      trigger:'.page-5',
+      scroller:'body',
+      start:'top 10px',
+      // markers:true
+      },
+      onComplete:()=>{
+        document.querySelector(".footer-part").style.opacity=1;
+        gsap.from(".footer-part .section",{
+          y:100,
+          opacity:0,
+          duration:duration,
+          ease:ease2,
+          stagger:0.15,
+          scrollTrigger:{
+            trigger:".page-5",
+            scroller:"body",
+            start:"top 50px",
+            // end:'top 10px',
+            // scrub:2,
+            // markers:true
+            },
+          onComplete:infoAnimation()
+        })
+      }
+  })
+
+  
+}
+footerAnimation()
+
+function infoAnimation(){
+  
+  let duration = 2;
+  ease='power3.inOut'
+document.querySelector('.info').style.display='block'
+  gsap.from('.info',{
+    height:0,
+    padding:0,
+    opacity:0,
+    duration:duration,
+    ease:ease,
+    scrollTrigger:{
+      trigger:'.page-5',
+      scroller:'body',
+      start:'top 10px',
+      // markers:true
+      },
+      onComplete:()=>{
+        document.querySelector('.info .wrapper').style.opacity=1
+        gsap.from('.info .wrapper',{
+          opacity:0,
+          duration:duration/3,
+          ease:ease,
+          onComplete:()=>{
+            let name = document.querySelectorAll(".info .title a")
+            name.forEach((a)=>{
+              animateWord(a)
+            })
+          }
+        })
+        
+      }
+  })
+}
+
+function animateWord(a){
+const letters = "ABCDEFGHIJKLMNOPQRDTUVWXYZ"
+let word = a.innerText;
+a.innerText = a.innerText.split('').map((letter,index) =>  {  
+  return letters[Math.floor(Math.random()*26)]
+}).join('')
+
+let iterations = 0;
+
+const interval = setInterval(()=>{
+  a.innerText = a.innerText.split('').map((letter,index) =>  {
+    if(index < iterations){
+      return word[index]
+    }
+    
+    return letters[Math.floor(Math.random()*26)]
+  }).join('')
+
+
+  if(iterations >= word.length) clearInterval(interval)
+
+  iterations +=1/4;
+},30)
+}
