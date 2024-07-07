@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import gsap from 'gsap';
 let GT3rs={
     url:'./assets/models/draco/gt3rs/gt3rs.gltf',
     name:'GT3rs',
@@ -281,4 +282,34 @@ let cardData=(carname)=>{
    return Data;
 }
 
-export {cardData}
+function cursorAnim(cursor,arr){
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+})
+if (arr){
+arr.forEach((ar2)=>{
+  ar2.forEach((a)=>{
+    
+
+  a.addEventListener('mouseenter',()=>{
+    gsap.to(cursor,{
+      opacity:0.3,
+      duration:0.2,
+      ease:'power2.out'
+    })
+
+  })
+  a.addEventListener('mouseleave',()=>{
+    gsap.to(cursor,{
+      opacity:1,
+      duration:0.2,
+      ease:'power2.out'
+    })
+  })
+})
+})
+}
+}
+
+export {cardData,cursorAnim}

@@ -15,14 +15,22 @@ import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass.js";
 GlitchPass
 import { addGUI } from "./carShowcasegui";
 import { addGsapAnimation ,pointsVisibleAnimation} from "./carshowcaseGsapAnimations";
-import { cardData} from "./interactions.js";
+import { cardData,cursorAnim} from "./interactions.js";
 import { load } from "./loading.js";
-import { shaderStages } from "three/examples/jsm/nodes/Nodes.js";
 
 console.log("three-js", THREE);
 
-let currentModle;
+// note 
+// if your element is not appearing more than once then pass it in rectangular brackets as array
+cursorAnim(
+  document.querySelector(".cursor"),
+[
+  document.querySelectorAll("a"),
+  document.querySelectorAll(".label"),
+  [document.querySelector(".cross")]
+])
 
+let currentModle;
 
 var urlParams = new URLSearchParams(window.location.search);
 var encodedCar = urlParams.get('car');

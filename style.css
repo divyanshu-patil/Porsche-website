@@ -30,6 +30,7 @@
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
+    cursor: none
 }
 
 :root{
@@ -71,6 +72,20 @@ body::-webkit-scrollbar{
     display: none;
 }
 
+.cursor{
+    width: 30px;
+    aspect-ratio: 1;
+    background-color: white;
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 300;
+    transform: translate(-50%,-50%);
+    transition: 0.15s ease-out ;
+    pointer-events: none;
+}
+
 canvas{
     width: 100vw;
     height: 100vh;
@@ -86,7 +101,7 @@ canvas{
 a{
     text-decoration: none;
     color: var(--gray-color);
-    cursor: pointer;
+    /* cursor: pointer; */
     transition: all 0.1s;
 }
 
@@ -188,7 +203,7 @@ nav .hamburger{
     height: 40px;
     padding: 5px;
     border-radius: 50%;
-    cursor: pointer;
+    /* cursor: pointer; */
 
 }
 
@@ -197,7 +212,7 @@ nav .hamburger{
     height: 3.5vw;
     right: 2%;
     top: 4%;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 
@@ -216,12 +231,13 @@ nav .hamburger:hover{
 .navigation{
     width: 100vw;
     height: 100vh;
-    z-index: 999;
+    z-index: 299;
     position: fixed;
     background-color: var(--darkColor);
     display: none;
     align-items: center;
     right: -100%;
+    overflow: hidden;
 }
 
 .navigation .left{

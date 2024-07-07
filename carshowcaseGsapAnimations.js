@@ -156,6 +156,10 @@ let addGsapAnimation = (camera, controls, THREE, points, info, name) => {
       ease: ease,
     });
   });
+
+
+  
+
 };
 
 let pointsVisibleAnimation = (points) => {
@@ -166,5 +170,8 @@ let pointsVisibleAnimation = (points) => {
     });
   }, 1000);
 };
+
+
+
 
 export { addGsapAnimation, pointsVisibleAnimation };

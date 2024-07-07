@@ -16,12 +16,22 @@ import { GammaCorrectionShader } from 'three/examples/jsm/Addons.js';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { load } from './loading';
+import {cursorAnim} from './interactions.js'
 
+// if your element is not appearing more than once then pass it in rectangular brackets as array
 
+cursorAnim(
+    document.querySelector(".cursor"),
+[
+    document.querySelectorAll("a"),
+    [document.querySelector(".hamburger")],
+    [document.querySelector(".close")],
+    document.querySelectorAll(".aa"),
+    document.querySelectorAll(".cards")
+])
 
 // making variable to store model
 let Model;
-
 
 // creating scene
 const scene = new THREE.Scene();

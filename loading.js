@@ -72,4 +72,8 @@ let load = (percentLoaded)=>{
                 },'color')        
     }
   }
+
+
+
+
   export {load};
