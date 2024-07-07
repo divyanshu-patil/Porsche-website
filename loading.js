@@ -34,6 +34,7 @@ let load = (percentLoaded)=>{
             tl.to('.box1',{
                 rotate:'90deg',
                 duration:duratiionAvg,
+                delay:-1,
                 ease:ease
             })
             tl.to('.box3',{

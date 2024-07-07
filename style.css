@@ -154,8 +154,8 @@ nav{
     justify-content: space-between;
     /* background-color: red; */
    
-    padding: 18px 80px;
-    height: auto;
+    padding: 20px 5%;
+    height: fit-content;
     width: 100%;
     
 
