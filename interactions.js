@@ -255,7 +255,4 @@ let cardData=(carname)=>{
    return Data;
 }
 
-
-
-
 export {cardData}
