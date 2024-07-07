@@ -70,6 +70,7 @@ body::-webkit-scrollbar{
 .overlay::-webkit-scrollbar{
     display: none;
 }
+
 canvas{
     width: 100vw;
     height: 100vh;
@@ -199,6 +200,17 @@ nav .hamburger:hover{
     width: 100%;
     height: 100%;
     fill: var(--lightColor);
+}
+
+.hamburger-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.283);
+    z-index: 550;
+    pointer-events: all;
 }
 
 /* fixed watermark in lower right.................. */

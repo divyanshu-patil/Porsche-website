@@ -66,6 +66,7 @@ let load = (percentLoaded)=>{
                 duration:duratiionAvg,
                 ease:ease,
                 onComplete:()=>{
+                    // document.querySelector(".container").style.display='block';
                   document.querySelector(".overlay").style.display="none";
                 }
                 },'color')        
