@@ -67,6 +67,9 @@ body::-webkit-scrollbar{
 }
 /* global structure ............................... */
 
+.overlay::-webkit-scrollbar{
+    display: none;
+}
 canvas{
     width: 100vw;
     height: 100vh;
@@ -441,8 +444,8 @@ nav .hamburger:hover{
    position: relative;
 
    backdrop-filter: blur(5px);
-
- 
+   background-image: linear-gradient(135deg,transparent,rgba(0, 0, 0, 0.264));
+ background-size: 4px 4px;
    z-index: 3;
 }
 
@@ -676,7 +679,7 @@ object-fit: cover;
     position: absolute;
     top: 20%;
     right: 10%;
-    background-color: #1e1e1e7d;
+    background-color: #1e1e1e2c;
     backdrop-filter: blur(5px);
     border: 2px solid var(--gray-color);
     z-index: 9;
@@ -686,9 +689,13 @@ object-fit: cover;
     height: 40vh;
     
     text-align: center;
-display: none;
+    display: none;
 
-color: var(--gray-color);
+    color: var(--gray-color);
+
+    /* box-shadow: 0 0 45px rgba(255, 255, 255, 0.264) inset; */
+    background-image: linear-gradient(135deg,transparent,rgba(0, 0, 0, 0.53));
+    background-size: 3px 3px;
     
     /* opacity: 0; */
 }

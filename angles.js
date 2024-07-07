@@ -11,6 +11,8 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
+import { SMAAPass } from 'three/examples/jsm/Addons.js';
+import { GammaCorrectionShader } from 'three/examples/jsm/Addons.js';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { load } from './loading';
@@ -442,7 +444,7 @@ window.addEventListener('resize', () => {
 
         // creating bloom
 
-
+        
         const renderScene = new RenderPass(scene, camera);
         const composer = new EffectComposer(renderer)
 
@@ -489,12 +491,18 @@ window.addEventListener('resize', () => {
         finalComposer.addPass(renderScene) 
         finalComposer.addPass(mixPass)
 
-
+        
         // adding outputpass
-
+        
         const outputPass = new OutputPass()
         finalComposer.addPass(outputPass)
-
+        
+         // adding antializing
+       const smaaPass = new SMAAPass()
+       // composer.addPass(smaaPass);
+      finalComposer.addPass(smaaPass)
+        
+        
         //  adding bloom to selected part
 
         const BLOOM_SCENE = 1;
@@ -553,7 +561,10 @@ window.addEventListener('resize', () => {
 
         // window.addEventListener('pointerdown', onPointerDown)
 
-       
+
+        
+      
+
         window.addEventListener('resize', () => {
             sizes.width = window.innerWidth;
             sizes.height = window.innerHeight;
@@ -562,8 +573,11 @@ window.addEventListener('resize', () => {
             camera.updateProjectionMatrix();
             renderer.render(scene, camera);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            finalComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             composer.setSize(sizes.width, sizes.height);
             finalComposer.setSize(sizes.width, sizes.height);
+
         });
 
         let animate = () => {
