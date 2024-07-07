@@ -240,7 +240,6 @@ if(renderer.getPixelRatio()===1 && !renderer.capabilities.isWebGL2){
 
 
 
-
   // controls.addEventListener("change", () => {
   //   console.log(
   //     `Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`
@@ -291,6 +290,8 @@ if(renderer.getPixelRatio()===1 && !renderer.capabilities.isWebGL2){
 }
 
   const raycaster = new THREE.Raycaster();
+
+
   let animate = () => {
     // update the helpers if their position changed
     directionalLightHelper.update();
@@ -331,6 +332,8 @@ if(renderer.getPixelRatio()===1 && !renderer.capabilities.isWebGL2){
 
     // update camera
     camera.updateProjectionMatrix();
+
+
     // update orbit controls
     controls.update();
     // render scene

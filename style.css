@@ -202,16 +202,7 @@ nav .hamburger:hover{
     fill: var(--lightColor);
 }
 
-.hamburger-overlay{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.283);
-    z-index: 550;
-    pointer-events: all;
-}
+
 
 /* fixed watermark in lower right.................. */
 .watermark{
