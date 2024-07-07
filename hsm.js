@@ -1,6 +1,5 @@
 import gsap from "gsap"
 
-
 let hamberger = document.querySelector(".hamburger")
 let navigation = document.querySelector(".navigation")
 let menu = document.querySelector(".menu")

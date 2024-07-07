@@ -37,7 +37,7 @@ let GT3rs={
 }
 
 let Spyder918={
-    url:'./assets/models/draco/918/918spider.gltf',
+    url:'./assets/models/draco/918/918.gltf',
     name:'Spyder',
     points : [
     {
@@ -74,7 +74,7 @@ let Spyder918={
 }
 
 let GT3r={
-    url:'./assets/models/draco/gt3r 2/gt3r.gltf',
+    url:'./assets/models/draco/gt3r/gt3r.gltf',
     name:'GT3r',
     points : [
     {
@@ -111,7 +111,7 @@ let GT3r={
 }
 
 let TurboS={
-  url:'./assets/models/draco/turbo S/turboS.gltf',
+  url:'./assets/models/draco/turbo S/redcar.gltf',
   name:'TURBO S',
   points : [
   {
@@ -148,7 +148,7 @@ let TurboS={
 }
 
 const Cayman718={
-    url:'./assets/models/draco/718 cayman gt4/718 cayman gt4.gltf',
+    url:'./assets/models/draco/718 cayman gt4/718.gltf',
     name:'Cayman',
     points: [
     {
@@ -254,8 +254,5 @@ let cardData=(carname)=>{
 
    return Data;
 }
-
-
-
 
 export {cardData}
