@@ -11,9 +11,11 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
+import { SMAAPass } from 'three/examples/jsm/Addons.js';
+import { GammaCorrectionShader } from 'three/examples/jsm/Addons.js';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ScrollToPlugin } from 'gsap/src/all';
+import { load } from './loading';
 
 
 
@@ -117,11 +119,14 @@ let parameter = {
 
 Lightsfolder.add(parameter, 'visible').name('visible helpers');
 
-// updating all material for envMap
-
+// adding loading manager
+const loadingManager = new THREE.LoadingManager()
+loadingManager.onProgress=(url,objectLoaded,totalObject)=>{
+    load(Math.floor((objectLoaded/totalObject)*100));
+}
 // adding environment map
 // using RGBELoader
-const rgbeLoader = new RGBELoader();
+const rgbeLoader = new RGBELoader(loadingManager);
 rgbeLoader.load(
     './assets/enviroment/darkhdri.hdr',
     (environmentMap) => {
@@ -168,9 +173,9 @@ rgbeLoader.load(
 
         // adding mesh
         let mixer = null;
-        const dracoLoader = new DRACOLoader()
+        const dracoLoader = new DRACOLoader(loadingManager)
         dracoLoader.setDecoderPath( './assets/libraries/draco/' );
-        const gltfLoader = new GLTFLoader();
+        const gltfLoader = new GLTFLoader(loadingManager);
         gltfLoader.setDRACOLoader(dracoLoader)
         gltfLoader.load(
             './assets/models/draco/gt3r/gt3r.gltf',
@@ -299,13 +304,20 @@ gsap.registerPlugin(ScrollTrigger);
 // Define camera positions
 const cameraPositions = [
     // giving positions of camera as object
-    { x: -0.014, y: 1.32, z: -6.00 },
-    { x: 2.7023127197580825, y:1.7049162056063678, z: 5.02001983140576 },
-    { x: 0.0001710000006823394, y:12.326639, z:0.0003240000012928536 },
-    { x: 2.1209853924759434, y:0.9604913289220418, z:4.310617568395401 },
-    { x: -5.5502484499949, y:1.4859644411285007, z:-2.740258632785624 },
+    { x: -0.014, y: 1.32, z: -6.00, },
+    { x: 2.7023127197580825, y:1.7049162056063678, z: 5.02001983140576,},
+    { x: 0.0001710000006823394, y:12.326639, z:0.0003240000012928536 ,},
+    { x: 2.1209853924759434, y:0.9604913289220418, z:4.310617568395401,},
+    {x: -5.550212999743161, y: 1.4869090011130943,z:-2.740565000144729, },
 ];
 
+const controlsTarget=[
+     new THREE.Vector3(0,1,0),
+     new THREE.Vector3(0,1,0) ,
+     new THREE.Vector3(0,1,0),
+     new THREE.Vector3(0,1,0) ,
+     new THREE.Vector3(-0.4175308165148711, 0.957633291500015,0.7474954119541828)
+]
 // for model rotation
 
 const modelRotations = [
@@ -324,6 +336,7 @@ const modelRotations = [
 const updateCamera = (index) => {
     const position = cameraPositions[index];
     const rotation = modelRotations[index];
+    const controlTarget = controlsTarget[index]
 
     if (position && rotation) {
         const timeline = gsap.timeline({
@@ -352,6 +365,14 @@ const updateCamera = (index) => {
                 immediateRender: true, // Ensure immediate rendering
             }, 0);
         }
+        timeline.to(controls.target, {
+            x: controlTarget.x,
+            y: controlTarget.y,
+            z: controlTarget.z,
+            duration: 2,
+            ease: 'power2.inOut',
+            immediateRender: true, // Ensure immediate rendering
+        }, 0);
     }
 };
 
@@ -461,7 +482,7 @@ window.addEventListener('resize', () => {
 
         // creating bloom
 
-
+        
         const renderScene = new RenderPass(scene, camera);
         const composer = new EffectComposer(renderer)
 
@@ -508,12 +529,18 @@ window.addEventListener('resize', () => {
         finalComposer.addPass(renderScene) 
         finalComposer.addPass(mixPass)
 
-
+        
         // adding outputpass
-
+        
         const outputPass = new OutputPass()
         finalComposer.addPass(outputPass)
-
+        
+         // adding antializing
+       const smaaPass = new SMAAPass()
+       // composer.addPass(smaaPass);
+      finalComposer.addPass(smaaPass)
+        
+        
         //  adding bloom to selected part
 
         const BLOOM_SCENE = 1;
@@ -572,7 +599,10 @@ window.addEventListener('resize', () => {
 
         // window.addEventListener('pointerdown', onPointerDown)
 
-       
+
+        
+      
+
         window.addEventListener('resize', () => {
             sizes.width = window.innerWidth;
             sizes.height = window.innerHeight;
@@ -581,8 +611,11 @@ window.addEventListener('resize', () => {
             camera.updateProjectionMatrix();
             renderer.render(scene, camera);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            finalComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             composer.setSize(sizes.width, sizes.height);
             finalComposer.setSize(sizes.width, sizes.height);
+
         });
 
         let animate = () => {

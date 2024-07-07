@@ -5,8 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="car-showcase.css">
+    <link rel="stylesheet" href="loadingbar.css">
 </head>
 <body>
+    <div class="overlay">
+        <div class="percent"><h1>0%</h1></div>
+        <div class="wrapper">
+
+            <div class="progress-bar">
+                <div class="wholebar">
+                    <div class="indicator"></div>
+                </div>
+            </div>
+                <div class="box1"></div>
+                <div class="box2"></div>
+                <div class="box3"></div>
+        </div>
+    </div>
     <div class="name">
         <h1></h1>
     </div>
@@ -39,7 +54,7 @@
 
     <canvas class="webgl"></canvas>
     <script type="module" src="carShowcase.js"></script>
-
+    <script type="module" src="loading.js"></script>
 
 </body>
 </html>

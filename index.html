@@ -5,8 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="loadingbar.css">
 </head>
 <body>
+    
+    <div class="overlay">
+        <div class="percent"><h1>0%</h1></div>
+        <div class="wrapper">
+    
+            <div class="progress-bar">
+                <div class="wholebar">
+                    <div class="indicator"></div>
+                </div>
+            </div>
+                <div class="box1"></div>
+                <div class="box2"></div>
+                <div class="box3"></div>
+        </div>
+    </div>
+
     <canvas class="webgl"></canvas>
     <header>
         <nav>
@@ -16,14 +33,52 @@
                 </div>
             </div>
 
-            <div class="hider">
-
                 <div class="hamburger">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"></path></svg>
-                </div>
+                    <svg class="menu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z"></path></svg>
+
             </div>
         </nav>
     </header>
+
+    <!-- hamberger click section -->
+
+
+    
+
+
+
+    <div class="navigation">
+      <div class="svg-wrapper">
+          <svg class="close" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
+              <g transform=""><g fill="#0f0f0f" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,256v-256h256v256z" id="bgRectangle"></path></g><g fill="none" fill-rule="nonzero" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.33333,5.33333)"><path d="M11.7,28.5l-3.7,3.7c-0.8,0.8 -0.8,2 0,2.8l5,5c0.8,0.8 2,0.8 2.8,0l8.2,-8.2l8.2,8.2c0.8,0.8 2,0.8 2.8,0l5,-5c0.8,-0.8 0.8,-2 0,-2.8l-8.2,-8.2l8.2,-8.2c0.8,-0.8 0.8,-2 0,-2.8l-2.6,-2.6"></path><path d="M33.1,7.1l-9.1,9.1l-8.2,-8.2c-0.8,-0.8 -2,-0.8 -2.8,0l-5,5c-0.8,0.8 -0.8,2 0,2.8l8.2,8.2"></path></g></g></g>
+            </svg>
+           
+        </div>
+        <div class="left">
+            <div   class="a-wrapper"> <svg class="red-line" height="50" width="300" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0" y1="10" x2="250" y2="10" style="stroke:red;stroke-width:12" />
+              </svg><a id="01" class="aa" href=""> HOME</a></div>
+            <div  class="a-wrapper"> <svg class="red-line" height="50" width="300" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0" y1="10" x2="250" y2="10" style="stroke:red;stroke-width:12" />
+              </svg><a id="02" class="aa" href="">PROJECTS</a></div>
+            <div  class="a-wrapper"> <svg class="red-line" height="50" width="300" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0" y1="10" x2="250" y2="10" style="stroke:red;stroke-width:12" />
+              </svg><a id="03" class="aa" href="">ABOUT</a></div>
+            <div  class="a-wrapper"> <svg class="red-line" height="50" width="300" xmlns="http://www.w3.org/2000/svg">
+                <line x1="0" y1="10" x2="250" y2="10" style="stroke:red;stroke-width:12" />
+              </svg><a id="04" class="aa" href="">CONTACT</a></div>
+        </div>
+
+        <div class="right-bottom">00</div>
+
+        <div class="bottom">
+            <div class="icon">
+                <div class="app">INSTAGRAM</div>
+                <div class="app">FACEBOOK</div>
+            </div>
+        </div>
+    </div>
+
 
     <!-- porsche name section -->
 
@@ -38,8 +93,12 @@
         </div>
     </div>
 
+  
+
 
 <!--......................... page 1 ....................... -->
+<div class="stopscrolling">
+
 
 <div class="pages page-1">
     <div class="main-heading "><h1>PORSCHE</h1></div>
@@ -60,15 +119,15 @@
     
  <!-- page 3.......................................... -->
  <div class="pages page-3">
+    <div class="gradient-left gradient"></div>
+    <div class="gradient-right gradient"></div>
 <div class="wrapper">
-
-
     <div class="top-left">
         <div class="hider">
 
             <h3 class="gradient-text-70p">THE ONE AND <br> ALWAYS</h3>
         </div>
-        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque doloribus quod suscipit, soluta itaque, nam autem rerum reprehenderit, unde deleniti repudiandae ducimus alias eligendi saepe.</p>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, fugit!</p>
     </div>
     <div class="bottom-right">
         <div class="wrapper">
@@ -101,18 +160,7 @@
                 </div>
             </div>
 
-            <div id="718-cayman" class="cards">
-                <div class="img">
-                    <img src="assets/IMAGES/render/718 cayman gt4 .png" alt="">
-                </div>
-                <div class="gradient"></div>
-                <div class="txt">
-                    <div class="logo">
-                        <img src="assets/IMAGES/porsche logo.png" alt="">
-                    </div>
-                    <h3 class="title">718 GT4</h3>
-                </div>
-            </div>
+            
 
             <div id="918-spyder" class="cards">
                 <div class="img">
@@ -124,19 +172,6 @@
                         <img src="assets/IMAGES/porsche logo.png" alt="">
                     </div>
                     <h3 class="title">918</h3>
-                </div>
-            </div>
-
-            <div id="gtr2" class="cards">
-                <div class="img">
-                    <img src="assets/IMAGES/render/gt3r.png" alt="">
-                </div>
-                <div class="gradient"></div>
-                <div class="txt">
-                    <div class="logo">
-                        <img src="assets/IMAGES/porsche logo.png" alt="">
-                    </div>
-                    <h3 class="title">GT3r</h3>
                 </div>
             </div>
 
@@ -153,7 +188,33 @@
                 </div>
             </div>
 
+            <div id="gtr2" class="cards">
+                <div class="img">
+                    <img src="assets/IMAGES/render/gt3r.png" alt="">
+                </div>
+                <div class="gradient"></div>
+                <div class="txt">
+                    <div class="logo">
+                        <img src="assets/IMAGES/porsche logo.png" alt="">
+                    </div>
+                    <h3 class="title">GT3r</h3>
+                </div>
+            </div>
 
+            
+
+            <div id="718-cayman" class="cards">
+                <div class="img">
+                    <img src="assets/IMAGES/render/718 cayman gt4 .png" alt="">
+                </div>
+                <div class="gradient"></div>
+                <div class="txt">
+                    <div class="logo">
+                        <img src="assets/IMAGES/porsche logo.png" alt="">
+                    </div>
+                    <h3 class="title">718 GT4</h3>
+                </div>
+            </div>
 
 
    </div>
@@ -166,14 +227,48 @@
 
     <!-- page 5............................................. -->
     <div class="pages page-5">
-        <div class="hider">
+        <div class="info">
+            <div class="wrapper">
 
+                <p>Join</p>
+                <div class="img">
+                    <div class="logo left">
+
+                    <a href="https://github.com/divyanshu-patil" target="_blank"><img src="assets/IMAGES/github icon.png" alt="divyanshu-github"></a>
+                </div>
+                <div class="logo right">
+
+                    <a href="https://github.com/Bhavesh-More" target="_blank"><img src="assets/IMAGES/github icon.png" alt="bhavesh-github"></a>
+                </div>
+                
+            </div>
+            <h1 class="title">
+                <a href="https://github.com/divyanshu-patil" target="_blank">Divyanshu</a> &
+                <a href="https://github.com/Bhavesh-More" target="_blank">Bhavesh</a>
+            </h1>
+            <div class="subtext">on 
+                <div class="github">
+                    
+                    <div class="logo">
+                        <img src="assets/IMAGES/github icon.png" alt="">
+                    </div>
+                    <p>github</p>
+                </div>
+            </div>
+            <div class="repo">Repo Link : 
+                <a href="https://github.com/divyanshu-patil/Porsche-website" target="_blank">Porsche website</a>
+            </div>
+            <p class="description"></p>
+        </div>
+        </div>
+        <div class="hider">
+            
             <h3>EXPLORE WEBSITE</h3>
         </div>
-
+        
         <footer>
             <div class="footer-part">
-                <div class="names">
+                <div class="names section">
                     <h4>CREATED BY</h4>
                     <div class="row2">
 
@@ -182,7 +277,7 @@
                         <P>ANIRUDDHA JAWALE</P>
                     </div>
                 </div>
-                <div class="contact">
+                <div class="contact section">
                     
                     <h4>CONTACT US</h4>
                     <div class="row2">
@@ -192,18 +287,18 @@
                 </div>
                     
                 </div>
-                <div class="github-links">
+                <div class="github-links section">
                     <h4>CONNECT US</h4>
                     <div class="row2">
                         
                         <ul>
                             <li>
                                 <div class="logo"><img src="assets/IMAGES/github icon.png" alt=""></div>
-                                <p>DIVYANSHU PATIL</p>
+                                <a href="https://github.com/divyanshu-patil" target="_blank"><p>DIVYANSHU PATIL</p></a>
                             </li>
                             <li>
                             <div class="logo"><img src="assets/IMAGES/github icon.png" alt=""></div>
-                            <p>BHAVESH MORE</p>
+                            <a href="https://github.com/Bhavesh-More"  target="_blank"><p>BHAVESH MORE</p></a>
                         </li>
                         <li>
                             <div class="logo"><img src="assets/IMAGES/github icon.png" alt=""></div>
@@ -212,7 +307,7 @@
                     </ul>
                 </div>
                 </div>
-                <div class="email">
+                <div class="email section">
                     <h4>EMAIL</h4>
                     <div class="row2">
                         
@@ -225,7 +320,11 @@
         </div>
 
 
-
+<<<<<<< HEAD
+    </div>
+=======
+           
+>>>>>>> 2961c9632a3259ab6d06422843545e588cab8344
     
     <!-- <script type="module" src="three-js.js"></script> -->
 
@@ -245,9 +344,10 @@
             gl_FragColor = (texture2D(baseTexture, vUv) + vec4(1.0) *  texture2D(bloomTexture, vUv)); 
         }
     </script>
-
+       <script type ="module" src="hsm.js"></script>
      <script type ="module" src="interactions.js"></script>
      <script src="angles.js" type="module"></script>
     <script type ="module" src="gsap-animation.js"></script>
+    <script type="module" src="loading.js"></script>
 </body>
 </html>

@@ -3,9 +3,19 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
+import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
+import { GammaCorrectionShader, ShaderPass } from "three/examples/jsm/Addons.js";
+import { GlitchPass } from "three/examples/jsm/Addons.js";
+import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js"
+import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass.js";
+
+GlitchPass
 import { addGUI } from "./carShowcasegui";
 import { addGsapAnimation ,pointsVisibleAnimation} from "./carshowcaseGsapAnimations";
-import { cardData } from "./interactions.js";
+import { cardData} from "./interactions.js";
+import { load } from "./loading.js";
+import { shaderStages } from "three/examples/jsm/nodes/Nodes.js";
 
 console.log("three-js", THREE);
 
@@ -60,17 +70,25 @@ const directionalLightHelper2 = new THREE.DirectionalLightHelper(
 scene.add(
   ambientLight,
   directionalLight,
-  directionalLightHelper,
   directionalLight2,
-  directionalLightHelper2
 );
+
+// adding helpers
+// scene.add(
+//   directionalLightHelper,
+//   directionalLightHelper2
+// )
+
+
 directionalLight2.target = scene;
 
-// updating all material for envMap
+
+// adding loading manager
+const loadingManager = new THREE.LoadingManager()
 
 // adding environment map
 // using RGBELoader
-const rgbeLoader = new RGBELoader();
+const rgbeLoader = new RGBELoader(loadingManager);
 rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
   const updateAllMaterials = () => {
     scene.traverse((child) => {
@@ -97,9 +115,9 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
 
   // adding mesh
   let mixer = null;
-  const dracoLoader = new DRACOLoader();
+  const dracoLoader = new DRACOLoader(loadingManager);
   dracoLoader.setDecoderPath("./assets/libraries/draco/");
-  const gltfLoader = new GLTFLoader();
+  const gltfLoader = new GLTFLoader(loadingManager);
   gltfLoader.setDRACOLoader(dracoLoader);
   gltfLoader.load(url, (gltf) => {
     gltf.scene.position.y = -0.5;
@@ -152,8 +170,11 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
   // adding orbit controls
   const controls = new OrbitControls(camera, canvas);
   controls.enableDamping = true;
+  controls.dampingFactor = 0.04
   controls.target.y = scene.position.y + 0.5;
-
+  controls.maxPolarAngle = Math.PI / 2             // dont go below ground
+  controls.minDistance =0;
+  controls.maxDistance =15;
   // adding renderer
   const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
@@ -182,19 +203,51 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
   // changing renderer tone mapping
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
 
-  // adding renderer tone mapping controls to the debug UI
+ 
 
   // render
   renderer.render(scene, camera);
 
-  controls.addEventListener("change", () => {
-    console.log(
-      `Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`
-    );
-    console.log(
-      `controls target: ${controls.target.x}, ${controls.target.y},${controls.target.z}`
-    );
-  });
+  // post processing
+  const renderTarget = new THREE.WebGLRenderTarget(sizes.width,sizes.height,
+    {
+      samples:2
+    }
+  )
+
+  const effectComposer = new EffectComposer(renderer,renderTarget)
+  effectComposer.setSize(sizes.width,sizes.height)
+  effectComposer.setPixelRatio(Math.min(window.devicePixelRatio,2))
+
+  const renderPass = new RenderPass(scene,camera)
+  effectComposer.addPass(renderPass)
+
+ 
+
+
+  const gammaCorrectionPas= new ShaderPass(GammaCorrectionShader)
+  effectComposer.addPass(gammaCorrectionPas)
+
+if(renderer.getPixelRatio()===1 && !renderer.capabilities.isWebGL2){
+
+  const smaaPass = new SMAAPass()
+  effectComposer.addPass(smaaPass);
+}
+
+  
+
+
+
+
+
+  // controls.addEventListener("change", () => {
+  //   console.log(
+  //     `Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`
+  //   );
+  //   console.log(
+  //     `controls target: ${controls.target.x}, ${controls.target.y},${controls.target.z}`
+  //   );
+  // });
 
   window.addEventListener("resize", () => {
     sizes.width = window.innerWidth;
@@ -204,6 +257,10 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
     camera.updateProjectionMatrix();
     renderer.render(scene, camera);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // update effect composer
+    effectComposer.render(scene, camera);
+    effectComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   });
 
   // points of intrest
@@ -226,8 +283,15 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
   let info = document.querySelector(".info");
   let name = document.querySelector(".name");
   info.style.opacity=0;
+  
   addGsapAnimation(camera,controls,THREE,points,info,name)
+  loadingManager.onProgress=(url,objectLoaded,totalObject)=>{
+    load(Math.floor((objectLoaded/totalObject)*100));
+}
+
   const raycaster = new THREE.Raycaster();
+
+
   let animate = () => {
     // update the helpers if their position changed
     directionalLightHelper.update();
@@ -268,10 +332,13 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
 
     // update camera
     camera.updateProjectionMatrix();
+
+
     // update orbit controls
     controls.update();
     // render scene
-    renderer.render(scene, camera);
+    // renderer.render(scene, camera);
+    effectComposer.render();
     // play animation on next frame
     window.requestAnimationFrame(animate);
   };
@@ -280,5 +347,5 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
     ambientLight,
     directionalLight,
     directionalLight2,
-  ],points);
+  ],points,controls);
 });

@@ -5,6 +5,14 @@ import { ScrollToPlugin } from 'gsap/src/all';
 
 // cards animation
 
+
+
+
+
+
+
+
+
 {
 
 let duration = 0.3
@@ -131,18 +139,6 @@ ScrollTrigger.create({
 // })
 // tl.set(document.body, {overflow: "hidden"})
 
-function Model_animation() {
-  t1.to(gltf.scene.position,{
-    x:-500,
-    y:-200,
-  })
-  
-}
-
-
-
-
-
 // animation on all the pages...
 
 let tl = gsap.timeline()
@@ -252,3 +248,5 @@ gsap.from('.page-3 .bottom-right ',{
 
 }
 page3animation();
+
+

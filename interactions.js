@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-
 let GT3rs={
     url:'./assets/models/draco/gt3rs/gt3rs.gltf',
     name:'GT3rs',
@@ -255,4 +254,8 @@ let cardData=(carname)=>{
 
    return Data;
 }
-export {cardData};
+
+
+
+
+export {cardData}
