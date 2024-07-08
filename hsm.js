@@ -51,7 +51,7 @@ anchors.forEach(anchor => {
         });
 
         // If you want to log the clicked anchor tag or perform other actions
-        console.log('Clicked:', anchor);
+        // console.log('Clicked:', anchor);
     });
     anchor.addEventListener('mouseleave', (event) => {
         event.preventDefault();
@@ -65,7 +65,7 @@ anchors.forEach(anchor => {
         });
 
         // If you want to log the clicked anchor tag or perform other actions
-        console.log('Clicked:', anchor);
+        // console.log('Clicked:', anchor);
     });
 
 })
