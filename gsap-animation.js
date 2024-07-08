@@ -6,13 +6,6 @@ import { ScrollToPlugin } from 'gsap/src/all';
 // cards animation
 
 
-
-
-
-
-
-
-
 {
 
 let duration = 0.3
