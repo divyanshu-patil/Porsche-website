@@ -262,7 +262,12 @@ rgbeLoader.load(
         const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height);
         // adding position              B
         camera.position.set(-0.014562269457166203, 1.3209874023720694,-6.004923732399126);
-        camera.zoom = 2
+        if (sizes.width > 850) {
+            camera.zoom = 2
+        }
+        else{
+            camera.zoom = 1
+        }
         scene.add(camera);
 
         
@@ -581,6 +586,12 @@ window.addEventListener('resize', () => {
             finalComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             composer.setSize(sizes.width, sizes.height);
             finalComposer.setSize(sizes.width, sizes.height);
+            if (sizes.width > 850) {
+                camera.zoom = 2
+            }
+            else{
+                camera.zoom = 1.1
+            }
 
         });
 
