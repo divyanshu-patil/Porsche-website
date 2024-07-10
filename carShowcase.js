@@ -428,9 +428,6 @@ function restoreMaterial(obj) {
     point.element.style.transform = `translate(${translateX}px,${translateY}px)`
 }
 
-
-
-
     // update camera
     camera.updateProjectionMatrix();
 

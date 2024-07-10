@@ -1,12 +1,13 @@
 import gsap from "gsap";
 import CustomEase from "gsap/CustomEase";
 
+var controls_name
 gsap.registerPlugin(CustomEase);
 let addGsapAnimation = (camera, controls, THREE, points, info, name) => {
   name.style.opacity=1
   document.querySelector(".cross").style.display = "none";
   setTimeout(() => {
-    controls.addEventListener(
+   controls_name =  controls.addEventListener(
       "change",
       () => {
         name.style.zIndex = 99;
@@ -121,7 +122,8 @@ let addGsapAnimation = (camera, controls, THREE, points, info, name) => {
 
   document.querySelector(".cross").addEventListener("click", () => {
     document.body.classList.add("disabled-pointer-events");
-
+    controls.enabled = false;
+    document.removeEventListener("change",controls_name)
     gsap.to(camera.position, {
       x: defaultPosition.x,
       y: defaultPosition.y,
@@ -130,6 +132,9 @@ let addGsapAnimation = (camera, controls, THREE, points, info, name) => {
       ease: ease,
       onComplete: () => {
         name.style.zIndex = 1;
+        setTimeout(() => {
+          
+       
         gsap.to(name, {
           fontSize: "10vw",
           top: "10%",
@@ -139,8 +144,11 @@ let addGsapAnimation = (camera, controls, THREE, points, info, name) => {
           onComplete: () => {
             document.body.classList.remove("disabled-pointer-events");
             document.querySelector(".cross").style.display = "none";
+            controls.enabled = true;
+            document.addEventListener("change",controls_name)
           },
         });
+      }, 100);
       },
     });
     gsap.to(camera, {
