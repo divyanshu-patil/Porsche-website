@@ -346,10 +346,10 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
   const outputPass = new OutputPass();
   finalComposer.addPass(outputPass);
 
-//   // adding antializing
-//   const smaaPass = new SMAAPass();
-//   // composer.addPass(smaaPass);
-//   finalComposer.addPass(smaaPass);
+  // adding antializing
+  const smaaPass = new SMAAPass();
+  // composer.addPass(smaaPass);
+  finalComposer.addPass(smaaPass);
 
   //  adding bloom to selected part
 

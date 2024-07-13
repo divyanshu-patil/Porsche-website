@@ -3,7 +3,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/src/all';
 
 
-// cards animation
 let animate1;
 let animate2;
 let animate3;
@@ -19,6 +18,7 @@ let animate12;
 let animate13;
 let animate14;
 let animate15;
+// cards animation
 {
 let duration = 0.3
 let cards=document.querySelectorAll(".page-4 .cards ");
