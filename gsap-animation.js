@@ -3,11 +3,23 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/src/all';
 
 
+let animate1;
+let animate2;
+let animate3;
+let animate4;
+let animate5;
+let animate6;
+let animate7;
+let animate8;
+let animate9;
+let animate10;
+let animate11;
+let animate12;
+let animate13;
+let animate14;
+let animate15;
 // cards animation
-
-
 {
-
 let duration = 0.3
 let cards=document.querySelectorAll(".page-4 .cards ");
 cards.forEach((card)=>{
@@ -22,12 +34,12 @@ cards.forEach((card)=>{
 
 
     let txt = card.querySelector('.page-4 .cards .txt')
-    gsap.to(card,{
+    animate1 = gsap.to(card,{
       scale:1.075,
       duration:duration,
       ease:"power2.inOut"
     })
-    gsap.to(txt,{
+    animate2= gsap.to(txt,{
       bottom:"10%",
       left:"10%",
       duration:duration,
@@ -35,7 +47,7 @@ cards.forEach((card)=>{
 
     })
     let gradient = card.querySelector('.page-4 .cards .gradient')
-    gsap.to(gradient,{
+    animate3 = gsap.to(gradient,{
       top:"0%",
       delay:0.02,
       duration:duration,
@@ -52,14 +64,14 @@ cards.forEach((card)=>{
   //     }
   // });
 
-  gsap.to(card,{
+  animate4 = gsap.to(card,{
     scale:1,
     duration:duration,
     ease:"power2.inOut"
   })
 
     let txt = card.querySelector('.page-4 .cards .txt')
-    gsap.to(txt,{
+   animate5 =  gsap.to(txt,{
       bottom:"-20%",
       left:"30%",
       duration:duration,
@@ -67,7 +79,7 @@ cards.forEach((card)=>{
 
     })
     let gradient = card.querySelector('.page-4 .cards .gradient')
-    gsap.to(gradient,{
+    animate6 =gsap.to(gradient,{
       top:"100%",
       duration:duration,
       ease:"power2.inOut"
@@ -177,7 +189,7 @@ tl.from(".watermark ",{
 page1animation();
 function page2animation(){
   let delay=0.5
-  gsap.from('.page-2 .trans-text ',{
+  animate7 = gsap.from('.page-2 .trans-text ',{
     left:'-100%',
     duration:duration,
     ease:'power2.out',
@@ -192,7 +204,7 @@ function page2animation(){
       // scrub:true
     }
   })
-  gsap.from('.page2-discription-part',{
+  animate8 = gsap.from('.page2-discription-part',{
     right:'-100%',
     opacity:0,
     duration:duration,
@@ -213,7 +225,7 @@ page2animation()
 
 function page3animation() {
   let delay=0.5
-gsap.from('.page-3 .top-left',{
+animate9 =gsap.from('.page-3 .top-left',{
   left:'-100%',
   opacity:0,
   duration:duration,
@@ -225,7 +237,7 @@ gsap.from('.page-3 .top-left',{
     // markers:true
   }
 })
-gsap.from('.page-3 .bottom-right ',{
+animate10 =gsap.from('.page-3 .bottom-right ',{
   right:'-100%',
   opacity:0,
   duration:duration,
@@ -246,7 +258,7 @@ function page4Animation(){
   let delay = 0.4;
   duration=1;
   ease ='back(3).out'
-  gsap.from('.page-4 .cards',{
+  animate11 =gsap.from('.page-4 .cards',{
     y:100,
     opacity:0,
     duration:duration,
@@ -272,7 +284,7 @@ function footerAnimation(){
   let duration=1;
   let ease2 ='back(3).out'
   let ease1= 'power2.out'
-  gsap.from('.page-5 .hider',{
+  animate12 =gsap.from('.page-5 .hider',{
     left:'-100%',
     opacity:0,
     duration:duration,
@@ -286,7 +298,7 @@ function footerAnimation(){
       },
       onComplete:()=>{
         document.querySelector(".footer-part").style.opacity=1;
-        gsap.from(".footer-part .section",{
+        animate13 =gsap.from(".footer-part .section",{
           y:100,
           opacity:0,
           duration:duration,
@@ -314,7 +326,7 @@ function infoAnimation(){
   let duration = 2;
   ease='power3.inOut'
 document.querySelector('.info').style.display='block'
-  gsap.from('.info',{
+  animate14 =gsap.from('.info',{
     height:0,
     padding:0,
     opacity:0,
@@ -328,7 +340,7 @@ document.querySelector('.info').style.display='block'
       },
       onComplete:()=>{
         document.querySelector('.info .wrapper').style.opacity=1
-        gsap.from('.info .wrapper',{
+       animate15 = gsap.from('.info .wrapper',{
           opacity:0,
           duration:duration/3,
           ease:ease,
@@ -370,3 +382,22 @@ const interval = setInterval(()=>{
 }
 
 
+function animate(){
+  animate1.render()
+  animate2.render()
+  animate3.render()
+  animate4.render()
+  animate5.render()
+  animate6.render()
+  animate7.render()
+  animate8.render()
+  animate9.render()
+  animate10.render()
+  animate11.render()
+  animate12.render()
+  animate13.render()
+  animate14.render()
+  animate15.render()
+  window.requestAnimationFrame(animate)
+}
+animate()
