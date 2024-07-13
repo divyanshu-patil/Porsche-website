@@ -5,14 +5,11 @@ import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
-import { GammaCorrectionShader} from "three/examples/jsm/Addons.js";
-import { GlitchPass } from "three/examples/jsm/Addons.js";
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js'
 import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js'
 import { SMAAPass } from "three/examples/jsm/postprocessing/SMAAPass.js";
-GlitchPass
-import { addGUI } from "./carShowcasegui";
+// import { addGUI } from "./carShowcasegui";
 import { addGsapAnimation ,pointsVisibleAnimation} from "./carshowcaseGsapAnimations";
 import { cardData,cursorAnim} from "./interactions.js";
 import { load } from "./loading.js";
@@ -60,10 +57,6 @@ directionalLight.shadow.normalBias = 0.05;
 directionalLight.shadow.mapSize.width = 1024;
 directionalLight.shadow.mapSize.height = 1024;
 
-const directionalLightHelper = new THREE.DirectionalLightHelper(
-  directionalLight
-);
-
 const directionalLight2 = new THREE.DirectionalLight(0xdd6c24, 1);
 directionalLight2.position.set(3.04, 3.63, 2.98);
 directionalLight2.castShadow = true;
@@ -74,9 +67,6 @@ directionalLight2.shadow.normalBias = 0.05;
 directionalLight2.shadow.mapSize.width = 1024;
 directionalLight2.shadow.mapSize.height = 1024;
 
-const directionalLightHelper2 = new THREE.DirectionalLightHelper(
-  directionalLight2
-);
 
 // all helpers are updated in animate loop functions
 scene.add(
@@ -90,10 +80,7 @@ scene.add(
 //   directionalLightHelper,
 //   directionalLightHelper2
 // )
-
-
 directionalLight2.target = scene;
-
 
 // adding loading manager
 const loadingManager = new THREE.LoadingManager()
@@ -136,16 +123,9 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
     currentModle.position.y = -0.5;
     scene.add(currentModle);
 
-    // playing animation - if any
-    if (gltf.animations.length) {
-      mixer = new THREE.AnimationMixer(gltf.scene);
-      const action = mixer.clipAction(gltf.animations[0]);
-      action.play();
-    }
     updateAllMaterials();
-    
 
-  const applyBloomToPart = (partName) => {
+    const applyBloomToPart = (partName) => {
     const part = currentModle.getObjectByName(partName);
     if (part) {
         part.layers.enable(bloom_scene);
@@ -174,12 +154,6 @@ pointsVisibleAnimation(points)
       color: 0xffffff,
     })
   );
-
-  // setting ground properties
-  ground.material.side = THREE.DoubleSide;
-  ground.position.set(0, -0.6, 0);
-  ground.rotation.set(Math.PI / 2, 0, 0);
-  ground.receiveShadow = true;
 
   // setting up sizes for rendering
   const sizes = {
@@ -392,10 +366,6 @@ function restoreMaterial(obj) {
 
 
   let animate = () => {
-    // update the helpers if their position changed
-    directionalLightHelper.update();
-    directionalLightHelper2.update();
-
     // update animation
     if (mixer != null) {
       mixer.update();
@@ -447,9 +417,9 @@ function restoreMaterial(obj) {
     window.requestAnimationFrame(animate);
   };
   animate();
-  addGUI(THREE, camera, scene, [
-    ambientLight,
-    directionalLight,
-    directionalLight2,
-  ],points,controls);
+  // addGUI(THREE, camera, scene, [
+  //   ambientLight,
+  //   directionalLight,
+  //   directionalLight2,
+  // ],points,controls);
 });

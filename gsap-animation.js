@@ -3,21 +3,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ScrollToPlugin } from 'gsap/src/all';
 
 
-let animate1;
-let animate2;
-let animate3;
-let animate4;
-let animate5;
-let animate6;
-let animate7;
-let animate8;
-let animate9;
-let animate10;
-let animate11;
-let animate12;
-let animate13;
-let animate14;
-let animate15;
+let context1;
+let context2;
+let context3;
+let context4;
+let context5;
+let context6;
+let context7;
 // cards animation
 {
 let duration = 0.3
@@ -34,12 +26,14 @@ cards.forEach((card)=>{
 
 
     let txt = card.querySelector('.page-4 .cards .txt')
-    animate1 = gsap.to(card,{
-      scale:1.075,
-      duration:duration,
-      ease:"power2.inOut"
+    context1 = gsap.context(()=>{
+      
+      gsap.to(card,{
+        scale:1.075,
+        duration:duration,
+        ease:"power2.inOut"
     })
-    animate2= gsap.to(txt,{
+    gsap.to(txt,{
       bottom:"10%",
       left:"10%",
       duration:duration,
@@ -47,12 +41,13 @@ cards.forEach((card)=>{
 
     })
     let gradient = card.querySelector('.page-4 .cards .gradient')
-    animate3 = gsap.to(gradient,{
+    gsap.to(gradient,{
       top:"0%",
       delay:0.02,
       duration:duration,
       ease:"power2.inOut"
     })
+  })
   })
 
   card.addEventListener('mouseleave',()=>{
@@ -64,14 +59,15 @@ cards.forEach((card)=>{
   //     }
   // });
 
-  animate4 = gsap.to(card,{
+  context2 = gsap.context(()=>{
+  gsap.to(card,{
     scale:1,
     duration:duration,
     ease:"power2.inOut"
   })
 
     let txt = card.querySelector('.page-4 .cards .txt')
-   animate5 =  gsap.to(txt,{
+    gsap.to(txt,{
       bottom:"-20%",
       left:"30%",
       duration:duration,
@@ -79,11 +75,12 @@ cards.forEach((card)=>{
 
     })
     let gradient = card.querySelector('.page-4 .cards .gradient')
-    animate6 =gsap.to(gradient,{
+    gsap.to(gradient,{
       top:"100%",
       duration:duration,
       ease:"power2.inOut"
     })
+  })
   })
 })
 }
@@ -152,7 +149,7 @@ let ease='power2.out';
 function page1animation() {
   
 // document.body.classList.add('disabled-pointer-events');
-
+context3 = gsap.context(()=>{
 
 tl.from("nav",{
   top:"-100%",
@@ -183,13 +180,15 @@ tl.from(".watermark ",{
   duration:duration,
   ease:ease,
 },'fixed')
-
+})
 }
 
 page1animation();
 function page2animation(){
   let delay=0.5
-  animate7 = gsap.from('.page-2 .trans-text ',{
+  context4 = gsap.context(()=>{
+
+  gsap.from('.page-2 .trans-text ',{
     left:'-100%',
     duration:duration,
     ease:'power2.out',
@@ -204,7 +203,7 @@ function page2animation(){
       // scrub:true
     }
   })
-  animate8 = gsap.from('.page2-discription-part',{
+  gsap.from('.page2-discription-part',{
     right:'-100%',
     opacity:0,
     duration:duration,
@@ -220,12 +219,14 @@ function page2animation(){
       // scrub:true
     }
   })
+  })
 }
 page2animation()
 
 function page3animation() {
   let delay=0.5
-animate9 =gsap.from('.page-3 .top-left',{
+  context5 = gsap.context(()=>{
+gsap.from('.page-3 .top-left',{
   left:'-100%',
   opacity:0,
   duration:duration,
@@ -237,7 +238,7 @@ animate9 =gsap.from('.page-3 .top-left',{
     // markers:true
   }
 })
-animate10 =gsap.from('.page-3 .bottom-right ',{
+gsap.from('.page-3 .bottom-right ',{
   right:'-100%',
   opacity:0,
   duration:duration,
@@ -250,6 +251,7 @@ animate10 =gsap.from('.page-3 .bottom-right ',{
     // markers:true
   }
 })
+})
 
 }
 page3animation();
@@ -258,7 +260,8 @@ function page4Animation(){
   let delay = 0.4;
   duration=1;
   ease ='back(3).out'
-  animate11 =gsap.from('.page-4 .cards',{
+  context6 = gsap.context(()=>{
+  gsap.from('.page-4 .cards',{
     y:100,
     opacity:0,
     duration:duration,
@@ -272,6 +275,7 @@ function page4Animation(){
       // markers:true
       }
   })
+  })
 
 }
 page4Animation()
@@ -284,7 +288,10 @@ function footerAnimation(){
   let duration=1;
   let ease2 ='back(3).out'
   let ease1= 'power2.out'
-  animate12 =gsap.from('.page-5 .hider',{
+  
+  context6 = gsap.context(()=>{
+
+  gsap.from('.page-5 .hider',{
     left:'-100%',
     opacity:0,
     duration:duration,
@@ -298,7 +305,7 @@ function footerAnimation(){
       },
       onComplete:()=>{
         document.querySelector(".footer-part").style.opacity=1;
-        animate13 =gsap.from(".footer-part .section",{
+        gsap.from(".footer-part .section",{
           y:100,
           opacity:0,
           duration:duration,
@@ -316,6 +323,7 @@ function footerAnimation(){
         })
       }
   })
+  })
 
   
 }
@@ -326,7 +334,10 @@ function infoAnimation(){
   let duration = 2;
   ease='power3.inOut'
 document.querySelector('.info').style.display='block'
-  animate14 =gsap.from('.info',{
+
+context7 = gsap.context(()=>{
+
+  gsap.from('.info',{  
     height:0,
     padding:0,
     opacity:0,
@@ -340,7 +351,7 @@ document.querySelector('.info').style.display='block'
       },
       onComplete:()=>{
         document.querySelector('.info .wrapper').style.opacity=1
-       animate15 = gsap.from('.info .wrapper',{
+        gsap.from('.info .wrapper',{
           opacity:0,
           duration:duration/3,
           ease:ease,
@@ -353,6 +364,7 @@ document.querySelector('.info').style.display='block'
         })
         
       }
+  })
   })
 }
 
@@ -381,23 +393,13 @@ const interval = setInterval(()=>{
 },30)
 }
 
+window.addEventListener('unload', () => {
+  context1.revert();
+  context2.revert();
+  context3.revert();
+  context4.revert();
+  context5.revert();
+  context6.revert();
+  context7.revert();
+});
 
-function animate(){
-  animate1.render()
-  animate2.render()
-  animate3.render()
-  animate4.render()
-  animate5.render()
-  animate6.render()
-  animate7.render()
-  animate8.render()
-  animate9.render()
-  animate10.render()
-  animate11.render()
-  animate12.render()
-  animate13.render()
-  animate14.render()
-  animate15.render()
-  window.requestAnimationFrame(animate)
-}
-animate()

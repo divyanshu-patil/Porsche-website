@@ -283,6 +283,10 @@ let cardData=(carname)=>{
 }
 
 function cursorAnim(cursor,arr){
+  let context1; 
+  let context2; 
+
+
         document.addEventListener('mousemove', e => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
@@ -293,23 +297,33 @@ arr.forEach((ar2)=>{
     
 
   a.addEventListener('mouseenter',()=>{
+    context1 = gsap.context(()=>{
+
     gsap.to(cursor,{
       opacity:0.3,
       duration:0.2,
       ease:'power2.out'
     })
+    })
 
   })
   a.addEventListener('mouseleave',()=>{
+    context2 = gsap.context(()=>{
     gsap.to(cursor,{
       opacity:1,
       duration:0.2,
       ease:'power2.out'
+    })
     })
   })
 })
 })
 }
 }
+
+window.addEventListener('unload', () => {
+  context1.revert();
+  context2.revert();
+});
 
 export {cardData,cursorAnim}
