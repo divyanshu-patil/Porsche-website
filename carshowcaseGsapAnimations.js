@@ -53,120 +53,128 @@ let addGsapAnimation = (camera, controls, THREE, points, info, name) => {
 
   document.body.classList.add("disabled-pointer-events");
 
-  gsap.from(name, {
-    y: 100,
-    opacity: 0,
-    duration: 3,
-    ease: "power2.out",
-  });
+  const context = gsap.context(()=>{
 
-  points.forEach((point) => {
-    point.element.addEventListener("click", () => {
-      if (isAnimating) return;
-      isAnimating = true;
-      document.body.classList.add("disabled-pointer-events");
-      // re-enable pointer events
-      gsap.to(camera.position, {
-        x: point.cameraPosition.x,
-        y: point.cameraPosition.y,
-        z: point.cameraPosition.z,
-        ease: ease,
-        duration: duration,
-        onComplete: () => {
-          title.innerText = point.title;
-          description.innerText = point.description;
-          isAnimating = false;
-          document.body.classList.remove("disabled-pointer-events");
-          document.addEventListener("click", () => {
-            gsap.to(info, {
-              opacity: 0,
-              duration: 0.1,
-              ease: ease,
-            });
-          });
-          info.style.left = point.infoPosition.left;
-          info.style.top = point.infoPosition.top;
-          console.log(info);
-          gsap.to(info, {
-            opacity: 1,
-            duration: 1,
+    
+      gsap.from(name, {
+        y: 100,
+        opacity: 0,
+        duration: 3,
+        ease: "power2.out",
+      });
+    
+      points.forEach((point) => {
+        point.element.addEventListener("click", () => {
+          if (isAnimating) return;
+          isAnimating = true;
+          document.body.classList.add("disabled-pointer-events");
+          // re-enable pointer events
+          gsap.to(camera.position, {
+            x: point.cameraPosition.x,
+            y: point.cameraPosition.y,
+            z: point.cameraPosition.z,
             ease: ease,
+            duration: duration,
             onComplete: () => {
+              title.innerText = point.title;
+              description.innerText = point.description;
+              isAnimating = false;
+              document.body.classList.remove("disabled-pointer-events");
               document.addEventListener("click", () => {
                 gsap.to(info, {
                   opacity: 0,
-                  duration: 1,
+                  duration: 0.1,
                   ease: ease,
                 });
               });
+              info.style.left = point.infoPosition.left;
+              info.style.top = point.infoPosition.top;
+              console.log(info);
+              gsap.to(info, {
+                opacity: 1,
+                duration: 1,
+                ease: ease,
+                onComplete: () => {
+                  document.addEventListener("click", () => {
+                    gsap.to(info, {
+                      opacity: 0,
+                      duration: 1,
+                      ease: ease,
+                    });
+                  });
+                },
+              });
             },
           });
-        },
+    
+          gsap.to(camera, {
+            zoom: point.cameraZoom,
+            ease: ease,
+            duration: duration,
+          });
+    
+          gsap.to(controls.target, {
+            x: point.controlsTarget.x,
+            y: point.controlsTarget.y,
+            z: point.controlsTarget.z,
+            ease: rapidease,
+            duration: duration,
+          });
+        });
       });
-
-      gsap.to(camera, {
-        zoom: point.cameraZoom,
-        ease: ease,
-        duration: duration,
-      });
-
-      gsap.to(controls.target, {
-        x: point.controlsTarget.x,
-        y: point.controlsTarget.y,
-        z: point.controlsTarget.z,
-        ease: rapidease,
-        duration: duration,
-      });
-    });
-  });
+  })
 
   document.querySelector(".cross").addEventListener("click", () => {
     document.body.classList.add("disabled-pointer-events");
     controls.enabled = false;
     document.removeEventListener("change",controls_name)
-    gsap.to(camera.position, {
-      x: defaultPosition.x,
-      y: defaultPosition.y,
-      z: defaultPosition.z,
-      duration: duration,
-      ease: ease,
-      onComplete: () => {
-        name.style.zIndex = 1;
-        setTimeout(() => {
-          
-       
-        gsap.to(name, {
-          fontSize: "10vw",
-          top: "10%",
-          duration: duration,
-          // delay:-1,
-          ease: ease,
-          onComplete: () => {
-            document.body.classList.remove("disabled-pointer-events");
-            document.querySelector(".cross").style.display = "none";
-            controls.enabled = true;
-            document.addEventListener("change",controls_name)
-          },
-        });
-      }, 100);
-      },
-    });
-    gsap.to(camera, {
-      zoom: 2,
-      ease: ease,
-      duration: duration,
-    });
-    gsap.to(controls.target, {
-      x: defaultTarget.x,
-      y: defaultTarget.y,
-      z: defaultTarget.z,
-      duration: duration,
-      ease: ease,
-    });
-  });
+  const context = gsap.context(()=>{
 
-
+    
+     gsap.to(camera.position, {
+       x: defaultPosition.x,
+       y: defaultPosition.y,
+       z: defaultPosition.z,
+       duration: duration,
+       ease: ease,
+       onComplete: () => {
+         name.style.zIndex = 1;
+         setTimeout(() => {
+           
+        
+         gsap.to(name, {
+           fontSize: "10vw",
+           top: "10%",
+           duration: duration,
+           // delay:-1,
+           ease: ease,
+           onComplete: () => {
+             document.body.classList.remove("disabled-pointer-events");
+             document.querySelector(".cross").style.display = "none";
+             controls.enabled = true;
+             document.addEventListener("change",controls_name)
+           },
+         });
+       }, 100);
+       },
+     });
+     gsap.to(camera, {
+       zoom: 2,
+       ease: ease,
+       duration: duration,
+     });
+     gsap.to(controls.target, {
+       x: defaultTarget.x,
+       y: defaultTarget.y,
+       z: defaultTarget.z,
+       duration: duration,
+       ease: ease,
+     });
+   });
   
+  
+   
+  })
 
 };
 

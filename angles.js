@@ -239,20 +239,23 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
     }
   };
 
-  // Initialize ScrollTrigger
-  cameraPositions.forEach((obj, index) => {
-    ScrollTrigger.create({
-      trigger: `.page-${index + 1}`,
-      start: "top center",
-      end: "bottom center",
-      scrub: true,
-      onEnter: () => updateCamera(index),
-      onEnterBack: () => updateCamera(index),
-      refreshPriority: index, // Ensure the correct order of ScrollTrigger instances
-      invalidateOnRefresh: true, // Recalculate positions when resizing
-    });
-  });
+  const context = gsap.context(()=>{
 
+    cameraPositions.forEach((obj, index) => {
+      ScrollTrigger.create({
+        trigger: `.page-${index + 1}`,
+        start: "top center",
+        end: "bottom center",
+        scrub: true,
+        onEnter: () => updateCamera(index),
+        onEnterBack: () => updateCamera(index),
+        refreshPriority: index, // Ensure the correct order of ScrollTrigger instances
+        invalidateOnRefresh: true, // Recalculate positions when resizing
+      });
+    });
+
+  })  
+  // Initialize ScrollTrigger
 
   // defining canvas
   let canvas = document.querySelector(".webgl");

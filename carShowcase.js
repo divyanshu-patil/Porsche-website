@@ -142,9 +142,8 @@ applyBloomToPart('head_light_left');
 applyBloomToPart('Headlight_Mirror');
 applyBloomToPart('Headlight_Mirror_right');
 applyBloomToPart('Headlight_Mirror_left');
-
     
-    pointsVisibleAnimation(points)
+pointsVisibleAnimation(points)
     
   });
 

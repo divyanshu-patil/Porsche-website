@@ -9,37 +9,9 @@ const anchors = document.querySelectorAll('.a-wrapper');
 let dot = document.querySelector(".cursor")
 let hover = document.querySelectorAll(".LargeHover")
 
-hamberger.addEventListener('click',()=>{ 
+const context = gsap.context(()=>{
 
-        navigation.style.display = 'flex'
-        document.body.style.overflow = 'hidden';
-     
-       gsap.to(navigation,{   
-         x:`-100%`,    
-        duration :1.5,
-        onComplete:()=>{
-            menu.style.display = 'none'
-            close.style.display = 'block'
-
-      }
-    })
-})
-
-close.addEventListener('click',()=>{
-
-    gsap.to(navigation,{   
-        x:`100%`, 
-        duration :1.5,
-        onComplete:()=>{
-            
-              navigation.style.display = 'none'
-              menu.style.display = 'block'
-              close.style.display = 'none'
-        }
-     })
-})
-
-
+    
 hover.forEach((e)=>{
     e.addEventListener('mouseenter',()=>{
         dot.classList.add("mixer")
@@ -91,6 +63,46 @@ anchors.forEach(anchor => {
     });
 
 })
+
+
+})
+
+
+
+
+
+
+hamberger.addEventListener('click',()=>{ 
+
+        navigation.style.display = 'flex'
+        document.body.style.overflow = 'hidden';
+     
+       gsap.to(navigation,{   
+         x:`-100%`,    
+        duration :1.5,
+        onComplete:()=>{
+            menu.style.display = 'none'
+            close.style.display = 'block'
+
+      }
+    })
+})
+
+close.addEventListener('click',()=>{
+
+    gsap.to(navigation,{   
+        x:`100%`, 
+        duration :1.5,
+        onComplete:()=>{
+            
+              navigation.style.display = 'none'
+              menu.style.display = 'block'
+              close.style.display = 'none'
+        }
+     })
+})
+
+
 
 
 
