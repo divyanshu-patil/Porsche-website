@@ -30,14 +30,19 @@
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
-    cursor: none
+    cursor: none;
+    
+}
+
+.mixer{
+    mix-blend-mode: difference;
 }
 
 :root{
     /* color......... */
-    --lightColor: rgb(218, 218, 218);
+    --lightColor: #dadada;
     --lightColorHover:rgb(153, 153, 153);
-    --darkColor:rgb(15, 15, 15);
+    --darkColor:#0f0f0f;
     --hoverColor:rgb(48, 48, 48);
     --gray-color:#a3a3a3;
     --yellow-color:#CB9D58;
@@ -73,18 +78,15 @@ body::-webkit-scrollbar{
 }
 
 .cursor{
-    width: 30px;
-    aspect-ratio: 1;
-    background-color: white;
-    border-radius: 50%;
+    width: 50px;
+    height: 50px;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 300;
-    transform: translate(-50%,-50%);
-    transition: 0.15s ease-out ;
     pointer-events: none;
-    mix-blend-mode: difference;
+    transform: translate(-50%,-50%);
+    /* mix-blend-mode: difference; */
 }
 
 

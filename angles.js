@@ -26,7 +26,7 @@ cursorAnim(
     [document.querySelector(".hamburger")],
     [document.querySelector(".close")],
     document.querySelectorAll(".aa"),
-    document.querySelectorAll(".cards")
+    document.querySelectorAll(".cards"),
 ])
 
 // making variable to store model
