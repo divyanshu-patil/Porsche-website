@@ -68,7 +68,7 @@ anchors.forEach(anchor => {
         scale:3
     })
         gsap.to(entire, { 
-            width: 250,
+            width: `10vw`,
             duration: 1,
             
         });
