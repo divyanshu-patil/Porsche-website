@@ -9,6 +9,69 @@ const anchors = document.querySelectorAll('.a-wrapper');
 let dot = document.querySelector(".cursor")
 let hover = document.querySelectorAll(".LargeHover")
 
+const context = gsap.context(()=>{
+
+    
+hover.forEach((e)=>{
+    e.addEventListener('mouseenter',()=>{
+        dot.classList.add("mixer")
+        gsap.to(dot,{
+            scale:3
+        })
+    })
+    
+    e.addEventListener('mouseleave',()=>{
+        dot.classList.remove("mixer")
+        gsap.to(dot,{
+            scale:1
+        })
+    })
+})
+
+
+
+// Add event listener to each anchor tag
+anchors.forEach(anchor => {
+    anchor.addEventListener('mouseenter', (event) => {
+        event.preventDefault(); 
+        right_bottom.innerHTML = anchor.id
+       let entire = `.red-line${anchor.id}`
+       gsap.to(dot,{
+        scale:3
+    })
+        gsap.to(entire, { 
+            width: `5vw`,
+            duration: 1,
+            
+        });
+    });
+    anchor.addEventListener('mouseleave', (event) => {
+        event.preventDefault();
+        let entire = `.red-line${anchor.id}`
+        gsap.to(dot,{
+            scale:1
+        })
+        gsap.to(entire, { 
+            width: 0,
+            duration: 1,
+            onComplete:()=>{
+                 right_bottom.innerHTML = "00"
+            }
+        });
+
+     
+    });
+
+})
+
+
+})
+
+
+
+
+
+
 hamberger.addEventListener('click',()=>{ 
 
         navigation.style.display = 'flex'
@@ -40,57 +103,6 @@ close.addEventListener('click',()=>{
 })
 
 
-hover.forEach((e)=>{
-    e.addEventListener('mouseenter',()=>{
-        dot.classList.add("mixer")
-        gsap.to(dot,{
-            scale:3
-        })
-    })
-    
-    e.addEventListener('mouseleave',()=>{
-        dot.classList.remove("mixer")
-        gsap.to(dot,{
-            scale:1
-        })
-    })
-})
-
-
-
-// Add event listener to each anchor tag
-anchors.forEach(anchor => {
-    anchor.addEventListener('mouseenter', (event) => {
-        event.preventDefault(); 
-        right_bottom.innerHTML = anchor.id
-       let entire = `.red-line${anchor.id}`
-       gsap.to(dot,{
-        scale:3
-    })
-        gsap.to(entire, { 
-            width: 250,
-            duration: 1,
-            
-        });
-    });
-    anchor.addEventListener('mouseleave', (event) => {
-        event.preventDefault();
-        let entire = `.red-line${anchor.id}`
-        gsap.to(dot,{
-            scale:1
-        })
-        gsap.to(entire, { 
-            width: 0,
-            duration: 1,
-            onComplete:()=>{
-                 right_bottom.innerHTML = "00"
-            }
-        });
-
-     
-    });
-
-})
 
 
 

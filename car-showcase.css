@@ -54,17 +54,15 @@ html, body{
   }
 
   .cursor{
-    width: 30px;
-    aspect-ratio: 1;
-    background-color: white;
-    border-radius: 50%;
+    width: 50px;
+    height: 50px;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 300;
-    transform: translate(-50%,-50%);
-    transition: 0.15s ease-out ;
     pointer-events: none;
+    transform: translate(-50%,-50%);
+    /* mix-blend-mode: difference; */
 }
 canvas{
     width: 100%;
