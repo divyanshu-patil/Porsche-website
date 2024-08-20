@@ -65,4 +65,4 @@ These files manage the project's dependencies, ensuring consistent installations
 
 1. Clone the repository to your local machine.
 2. Install dependencies using `npm install`.
-3. run command npx vite
+3. run command `npx vite`
