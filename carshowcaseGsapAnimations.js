@@ -89,7 +89,6 @@ let addGsapAnimation = (camera, controls, THREE, points, info, name) => {
               });
               info.style.left = point.infoPosition.left;
               info.style.top = point.infoPosition.top;
-              console.log(info);
               gsap.to(info, {
                 opacity: 1,
                 duration: 1,

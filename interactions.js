@@ -213,10 +213,9 @@ const Cayman718={
 
 let car ;
 let cards = document.querySelectorAll('.cards')
-  console.log(cards)
+
   cards.forEach((card)=>{
     card.addEventListener('click',()=>{
-      console.log(card.id);
       switch(card.id){
         case 'gt3rs':
           car = encodeURIComponent('GT3rs')

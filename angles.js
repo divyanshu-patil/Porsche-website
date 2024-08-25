@@ -268,11 +268,6 @@ rgbeLoader.load("./assets/enviroment/darkhdri.hdr", (environmentMap) => {
 
   controls.target.y = scene.position.y + 1;
 
-  //  controls.addEventListener('change', () => {
-  //     console.log(`Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`);
-  //     console.log(`controls target: ${controls.target.x}, ${controls.target.y},${controls.target.z}`);
-  //   });
-
   // adding renderer
   const renderer = new THREE.WebGLRenderer({
     canvas: canvas,

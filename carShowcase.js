@@ -14,7 +14,7 @@ import { addGsapAnimation ,pointsVisibleAnimation} from "./carshowcaseGsapAnimat
 import { cardData,cursorAnim} from "./interactions.js";
 import { load } from "./loading.js";
 
-console.log("three-js", THREE);
+
 
 // note 
 // if your element is not appearing more than once then pass it in rectangular brackets as array
@@ -30,13 +30,13 @@ let currentModle;
 
 var urlParams = new URLSearchParams(window.location.search);
 var encodedCar = urlParams.get('car');
-console.log(encodedCar)
+
 const Data = cardData(encodedCar);
 
 const url =Data.url;
 const name = Data.name
 const points=Data.points
-console.log(Data)
+
 let carName = document.querySelector(".name h1");
 document.title = name
 carName.innerHTML = name;
@@ -311,14 +311,7 @@ function restoreMaterial(obj) {
   }
 });
 
-  // controls.addEventListener("change", () => {
-  //   console.log(
-  //     `Camera position: ${camera.position.x}, ${camera.position.y},${camera.position.z}`
-  //   );
-  //   console.log(
-  //     `controls target: ${controls.target.x}, ${controls.target.y},${controls.target.z}`
-  //   );
-  // });
+
 
   window.addEventListener("resize", () => {
     sizes.width = window.innerWidth;
@@ -336,23 +329,6 @@ function restoreMaterial(obj) {
     endComposer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   });
 
-  // points of intrest
-  
-  // console.log();
-    // next in tick function
-
-  // let addFactor = 6;
-  // points.forEach((point) => {
-  //     point.element.addEventListener('click', () => {
-  //         console.log(point.element.innerHTML);
-  //         console.log(point.position);
-  //         gsap.to(camera.position, {
-  //             x: point.position.x + ((point.position.x < 0) ? addFactor : -addFactor),
-  //             y: point.position.y+0.5,
-  //             z: point.position.z + ((point.position.z < 0) ? addFactor : -addFactor),
-  //         });
-  //     });
-  // });
   let info = document.querySelector(".info");
   let name = document.querySelector(".name");
   info.style.opacity=0;
@@ -390,7 +366,6 @@ function restoreMaterial(obj) {
         // }
     }
 
-    // console.log(screenPosition.x)
     const translateX = screenPosition.x *sizes.width*0.5
     const translateY = -screenPosition.y *sizes.height*0.5
     point.element.style.transform = `translate(${translateX}px,${translateY}px)`
