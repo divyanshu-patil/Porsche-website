@@ -1,3 +1,4 @@
+### not maintained
 # CarShowcase Website Project
 
 This project is a 3D-based car showcase website built using three.js and GSAP, designed to highlight Porsche cars with engaging camera animations and smooth interactions. 
